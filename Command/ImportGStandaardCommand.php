@@ -461,7 +461,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 						    }
 						    break;
 					case 'boolean':
-						$row[$field] = $row[$field] == 'J'?true:false;
+						$row[$field] = $row[$field] == 'J' ? 1 : 0;
 				}
 			}
 			return $row;
