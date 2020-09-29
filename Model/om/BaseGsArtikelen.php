@@ -24,10 +24,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproductenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsIndicatiesBijSupplementaireProducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsIndicatiesBijSupplementaireProductenQuery;
-use PharmaIntelligence\GstandaardBundle\Model\GsLeveranciersassortimenten;
-use PharmaIntelligence\GstandaardBundle\Model\GsLeveranciersassortimentenQuery;
-use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatie;
-use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatieQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeVerpakkingsinformatie;
 use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeVerpakkingsinformatieQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsNamen;
@@ -439,11 +435,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
     protected $aDeelverpakkingOmschrijving;
 
     /**
-     * @var        GsLogistiekeInformatie
-     */
-    protected $aLogistiekeInformatie;
-
-    /**
      * @var        PropelObjectCollection|GsSupplementaireProductenHistorie[] Collection to store aggregation of GsSupplementaireProductenHistorie objects.
      */
     protected $collGsSupplementaireProductenHistories;
@@ -475,18 +466,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
      */
     protected $collGsIndicatiesBijSupplementaireProductens;
     protected $collGsIndicatiesBijSupplementaireProductensPartial;
-
-    /**
-     * @var        PropelObjectCollection|GsLeveranciersassortimenten[] Collection to store aggregation of GsLeveranciersassortimenten objects.
-     */
-    protected $collGsLeveranciersassortimentens;
-    protected $collGsLeveranciersassortimentensPartial;
-
-    /**
-     * @var        PropelObjectCollection|GsLogistiekeInformatie[] Collection to store aggregation of GsLogistiekeInformatie objects.
-     */
-    protected $collGsLogistiekeInformatiesRelatedByZindexNummer;
-    protected $collGsLogistiekeInformatiesRelatedByZindexNummerPartial;
 
     /**
      * @var        PropelObjectCollection|GsPreferentieBeleid[] Collection to store aggregation of GsPreferentieBeleid objects.
@@ -536,18 +515,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $gsIndicatiesBijSupplementaireProductensScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $gsLeveranciersassortimentensScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -1449,10 +1416,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
         if ($this->zinummer !== $v) {
             $this->zinummer = $v;
             $this->modifiedColumns[] = GsArtikelenPeer::ZINUMMER;
-        }
-
-        if ($this->aLogistiekeInformatie !== null && $this->aLogistiekeInformatie->getZindexNummer() !== $v) {
-            $this->aLogistiekeInformatie = null;
         }
 
 
@@ -2730,9 +2693,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
     public function ensureConsistency()
     {
 
-        if ($this->aLogistiekeInformatie !== null && $this->zinummer !== $this->aLogistiekeInformatie->getZindexNummer()) {
-            $this->aLogistiekeInformatie = null;
-        }
         if ($this->aGsHandelsproducten !== null && $this->handelsproduktkode !== $this->aGsHandelsproducten->getHandelsproduktkode()) {
             $this->aGsHandelsproducten = null;
         }
@@ -2813,7 +2773,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             $this->aLandOmschrijving = null;
             $this->aHoofdverpakkingOmschrijving = null;
             $this->aDeelverpakkingOmschrijving = null;
-            $this->aLogistiekeInformatie = null;
             $this->collGsSupplementaireProductenHistories = null;
 
             $this->singleGsArtikelEigenschappen = null;
@@ -2825,10 +2784,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             $this->singleGsSupplementaireProductenMetNzaMaximumtarief = null;
 
             $this->collGsIndicatiesBijSupplementaireProductens = null;
-
-            $this->collGsLeveranciersassortimentens = null;
-
-            $this->collGsLogistiekeInformatiesRelatedByZindexNummer = null;
 
             $this->collGsPreferentieBeleids = null;
 
@@ -3017,13 +2972,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
                 $this->setDeelverpakkingOmschrijving($this->aDeelverpakkingOmschrijving);
             }
 
-            if ($this->aLogistiekeInformatie !== null) {
-                if ($this->aLogistiekeInformatie->isModified() || $this->aLogistiekeInformatie->isNew()) {
-                    $affectedRows += $this->aLogistiekeInformatie->save($con);
-                }
-                $this->setLogistiekeInformatie($this->aLogistiekeInformatie);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -3099,42 +3047,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
 
             if ($this->collGsIndicatiesBijSupplementaireProductens !== null) {
                 foreach ($this->collGsIndicatiesBijSupplementaireProductens as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->gsLeveranciersassortimentensScheduledForDeletion !== null) {
-                if (!$this->gsLeveranciersassortimentensScheduledForDeletion->isEmpty()) {
-                    foreach ($this->gsLeveranciersassortimentensScheduledForDeletion as $gsLeveranciersassortimenten) {
-                        // need to save related object because we set the relation to null
-                        $gsLeveranciersassortimenten->save($con);
-                    }
-                    $this->gsLeveranciersassortimentensScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsLeveranciersassortimentens !== null) {
-                foreach ($this->collGsLeveranciersassortimentens as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion !== null) {
-                if (!$this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion->isEmpty()) {
-                    foreach ($this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion as $gsLogistiekeInformatieRelatedByZindexNummer) {
-                        // need to save related object because we set the relation to null
-                        $gsLogistiekeInformatieRelatedByZindexNummer->save($con);
-                    }
-                    $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsLogistiekeInformatiesRelatedByZindexNummer !== null) {
-                foreach ($this->collGsLogistiekeInformatiesRelatedByZindexNummer as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -3667,12 +3579,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->aLogistiekeInformatie !== null) {
-                if (!$this->aLogistiekeInformatie->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aLogistiekeInformatie->getValidationFailures());
-                }
-            }
-
 
             if (($retval = GsArtikelenPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
@@ -3715,22 +3621,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
 
                 if ($this->collGsIndicatiesBijSupplementaireProductens !== null) {
                     foreach ($this->collGsIndicatiesBijSupplementaireProductens as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collGsLeveranciersassortimentens !== null) {
-                    foreach ($this->collGsLeveranciersassortimentens as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collGsLogistiekeInformatiesRelatedByZindexNummer !== null) {
-                    foreach ($this->collGsLogistiekeInformatiesRelatedByZindexNummer as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -4066,9 +3956,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             if (null !== $this->aDeelverpakkingOmschrijving) {
                 $result['DeelverpakkingOmschrijving'] = $this->aDeelverpakkingOmschrijving->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aLogistiekeInformatie) {
-                $result['LogistiekeInformatie'] = $this->aLogistiekeInformatie->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->collGsSupplementaireProductenHistories) {
                 $result['GsSupplementaireProductenHistories'] = $this->collGsSupplementaireProductenHistories->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
@@ -4086,12 +3973,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             }
             if (null !== $this->collGsIndicatiesBijSupplementaireProductens) {
                 $result['GsIndicatiesBijSupplementaireProductens'] = $this->collGsIndicatiesBijSupplementaireProductens->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collGsLeveranciersassortimentens) {
-                $result['GsLeveranciersassortimentens'] = $this->collGsLeveranciersassortimentens->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collGsLogistiekeInformatiesRelatedByZindexNummer) {
-                $result['GsLogistiekeInformatiesRelatedByZindexNummer'] = $this->collGsLogistiekeInformatiesRelatedByZindexNummer->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collGsPreferentieBeleids) {
                 $result['GsPreferentieBeleids'] = $this->collGsPreferentieBeleids->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
@@ -4601,18 +4482,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
                 }
             }
 
-            foreach ($this->getGsLeveranciersassortimentens() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsLeveranciersassortimenten($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getGsLogistiekeInformatiesRelatedByZindexNummer() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsLogistiekeInformatieRelatedByZindexNummer($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getGsPreferentieBeleids() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addGsPreferentieBeleid($relObj->copy($deepCopy));
@@ -4622,11 +4491,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             $relObj = $this->getGsRelatieTussenZinummerHibc();
             if ($relObj) {
                 $copyObj->setGsRelatieTussenZinummerHibc($relObj->copy($deepCopy));
-            }
-
-            $relObj = $this->getLogistiekeInformatie();
-            if ($relObj) {
-                $copyObj->setLogistiekeInformatie($relObj->copy($deepCopy));
             }
 
             //unflag object copy
@@ -5119,54 +4983,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
         return $this->aDeelverpakkingOmschrijving;
     }
 
-    /**
-     * Declares an association between this object and a GsLogistiekeInformatie object.
-     *
-     * @param                  GsLogistiekeInformatie $v
-     * @return GsArtikelen The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setLogistiekeInformatie(GsLogistiekeInformatie $v = null)
-    {
-        if ($v === null) {
-            $this->setZinummer(NULL);
-        } else {
-            $this->setZinummer($v->getZindexNummer());
-        }
-
-        $this->aLogistiekeInformatie = $v;
-
-        // Add binding for other direction of this 1:1 relationship.
-        if ($v !== null) {
-            $v->setGsArtikelenRelatedByZinummer($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated GsLogistiekeInformatie object
-     *
-     * @param PropelPDO $con Optional Connection object.
-     * @param $doQuery Executes a query to get the object if required
-     * @return GsLogistiekeInformatie The associated GsLogistiekeInformatie object.
-     * @throws PropelException
-     */
-    public function getLogistiekeInformatie(PropelPDO $con = null, $doQuery = true)
-    {
-        if ($this->aLogistiekeInformatie === null && ($this->zinummer !== null) && $doQuery) {
-            $this->aLogistiekeInformatie = GsLogistiekeInformatieQuery::create()
-                ->filterByGsArtikelenRelatedByZinummer($this) // here
-                ->findOne($con);
-            // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
-            $this->aLogistiekeInformatie->setGsArtikelenRelatedByZinummer($this);
-        }
-
-        return $this->aLogistiekeInformatie;
-    }
-
 
     /**
      * Initializes a collection based on the name of a relation.
@@ -5186,12 +5002,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
         }
         if ('GsIndicatiesBijSupplementaireProducten' == $relationName) {
             $this->initGsIndicatiesBijSupplementaireProductens();
-        }
-        if ('GsLeveranciersassortimenten' == $relationName) {
-            $this->initGsLeveranciersassortimentens();
-        }
-        if ('GsLogistiekeInformatieRelatedByZindexNummer' == $relationName) {
-            $this->initGsLogistiekeInformatiesRelatedByZindexNummer();
         }
         if ('GsPreferentieBeleid' == $relationName) {
             $this->initGsPreferentieBeleids();
@@ -6113,456 +5923,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
     }
 
     /**
-     * Clears out the collGsLeveranciersassortimentens collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsArtikelen The current object (for fluent API support)
-     * @see        addGsLeveranciersassortimentens()
-     */
-    public function clearGsLeveranciersassortimentens()
-    {
-        $this->collGsLeveranciersassortimentens = null; // important to set this to null since that means it is uninitialized
-        $this->collGsLeveranciersassortimentensPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsLeveranciersassortimentens collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsLeveranciersassortimentens($v = true)
-    {
-        $this->collGsLeveranciersassortimentensPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsLeveranciersassortimentens collection.
-     *
-     * By default this just sets the collGsLeveranciersassortimentens collection to an empty array (like clearcollGsLeveranciersassortimentens());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsLeveranciersassortimentens($overrideExisting = true)
-    {
-        if (null !== $this->collGsLeveranciersassortimentens && !$overrideExisting) {
-            return;
-        }
-        $this->collGsLeveranciersassortimentens = new PropelObjectCollection();
-        $this->collGsLeveranciersassortimentens->setModel('GsLeveranciersassortimenten');
-    }
-
-    /**
-     * Gets an array of GsLeveranciersassortimenten objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsArtikelen is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsLeveranciersassortimenten[] List of GsLeveranciersassortimenten objects
-     * @throws PropelException
-     */
-    public function getGsLeveranciersassortimentens($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsLeveranciersassortimentensPartial && !$this->isNew();
-        if (null === $this->collGsLeveranciersassortimentens || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsLeveranciersassortimentens) {
-                // return empty collection
-                $this->initGsLeveranciersassortimentens();
-            } else {
-                $collGsLeveranciersassortimentens = GsLeveranciersassortimentenQuery::create(null, $criteria)
-                    ->filterByGsArtikelen($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsLeveranciersassortimentensPartial && count($collGsLeveranciersassortimentens)) {
-                      $this->initGsLeveranciersassortimentens(false);
-
-                      foreach ($collGsLeveranciersassortimentens as $obj) {
-                        if (false == $this->collGsLeveranciersassortimentens->contains($obj)) {
-                          $this->collGsLeveranciersassortimentens->append($obj);
-                        }
-                      }
-
-                      $this->collGsLeveranciersassortimentensPartial = true;
-                    }
-
-                    $collGsLeveranciersassortimentens->getInternalIterator()->rewind();
-
-                    return $collGsLeveranciersassortimentens;
-                }
-
-                if ($partial && $this->collGsLeveranciersassortimentens) {
-                    foreach ($this->collGsLeveranciersassortimentens as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsLeveranciersassortimentens[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsLeveranciersassortimentens = $collGsLeveranciersassortimentens;
-                $this->collGsLeveranciersassortimentensPartial = false;
-            }
-        }
-
-        return $this->collGsLeveranciersassortimentens;
-    }
-
-    /**
-     * Sets a collection of GsLeveranciersassortimenten objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsLeveranciersassortimentens A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsArtikelen The current object (for fluent API support)
-     */
-    public function setGsLeveranciersassortimentens(PropelCollection $gsLeveranciersassortimentens, PropelPDO $con = null)
-    {
-        $gsLeveranciersassortimentensToDelete = $this->getGsLeveranciersassortimentens(new Criteria(), $con)->diff($gsLeveranciersassortimentens);
-
-
-        $this->gsLeveranciersassortimentensScheduledForDeletion = $gsLeveranciersassortimentensToDelete;
-
-        foreach ($gsLeveranciersassortimentensToDelete as $gsLeveranciersassortimentenRemoved) {
-            $gsLeveranciersassortimentenRemoved->setGsArtikelen(null);
-        }
-
-        $this->collGsLeveranciersassortimentens = null;
-        foreach ($gsLeveranciersassortimentens as $gsLeveranciersassortimenten) {
-            $this->addGsLeveranciersassortimenten($gsLeveranciersassortimenten);
-        }
-
-        $this->collGsLeveranciersassortimentens = $gsLeveranciersassortimentens;
-        $this->collGsLeveranciersassortimentensPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsLeveranciersassortimenten objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsLeveranciersassortimenten objects.
-     * @throws PropelException
-     */
-    public function countGsLeveranciersassortimentens(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsLeveranciersassortimentensPartial && !$this->isNew();
-        if (null === $this->collGsLeveranciersassortimentens || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsLeveranciersassortimentens) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsLeveranciersassortimentens());
-            }
-            $query = GsLeveranciersassortimentenQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByGsArtikelen($this)
-                ->count($con);
-        }
-
-        return count($this->collGsLeveranciersassortimentens);
-    }
-
-    /**
-     * Method called to associate a GsLeveranciersassortimenten object to this object
-     * through the GsLeveranciersassortimenten foreign key attribute.
-     *
-     * @param    GsLeveranciersassortimenten $l GsLeveranciersassortimenten
-     * @return GsArtikelen The current object (for fluent API support)
-     */
-    public function addGsLeveranciersassortimenten(GsLeveranciersassortimenten $l)
-    {
-        if ($this->collGsLeveranciersassortimentens === null) {
-            $this->initGsLeveranciersassortimentens();
-            $this->collGsLeveranciersassortimentensPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsLeveranciersassortimentens->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsLeveranciersassortimenten($l);
-
-            if ($this->gsLeveranciersassortimentensScheduledForDeletion and $this->gsLeveranciersassortimentensScheduledForDeletion->contains($l)) {
-                $this->gsLeveranciersassortimentensScheduledForDeletion->remove($this->gsLeveranciersassortimentensScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsLeveranciersassortimenten $gsLeveranciersassortimenten The gsLeveranciersassortimenten object to add.
-     */
-    protected function doAddGsLeveranciersassortimenten($gsLeveranciersassortimenten)
-    {
-        $this->collGsLeveranciersassortimentens[]= $gsLeveranciersassortimenten;
-        $gsLeveranciersassortimenten->setGsArtikelen($this);
-    }
-
-    /**
-     * @param	GsLeveranciersassortimenten $gsLeveranciersassortimenten The gsLeveranciersassortimenten object to remove.
-     * @return GsArtikelen The current object (for fluent API support)
-     */
-    public function removeGsLeveranciersassortimenten($gsLeveranciersassortimenten)
-    {
-        if ($this->getGsLeveranciersassortimentens()->contains($gsLeveranciersassortimenten)) {
-            $this->collGsLeveranciersassortimentens->remove($this->collGsLeveranciersassortimentens->search($gsLeveranciersassortimenten));
-            if (null === $this->gsLeveranciersassortimentensScheduledForDeletion) {
-                $this->gsLeveranciersassortimentensScheduledForDeletion = clone $this->collGsLeveranciersassortimentens;
-                $this->gsLeveranciersassortimentensScheduledForDeletion->clear();
-            }
-            $this->gsLeveranciersassortimentensScheduledForDeletion[]= $gsLeveranciersassortimenten;
-            $gsLeveranciersassortimenten->setGsArtikelen(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Clears out the collGsLogistiekeInformatiesRelatedByZindexNummer collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsArtikelen The current object (for fluent API support)
-     * @see        addGsLogistiekeInformatiesRelatedByZindexNummer()
-     */
-    public function clearGsLogistiekeInformatiesRelatedByZindexNummer()
-    {
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer = null; // important to set this to null since that means it is uninitialized
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsLogistiekeInformatiesRelatedByZindexNummer collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsLogistiekeInformatiesRelatedByZindexNummer($v = true)
-    {
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsLogistiekeInformatiesRelatedByZindexNummer collection.
-     *
-     * By default this just sets the collGsLogistiekeInformatiesRelatedByZindexNummer collection to an empty array (like clearcollGsLogistiekeInformatiesRelatedByZindexNummer());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsLogistiekeInformatiesRelatedByZindexNummer($overrideExisting = true)
-    {
-        if (null !== $this->collGsLogistiekeInformatiesRelatedByZindexNummer && !$overrideExisting) {
-            return;
-        }
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer = new PropelObjectCollection();
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer->setModel('GsLogistiekeInformatie');
-    }
-
-    /**
-     * Gets an array of GsLogistiekeInformatie objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsArtikelen is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsLogistiekeInformatie[] List of GsLogistiekeInformatie objects
-     * @throws PropelException
-     */
-    public function getGsLogistiekeInformatiesRelatedByZindexNummer($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial && !$this->isNew();
-        if (null === $this->collGsLogistiekeInformatiesRelatedByZindexNummer || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsLogistiekeInformatiesRelatedByZindexNummer) {
-                // return empty collection
-                $this->initGsLogistiekeInformatiesRelatedByZindexNummer();
-            } else {
-                $collGsLogistiekeInformatiesRelatedByZindexNummer = GsLogistiekeInformatieQuery::create(null, $criteria)
-                    ->filterByGsArtikelenRelatedByZindexNummer($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial && count($collGsLogistiekeInformatiesRelatedByZindexNummer)) {
-                      $this->initGsLogistiekeInformatiesRelatedByZindexNummer(false);
-
-                      foreach ($collGsLogistiekeInformatiesRelatedByZindexNummer as $obj) {
-                        if (false == $this->collGsLogistiekeInformatiesRelatedByZindexNummer->contains($obj)) {
-                          $this->collGsLogistiekeInformatiesRelatedByZindexNummer->append($obj);
-                        }
-                      }
-
-                      $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial = true;
-                    }
-
-                    $collGsLogistiekeInformatiesRelatedByZindexNummer->getInternalIterator()->rewind();
-
-                    return $collGsLogistiekeInformatiesRelatedByZindexNummer;
-                }
-
-                if ($partial && $this->collGsLogistiekeInformatiesRelatedByZindexNummer) {
-                    foreach ($this->collGsLogistiekeInformatiesRelatedByZindexNummer as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsLogistiekeInformatiesRelatedByZindexNummer[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsLogistiekeInformatiesRelatedByZindexNummer = $collGsLogistiekeInformatiesRelatedByZindexNummer;
-                $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial = false;
-            }
-        }
-
-        return $this->collGsLogistiekeInformatiesRelatedByZindexNummer;
-    }
-
-    /**
-     * Sets a collection of GsLogistiekeInformatieRelatedByZindexNummer objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsLogistiekeInformatiesRelatedByZindexNummer A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsArtikelen The current object (for fluent API support)
-     */
-    public function setGsLogistiekeInformatiesRelatedByZindexNummer(PropelCollection $gsLogistiekeInformatiesRelatedByZindexNummer, PropelPDO $con = null)
-    {
-        $gsLogistiekeInformatiesRelatedByZindexNummerToDelete = $this->getGsLogistiekeInformatiesRelatedByZindexNummer(new Criteria(), $con)->diff($gsLogistiekeInformatiesRelatedByZindexNummer);
-
-
-        $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion = $gsLogistiekeInformatiesRelatedByZindexNummerToDelete;
-
-        foreach ($gsLogistiekeInformatiesRelatedByZindexNummerToDelete as $gsLogistiekeInformatieRelatedByZindexNummerRemoved) {
-            $gsLogistiekeInformatieRelatedByZindexNummerRemoved->setGsArtikelenRelatedByZindexNummer(null);
-        }
-
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer = null;
-        foreach ($gsLogistiekeInformatiesRelatedByZindexNummer as $gsLogistiekeInformatieRelatedByZindexNummer) {
-            $this->addGsLogistiekeInformatieRelatedByZindexNummer($gsLogistiekeInformatieRelatedByZindexNummer);
-        }
-
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer = $gsLogistiekeInformatiesRelatedByZindexNummer;
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsLogistiekeInformatie objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsLogistiekeInformatie objects.
-     * @throws PropelException
-     */
-    public function countGsLogistiekeInformatiesRelatedByZindexNummer(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial && !$this->isNew();
-        if (null === $this->collGsLogistiekeInformatiesRelatedByZindexNummer || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsLogistiekeInformatiesRelatedByZindexNummer) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsLogistiekeInformatiesRelatedByZindexNummer());
-            }
-            $query = GsLogistiekeInformatieQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByGsArtikelenRelatedByZindexNummer($this)
-                ->count($con);
-        }
-
-        return count($this->collGsLogistiekeInformatiesRelatedByZindexNummer);
-    }
-
-    /**
-     * Method called to associate a GsLogistiekeInformatie object to this object
-     * through the GsLogistiekeInformatie foreign key attribute.
-     *
-     * @param    GsLogistiekeInformatie $l GsLogistiekeInformatie
-     * @return GsArtikelen The current object (for fluent API support)
-     */
-    public function addGsLogistiekeInformatieRelatedByZindexNummer(GsLogistiekeInformatie $l)
-    {
-        if ($this->collGsLogistiekeInformatiesRelatedByZindexNummer === null) {
-            $this->initGsLogistiekeInformatiesRelatedByZindexNummer();
-            $this->collGsLogistiekeInformatiesRelatedByZindexNummerPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsLogistiekeInformatiesRelatedByZindexNummer->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsLogistiekeInformatieRelatedByZindexNummer($l);
-
-            if ($this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion and $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion->contains($l)) {
-                $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion->remove($this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsLogistiekeInformatieRelatedByZindexNummer $gsLogistiekeInformatieRelatedByZindexNummer The gsLogistiekeInformatieRelatedByZindexNummer object to add.
-     */
-    protected function doAddGsLogistiekeInformatieRelatedByZindexNummer($gsLogistiekeInformatieRelatedByZindexNummer)
-    {
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer[]= $gsLogistiekeInformatieRelatedByZindexNummer;
-        $gsLogistiekeInformatieRelatedByZindexNummer->setGsArtikelenRelatedByZindexNummer($this);
-    }
-
-    /**
-     * @param	GsLogistiekeInformatieRelatedByZindexNummer $gsLogistiekeInformatieRelatedByZindexNummer The gsLogistiekeInformatieRelatedByZindexNummer object to remove.
-     * @return GsArtikelen The current object (for fluent API support)
-     */
-    public function removeGsLogistiekeInformatieRelatedByZindexNummer($gsLogistiekeInformatieRelatedByZindexNummer)
-    {
-        if ($this->getGsLogistiekeInformatiesRelatedByZindexNummer()->contains($gsLogistiekeInformatieRelatedByZindexNummer)) {
-            $this->collGsLogistiekeInformatiesRelatedByZindexNummer->remove($this->collGsLogistiekeInformatiesRelatedByZindexNummer->search($gsLogistiekeInformatieRelatedByZindexNummer));
-            if (null === $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion) {
-                $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion = clone $this->collGsLogistiekeInformatiesRelatedByZindexNummer;
-                $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion->clear();
-            }
-            $this->gsLogistiekeInformatiesRelatedByZindexNummerScheduledForDeletion[]= $gsLogistiekeInformatieRelatedByZindexNummer;
-            $gsLogistiekeInformatieRelatedByZindexNummer->setGsArtikelenRelatedByZindexNummer(null);
-        }
-
-        return $this;
-    }
-
-    /**
      * Clears out the collGsPreferentieBeleids collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -6957,16 +6317,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collGsLeveranciersassortimentens) {
-                foreach ($this->collGsLeveranciersassortimentens as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collGsLogistiekeInformatiesRelatedByZindexNummer) {
-                foreach ($this->collGsLogistiekeInformatiesRelatedByZindexNummer as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collGsPreferentieBeleids) {
                 foreach ($this->collGsPreferentieBeleids as $o) {
                     $o->clearAllReferences($deep);
@@ -6999,9 +6349,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             if ($this->aDeelverpakkingOmschrijving instanceof Persistent) {
               $this->aDeelverpakkingOmschrijving->clearAllReferences($deep);
             }
-            if ($this->aLogistiekeInformatie instanceof Persistent) {
-              $this->aLogistiekeInformatie->clearAllReferences($deep);
-            }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
@@ -7030,14 +6377,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
             $this->collGsIndicatiesBijSupplementaireProductens->clearIterator();
         }
         $this->collGsIndicatiesBijSupplementaireProductens = null;
-        if ($this->collGsLeveranciersassortimentens instanceof PropelCollection) {
-            $this->collGsLeveranciersassortimentens->clearIterator();
-        }
-        $this->collGsLeveranciersassortimentens = null;
-        if ($this->collGsLogistiekeInformatiesRelatedByZindexNummer instanceof PropelCollection) {
-            $this->collGsLogistiekeInformatiesRelatedByZindexNummer->clearIterator();
-        }
-        $this->collGsLogistiekeInformatiesRelatedByZindexNummer = null;
         if ($this->collGsPreferentieBeleids instanceof PropelCollection) {
             $this->collGsPreferentieBeleids->clearIterator();
         }
@@ -7054,7 +6393,6 @@ abstract class BaseGsArtikelen extends BaseObject implements Persistent
         $this->aLandOmschrijving = null;
         $this->aHoofdverpakkingOmschrijving = null;
         $this->aDeelverpakkingOmschrijving = null;
-        $this->aLogistiekeInformatie = null;
     }
 
     /**

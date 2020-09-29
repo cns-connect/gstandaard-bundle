@@ -15,7 +15,6 @@ use \PropelPDO;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelEigenschappen;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerken;
-use PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproductenPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproductenQuery;
@@ -252,10 +251,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsVoorschrijfprGeneesmiddelIdentif
  * @method GsHandelsproductenQuery leftJoinGsBijzondereKenmerken($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsBijzondereKenmerken relation
  * @method GsHandelsproductenQuery rightJoinGsBijzondereKenmerken($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsBijzondereKenmerken relation
  * @method GsHandelsproductenQuery innerJoinGsBijzondereKenmerken($relationAlias = null) Adds a INNER JOIN clause to the query using the GsBijzondereKenmerken relation
- *
- * @method GsHandelsproductenQuery leftJoinGsDeclaratietabelDureGeneesmiddelen($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelen relation
- * @method GsHandelsproductenQuery rightJoinGsDeclaratietabelDureGeneesmiddelen($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelen relation
- * @method GsHandelsproductenQuery innerJoinGsDeclaratietabelDureGeneesmiddelen($relationAlias = null) Adds a INNER JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelen relation
  *
  * @method GsHandelsproductenQuery leftJoinGsIngegevenSamenstellingen($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsIngegevenSamenstellingen relation
  * @method GsHandelsproductenQuery rightJoinGsIngegevenSamenstellingen($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsIngegevenSamenstellingen relation
@@ -4968,80 +4963,6 @@ abstract class BaseGsHandelsproductenQuery extends ModelCriteria
         return $this
             ->joinGsBijzondereKenmerken($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'GsBijzondereKenmerken', '\PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerkenQuery');
-    }
-
-    /**
-     * Filter the query by a related GsDeclaratietabelDureGeneesmiddelen object
-     *
-     * @param   GsDeclaratietabelDureGeneesmiddelen|PropelObjectCollection $gsDeclaratietabelDureGeneesmiddelen  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsHandelsproductenQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsDeclaratietabelDureGeneesmiddelen($gsDeclaratietabelDureGeneesmiddelen, $comparison = null)
-    {
-        if ($gsDeclaratietabelDureGeneesmiddelen instanceof GsDeclaratietabelDureGeneesmiddelen) {
-            return $this
-                ->addUsingAlias(GsHandelsproductenPeer::HANDELSPRODUKTKODE, $gsDeclaratietabelDureGeneesmiddelen->getHandelsproduktkode(), $comparison);
-        } elseif ($gsDeclaratietabelDureGeneesmiddelen instanceof PropelObjectCollection) {
-            return $this
-                ->useGsDeclaratietabelDureGeneesmiddelenQuery()
-                ->filterByPrimaryKeys($gsDeclaratietabelDureGeneesmiddelen->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByGsDeclaratietabelDureGeneesmiddelen() only accepts arguments of type GsDeclaratietabelDureGeneesmiddelen or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelen relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsHandelsproductenQuery The current query, for fluid interface
-     */
-    public function joinGsDeclaratietabelDureGeneesmiddelen($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsDeclaratietabelDureGeneesmiddelen');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsDeclaratietabelDureGeneesmiddelen');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsDeclaratietabelDureGeneesmiddelen relation GsDeclaratietabelDureGeneesmiddelen object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery A secondary query class using the current class as primary query
-     */
-    public function useGsDeclaratietabelDureGeneesmiddelenQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinGsDeclaratietabelDureGeneesmiddelen($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsDeclaratietabelDureGeneesmiddelen', '\PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery');
     }
 
     /**

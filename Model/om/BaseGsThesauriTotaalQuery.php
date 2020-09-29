@@ -11,11 +11,9 @@ use \Propel;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
-use PharmaIntelligence\GstandaardBundle\Model\GsAanvullendeMedicatiebewakingsgegevens;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerken;
 use PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDose;
-use PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsGeneriekeProducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsIngegevenSamenstellingen;
@@ -84,10 +82,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsThesauriTotaalQuery;
  * @method GsThesauriTotaalQuery rightJoinGsRzvAanspraakRelatedByRzvThesaurus120RzvvoorwaardenBijlage2($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsRzvAanspraakRelatedByRzvThesaurus120RzvvoorwaardenBijlage2 relation
  * @method GsThesauriTotaalQuery innerJoinGsRzvAanspraakRelatedByRzvThesaurus120RzvvoorwaardenBijlage2($relationAlias = null) Adds a INNER JOIN clause to the query using the GsRzvAanspraakRelatedByRzvThesaurus120RzvvoorwaardenBijlage2 relation
  *
- * @method GsThesauriTotaalQuery leftJoinGsAanvullendeMedicatiebewakingsgegevens($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsAanvullendeMedicatiebewakingsgegevens relation
- * @method GsThesauriTotaalQuery rightJoinGsAanvullendeMedicatiebewakingsgegevens($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsAanvullendeMedicatiebewakingsgegevens relation
- * @method GsThesauriTotaalQuery innerJoinGsAanvullendeMedicatiebewakingsgegevens($relationAlias = null) Adds a INNER JOIN clause to the query using the GsAanvullendeMedicatiebewakingsgegevens relation
- *
  * @method GsThesauriTotaalQuery leftJoinGsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen relation
  * @method GsThesauriTotaalQuery rightJoinGsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen relation
  * @method GsThesauriTotaalQuery innerJoinGsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen($relationAlias = null) Adds a INNER JOIN clause to the query using the GsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen relation
@@ -127,14 +121,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsThesauriTotaalQuery;
  * @method GsThesauriTotaalQuery leftJoinGsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg relation
  * @method GsThesauriTotaalQuery rightJoinGsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg relation
  * @method GsThesauriTotaalQuery innerJoinGsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg($relationAlias = null) Adds a INNER JOIN clause to the query using the GsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg relation
- *
- * @method GsThesauriTotaalQuery leftJoinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel relation
- * @method GsThesauriTotaalQuery rightJoinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel relation
- * @method GsThesauriTotaalQuery innerJoinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($relationAlias = null) Adds a INNER JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel relation
- *
- * @method GsThesauriTotaalQuery leftJoinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid relation
- * @method GsThesauriTotaalQuery rightJoinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid relation
- * @method GsThesauriTotaalQuery innerJoinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($relationAlias = null) Adds a INNER JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid relation
  *
  * @method GsThesauriTotaalQuery leftJoinGsGeneriekeProductenRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsGeneriekeProductenRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode relation
  * @method GsThesauriTotaalQuery rightJoinGsGeneriekeProductenRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsGeneriekeProductenRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode relation
@@ -1239,76 +1225,6 @@ abstract class BaseGsThesauriTotaalQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related GsAanvullendeMedicatiebewakingsgegevens object
-     *
-     * @param   GsAanvullendeMedicatiebewakingsgegevens|PropelObjectCollection $gsAanvullendeMedicatiebewakingsgegevens  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsThesauriTotaalQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsAanvullendeMedicatiebewakingsgegevens($gsAanvullendeMedicatiebewakingsgegevens, $comparison = null)
-    {
-        if ($gsAanvullendeMedicatiebewakingsgegevens instanceof GsAanvullendeMedicatiebewakingsgegevens) {
-            return $this
-                ->addUsingAlias(GsThesauriTotaalPeer::THESAURUSNUMMER, $gsAanvullendeMedicatiebewakingsgegevens->getThesnrBewakingssoort(), $comparison)
-                ->addUsingAlias(GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER, $gsAanvullendeMedicatiebewakingsgegevens->getBewakingssoort(), $comparison);
-        } else {
-            throw new PropelException('filterByGsAanvullendeMedicatiebewakingsgegevens() only accepts arguments of type GsAanvullendeMedicatiebewakingsgegevens');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsAanvullendeMedicatiebewakingsgegevens relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsThesauriTotaalQuery The current query, for fluid interface
-     */
-    public function joinGsAanvullendeMedicatiebewakingsgegevens($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsAanvullendeMedicatiebewakingsgegevens');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsAanvullendeMedicatiebewakingsgegevens');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsAanvullendeMedicatiebewakingsgegevens relation GsAanvullendeMedicatiebewakingsgegevens object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsAanvullendeMedicatiebewakingsgegevensQuery A secondary query class using the current class as primary query
-     */
-    public function useGsAanvullendeMedicatiebewakingsgegevensQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinGsAanvullendeMedicatiebewakingsgegevens($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsAanvullendeMedicatiebewakingsgegevens', '\PharmaIntelligence\GstandaardBundle\Model\GsAanvullendeMedicatiebewakingsgegevensQuery');
-    }
-
-    /**
      * Filter the query by a related GsLogistiekeVerpakkingsinformatie object
      *
      * @param   GsLogistiekeVerpakkingsinformatie|PropelObjectCollection $gsLogistiekeVerpakkingsinformatie  the related object to use as filter
@@ -2006,146 +1922,6 @@ abstract class BaseGsThesauriTotaalQuery extends ModelCriteria
         return $this
             ->joinGsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'GsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg', '\PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDoseQuery');
-    }
-
-    /**
-     * Filter the query by a related GsDeclaratietabelDureGeneesmiddelen object
-     *
-     * @param   GsDeclaratietabelDureGeneesmiddelen|PropelObjectCollection $gsDeclaratietabelDureGeneesmiddelen  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsThesauriTotaalQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($gsDeclaratietabelDureGeneesmiddelen, $comparison = null)
-    {
-        if ($gsDeclaratietabelDureGeneesmiddelen instanceof GsDeclaratietabelDureGeneesmiddelen) {
-            return $this
-                ->addUsingAlias(GsThesauriTotaalPeer::THESAURUSNUMMER, $gsDeclaratietabelDureGeneesmiddelen->getThesaurusNummerBeleidsregel(), $comparison)
-                ->addUsingAlias(GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER, $gsDeclaratietabelDureGeneesmiddelen->getItemnummerBeleidsregel(), $comparison);
-        } else {
-            throw new PropelException('filterByGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel() only accepts arguments of type GsDeclaratietabelDureGeneesmiddelen');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsThesauriTotaalQuery The current query, for fluid interface
-     */
-    public function joinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel relation GsDeclaratietabelDureGeneesmiddelen object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery A secondary query class using the current class as primary query
-     */
-    public function useGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel', '\PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery');
-    }
-
-    /**
-     * Filter the query by a related GsDeclaratietabelDureGeneesmiddelen object
-     *
-     * @param   GsDeclaratietabelDureGeneesmiddelen|PropelObjectCollection $gsDeclaratietabelDureGeneesmiddelen  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsThesauriTotaalQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($gsDeclaratietabelDureGeneesmiddelen, $comparison = null)
-    {
-        if ($gsDeclaratietabelDureGeneesmiddelen instanceof GsDeclaratietabelDureGeneesmiddelen) {
-            return $this
-                ->addUsingAlias(GsThesauriTotaalPeer::THESAURUSNUMMER, $gsDeclaratietabelDureGeneesmiddelen->getThesaurusVerwijzingEenheid(), $comparison)
-                ->addUsingAlias(GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER, $gsDeclaratietabelDureGeneesmiddelen->getEenheid(), $comparison);
-        } else {
-            throw new PropelException('filterByGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid() only accepts arguments of type GsDeclaratietabelDureGeneesmiddelen');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsThesauriTotaalQuery The current query, for fluid interface
-     */
-    public function joinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid relation GsDeclaratietabelDureGeneesmiddelen object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery A secondary query class using the current class as primary query
-     */
-    public function useGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheidQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid', '\PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery');
     }
 
     /**

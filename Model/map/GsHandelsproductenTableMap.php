@@ -145,7 +145,6 @@ class GsHandelsproductenTableMap extends TableMap
         $this->addRelation('GsArtikelEigenschappen', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsArtikelEigenschappen', RelationMap::ONE_TO_MANY, array('handelsproduktkode' => 'hpk', ), null, null, 'GsArtikelEigenschappens');
         $this->addRelation('GsArtikelen', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsArtikelen', RelationMap::ONE_TO_MANY, array('handelsproduktkode' => 'handelsproduktkode', ), null, null, 'GsArtikelens');
         $this->addRelation('GsBijzondereKenmerken', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsBijzondereKenmerken', RelationMap::ONE_TO_MANY, array('handelsproduktkode' => 'handelsproduktkode', ), null, null, 'GsBijzondereKenmerkens');
-        $this->addRelation('GsDeclaratietabelDureGeneesmiddelen', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsDeclaratietabelDureGeneesmiddelen', RelationMap::ONE_TO_MANY, array('handelsproduktkode' => 'handelsproduktkode', ), null, null, 'GsDeclaratietabelDureGeneesmiddelens');
         $this->addRelation('GsIngegevenSamenstellingen', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsIngegevenSamenstellingen', RelationMap::ONE_TO_MANY, array('handelsproduktkode' => 'handelsproduktkode', ), null, null, 'GsIngegevenSamenstellingens');
     } // buildRelations()
 

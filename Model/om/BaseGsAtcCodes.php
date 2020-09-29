@@ -20,8 +20,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesExtended;
 use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesExtendedQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesQuery;
-use PharmaIntelligence\GstandaardBundle\Model\GsAtcdddgegevens;
-use PharmaIntelligence\GstandaardBundle\Model\GsAtcdddgegevensQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDose;
 use PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDoseQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsGeneriekeProducten;
@@ -96,12 +94,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
     protected $singleGsAtcCodesExtended;
 
     /**
-     * @var        PropelObjectCollection|GsAtcdddgegevens[] Collection to store aggregation of GsAtcdddgegevens objects.
-     */
-    protected $collGsAtcdddgegevenss;
-    protected $collGsAtcdddgegevenssPartial;
-
-    /**
      * @var        PropelObjectCollection|GsDailyDefinedDose[] Collection to store aggregation of GsDailyDefinedDose objects.
      */
     protected $collGsDailyDefinedDoses;
@@ -138,12 +130,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $gsArtikelEigenschappensScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $gsAtcdddgegevenssScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -462,8 +448,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
 
             $this->singleGsAtcCodesExtended = null;
 
-            $this->collGsAtcdddgegevenss = null;
-
             $this->collGsDailyDefinedDoses = null;
 
             $this->collGsGeneriekeProductens = null;
@@ -613,23 +597,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
             if ($this->singleGsAtcCodesExtended !== null) {
                 if (!$this->singleGsAtcCodesExtended->isDeleted() && ($this->singleGsAtcCodesExtended->isNew() || $this->singleGsAtcCodesExtended->isModified())) {
                         $affectedRows += $this->singleGsAtcCodesExtended->save($con);
-                }
-            }
-
-            if ($this->gsAtcdddgegevenssScheduledForDeletion !== null) {
-                if (!$this->gsAtcdddgegevenssScheduledForDeletion->isEmpty()) {
-                    GsAtcdddgegevensQuery::create()
-                        ->filterByPrimaryKeys($this->gsAtcdddgegevenssScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->gsAtcdddgegevenssScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsAtcdddgegevenss !== null) {
-                foreach ($this->collGsAtcdddgegevenss as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
                 }
             }
 
@@ -843,14 +810,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
                     }
                 }
 
-                if ($this->collGsAtcdddgegevenss !== null) {
-                    foreach ($this->collGsAtcdddgegevenss as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collGsDailyDefinedDoses !== null) {
                     foreach ($this->collGsDailyDefinedDoses as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -967,9 +926,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
             }
             if (null !== $this->singleGsAtcCodesExtended) {
                 $result['GsAtcCodesExtended'] = $this->singleGsAtcCodesExtended->toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->collGsAtcdddgegevenss) {
-                $result['GsAtcdddgegevenss'] = $this->collGsAtcdddgegevenss->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collGsDailyDefinedDoses) {
                 $result['GsDailyDefinedDoses'] = $this->collGsDailyDefinedDoses->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
@@ -1163,12 +1119,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
                 $copyObj->setGsAtcCodesExtended($relObj->copy($deepCopy));
             }
 
-            foreach ($this->getGsAtcdddgegevenss() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsAtcdddgegevens($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getGsDailyDefinedDoses() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addGsDailyDefinedDose($relObj->copy($deepCopy));
@@ -1244,9 +1194,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
     {
         if ('GsArtikelEigenschappen' == $relationName) {
             $this->initGsArtikelEigenschappens();
-        }
-        if ('GsAtcdddgegevens' == $relationName) {
-            $this->initGsAtcdddgegevenss();
         }
         if ('GsDailyDefinedDose' == $relationName) {
             $this->initGsDailyDefinedDoses();
@@ -1637,234 +1584,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
         // Make sure that that the passed-in GsAtcCodesExtended isn't already associated with this object
         if ($v !== null && $v->getGsAtcCodes(null, false) === null) {
             $v->setGsAtcCodes($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Clears out the collGsAtcdddgegevenss collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsAtcCodes The current object (for fluent API support)
-     * @see        addGsAtcdddgegevenss()
-     */
-    public function clearGsAtcdddgegevenss()
-    {
-        $this->collGsAtcdddgegevenss = null; // important to set this to null since that means it is uninitialized
-        $this->collGsAtcdddgegevenssPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsAtcdddgegevenss collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsAtcdddgegevenss($v = true)
-    {
-        $this->collGsAtcdddgegevenssPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsAtcdddgegevenss collection.
-     *
-     * By default this just sets the collGsAtcdddgegevenss collection to an empty array (like clearcollGsAtcdddgegevenss());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsAtcdddgegevenss($overrideExisting = true)
-    {
-        if (null !== $this->collGsAtcdddgegevenss && !$overrideExisting) {
-            return;
-        }
-        $this->collGsAtcdddgegevenss = new PropelObjectCollection();
-        $this->collGsAtcdddgegevenss->setModel('GsAtcdddgegevens');
-    }
-
-    /**
-     * Gets an array of GsAtcdddgegevens objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsAtcCodes is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsAtcdddgegevens[] List of GsAtcdddgegevens objects
-     * @throws PropelException
-     */
-    public function getGsAtcdddgegevenss($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsAtcdddgegevenssPartial && !$this->isNew();
-        if (null === $this->collGsAtcdddgegevenss || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsAtcdddgegevenss) {
-                // return empty collection
-                $this->initGsAtcdddgegevenss();
-            } else {
-                $collGsAtcdddgegevenss = GsAtcdddgegevensQuery::create(null, $criteria)
-                    ->filterByGsAtcCodes($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsAtcdddgegevenssPartial && count($collGsAtcdddgegevenss)) {
-                      $this->initGsAtcdddgegevenss(false);
-
-                      foreach ($collGsAtcdddgegevenss as $obj) {
-                        if (false == $this->collGsAtcdddgegevenss->contains($obj)) {
-                          $this->collGsAtcdddgegevenss->append($obj);
-                        }
-                      }
-
-                      $this->collGsAtcdddgegevenssPartial = true;
-                    }
-
-                    $collGsAtcdddgegevenss->getInternalIterator()->rewind();
-
-                    return $collGsAtcdddgegevenss;
-                }
-
-                if ($partial && $this->collGsAtcdddgegevenss) {
-                    foreach ($this->collGsAtcdddgegevenss as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsAtcdddgegevenss[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsAtcdddgegevenss = $collGsAtcdddgegevenss;
-                $this->collGsAtcdddgegevenssPartial = false;
-            }
-        }
-
-        return $this->collGsAtcdddgegevenss;
-    }
-
-    /**
-     * Sets a collection of GsAtcdddgegevens objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsAtcdddgegevenss A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsAtcCodes The current object (for fluent API support)
-     */
-    public function setGsAtcdddgegevenss(PropelCollection $gsAtcdddgegevenss, PropelPDO $con = null)
-    {
-        $gsAtcdddgegevenssToDelete = $this->getGsAtcdddgegevenss(new Criteria(), $con)->diff($gsAtcdddgegevenss);
-
-
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->gsAtcdddgegevenssScheduledForDeletion = clone $gsAtcdddgegevenssToDelete;
-
-        foreach ($gsAtcdddgegevenssToDelete as $gsAtcdddgegevensRemoved) {
-            $gsAtcdddgegevensRemoved->setGsAtcCodes(null);
-        }
-
-        $this->collGsAtcdddgegevenss = null;
-        foreach ($gsAtcdddgegevenss as $gsAtcdddgegevens) {
-            $this->addGsAtcdddgegevens($gsAtcdddgegevens);
-        }
-
-        $this->collGsAtcdddgegevenss = $gsAtcdddgegevenss;
-        $this->collGsAtcdddgegevenssPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsAtcdddgegevens objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsAtcdddgegevens objects.
-     * @throws PropelException
-     */
-    public function countGsAtcdddgegevenss(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsAtcdddgegevenssPartial && !$this->isNew();
-        if (null === $this->collGsAtcdddgegevenss || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsAtcdddgegevenss) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsAtcdddgegevenss());
-            }
-            $query = GsAtcdddgegevensQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByGsAtcCodes($this)
-                ->count($con);
-        }
-
-        return count($this->collGsAtcdddgegevenss);
-    }
-
-    /**
-     * Method called to associate a GsAtcdddgegevens object to this object
-     * through the GsAtcdddgegevens foreign key attribute.
-     *
-     * @param    GsAtcdddgegevens $l GsAtcdddgegevens
-     * @return GsAtcCodes The current object (for fluent API support)
-     */
-    public function addGsAtcdddgegevens(GsAtcdddgegevens $l)
-    {
-        if ($this->collGsAtcdddgegevenss === null) {
-            $this->initGsAtcdddgegevenss();
-            $this->collGsAtcdddgegevenssPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsAtcdddgegevenss->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsAtcdddgegevens($l);
-
-            if ($this->gsAtcdddgegevenssScheduledForDeletion and $this->gsAtcdddgegevenssScheduledForDeletion->contains($l)) {
-                $this->gsAtcdddgegevenssScheduledForDeletion->remove($this->gsAtcdddgegevenssScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsAtcdddgegevens $gsAtcdddgegevens The gsAtcdddgegevens object to add.
-     */
-    protected function doAddGsAtcdddgegevens($gsAtcdddgegevens)
-    {
-        $this->collGsAtcdddgegevenss[]= $gsAtcdddgegevens;
-        $gsAtcdddgegevens->setGsAtcCodes($this);
-    }
-
-    /**
-     * @param	GsAtcdddgegevens $gsAtcdddgegevens The gsAtcdddgegevens object to remove.
-     * @return GsAtcCodes The current object (for fluent API support)
-     */
-    public function removeGsAtcdddgegevens($gsAtcdddgegevens)
-    {
-        if ($this->getGsAtcdddgegevenss()->contains($gsAtcdddgegevens)) {
-            $this->collGsAtcdddgegevenss->remove($this->collGsAtcdddgegevenss->search($gsAtcdddgegevens));
-            if (null === $this->gsAtcdddgegevenssScheduledForDeletion) {
-                $this->gsAtcdddgegevenssScheduledForDeletion = clone $this->collGsAtcdddgegevenss;
-                $this->gsAtcdddgegevenssScheduledForDeletion->clear();
-            }
-            $this->gsAtcdddgegevenssScheduledForDeletion[]= clone $gsAtcdddgegevens;
-            $gsAtcdddgegevens->setGsAtcCodes(null);
         }
 
         return $this;
@@ -2514,11 +2233,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
             if ($this->singleGsAtcCodesExtended) {
                 $this->singleGsAtcCodesExtended->clearAllReferences($deep);
             }
-            if ($this->collGsAtcdddgegevenss) {
-                foreach ($this->collGsAtcdddgegevenss as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collGsDailyDefinedDoses) {
                 foreach ($this->collGsDailyDefinedDoses as $o) {
                     $o->clearAllReferences($deep);
@@ -2541,10 +2255,6 @@ abstract class BaseGsAtcCodes extends BaseObject implements Persistent
             $this->singleGsAtcCodesExtended->clearIterator();
         }
         $this->singleGsAtcCodesExtended = null;
-        if ($this->collGsAtcdddgegevenss instanceof PropelCollection) {
-            $this->collGsAtcdddgegevenss->clearIterator();
-        }
-        $this->collGsAtcdddgegevenss = null;
         if ($this->collGsDailyDefinedDoses instanceof PropelCollection) {
             $this->collGsDailyDefinedDoses->clearIterator();
         }

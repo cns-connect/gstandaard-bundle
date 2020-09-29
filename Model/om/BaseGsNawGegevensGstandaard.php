@@ -3093,31 +3093,6 @@ abstract class BaseGsNawGegevensGstandaard extends BaseObject implements Persist
         return $this->getGsArtikelensRelatedByLeverancierKode($query, $con);
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsNawGegevensGstandaard is new, it will return
-     * an empty collection; or if this GsNawGegevensGstandaard has previously
-     * been saved, it will retrieve related GsArtikelensRelatedByLeverancierKode from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsNawGegevensGstandaard.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensRelatedByLeverancierKodeJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
-
-        return $this->getGsArtikelensRelatedByLeverancierKode($query, $con);
-    }
-
     /**
      * Clears out the collGsArtikelensRelatedByImporteurKode collection
      *
@@ -3468,31 +3443,6 @@ abstract class BaseGsNawGegevensGstandaard extends BaseObject implements Persist
         return $this->getGsArtikelensRelatedByImporteurKode($query, $con);
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsNawGegevensGstandaard is new, it will return
-     * an empty collection; or if this GsNawGegevensGstandaard has previously
-     * been saved, it will retrieve related GsArtikelensRelatedByImporteurKode from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsNawGegevensGstandaard.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensRelatedByImporteurKodeJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
-
-        return $this->getGsArtikelensRelatedByImporteurKode($query, $con);
-    }
-
     /**
      * Clears out the collGsArtikelensRelatedByRegistratiehouderKode collection
      *
@@ -3839,31 +3789,6 @@ abstract class BaseGsNawGegevensGstandaard extends BaseObject implements Persist
     {
         $query = GsArtikelenQuery::create(null, $criteria);
         $query->joinWith('DeelverpakkingOmschrijving', $join_behavior);
-
-        return $this->getGsArtikelensRelatedByRegistratiehouderKode($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsNawGegevensGstandaard is new, it will return
-     * an empty collection; or if this GsNawGegevensGstandaard has previously
-     * been saved, it will retrieve related GsArtikelensRelatedByRegistratiehouderKode from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsNawGegevensGstandaard.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensRelatedByRegistratiehouderKodeJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
 
         return $this->getGsArtikelensRelatedByRegistratiehouderKode($query, $con);
     }

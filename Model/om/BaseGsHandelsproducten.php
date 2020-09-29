@@ -19,8 +19,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsArtikelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerken;
 use PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerkenQuery;
-use PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelen;
-use PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproductenPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproductenQuery;
@@ -612,12 +610,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
     protected $collGsBijzondereKenmerkensPartial;
 
     /**
-     * @var        PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] Collection to store aggregation of GsDeclaratietabelDureGeneesmiddelen objects.
-     */
-    protected $collGsDeclaratietabelDureGeneesmiddelens;
-    protected $collGsDeclaratietabelDureGeneesmiddelensPartial;
-
-    /**
      * @var        PropelObjectCollection|GsIngegevenSamenstellingen[] Collection to store aggregation of GsIngegevenSamenstellingen objects.
      */
     protected $collGsIngegevenSamenstellingens;
@@ -660,12 +652,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $gsBijzondereKenmerkensScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -3570,8 +3556,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
 
             $this->collGsBijzondereKenmerkens = null;
 
-            $this->collGsDeclaratietabelDureGeneesmiddelens = null;
-
             $this->collGsIngegevenSamenstellingens = null;
 
         } // if (deep)
@@ -3841,23 +3825,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
 
             if ($this->collGsBijzondereKenmerkens !== null) {
                 foreach ($this->collGsBijzondereKenmerkens as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion !== null) {
-                if (!$this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion->isEmpty()) {
-                    GsDeclaratietabelDureGeneesmiddelenQuery::create()
-                        ->filterByPrimaryKeys($this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsDeclaratietabelDureGeneesmiddelens !== null) {
-                foreach ($this->collGsDeclaratietabelDureGeneesmiddelens as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -4588,14 +4555,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
                     }
                 }
 
-                if ($this->collGsDeclaratietabelDureGeneesmiddelens !== null) {
-                    foreach ($this->collGsDeclaratietabelDureGeneesmiddelens as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collGsIngegevenSamenstellingens !== null) {
                     foreach ($this->collGsIngegevenSamenstellingens as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -5038,9 +4997,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
             }
             if (null !== $this->collGsBijzondereKenmerkens) {
                 $result['GsBijzondereKenmerkens'] = $this->collGsBijzondereKenmerkens->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collGsDeclaratietabelDureGeneesmiddelens) {
-                $result['GsDeclaratietabelDureGeneesmiddelens'] = $this->collGsDeclaratietabelDureGeneesmiddelens->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collGsIngegevenSamenstellingens) {
                 $result['GsIngegevenSamenstellingens'] = $this->collGsIngegevenSamenstellingens->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
@@ -5673,12 +5629,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
             foreach ($this->getGsBijzondereKenmerkens() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addGsBijzondereKenmerken($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getGsDeclaratietabelDureGeneesmiddelens() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsDeclaratietabelDureGeneesmiddelen($relObj->copy($deepCopy));
                 }
             }
 
@@ -6500,9 +6450,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
         if ('GsBijzondereKenmerken' == $relationName) {
             $this->initGsBijzondereKenmerkens();
         }
-        if ('GsDeclaratietabelDureGeneesmiddelen' == $relationName) {
-            $this->initGsDeclaratietabelDureGeneesmiddelens();
-        }
         if ('GsIngegevenSamenstellingen' == $relationName) {
             $this->initGsIngegevenSamenstellingens();
         }
@@ -7258,31 +7205,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
         return $this->getGsArtikelens($query, $con);
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsHandelsproducten is new, it will return
-     * an empty collection; or if this GsHandelsproducten has previously
-     * been saved, it will retrieve related GsArtikelens from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsHandelsproducten.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
-
-        return $this->getGsArtikelens($query, $con);
-    }
-
     /**
      * Clears out the collGsBijzondereKenmerkens collection
      *
@@ -7559,284 +7481,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
         $query->joinWith('GsVoorschrijfprGeneesmiddelIdentific', $join_behavior);
 
         return $this->getGsBijzondereKenmerkens($query, $con);
-    }
-
-    /**
-     * Clears out the collGsDeclaratietabelDureGeneesmiddelens collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsHandelsproducten The current object (for fluent API support)
-     * @see        addGsDeclaratietabelDureGeneesmiddelens()
-     */
-    public function clearGsDeclaratietabelDureGeneesmiddelens()
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelens = null; // important to set this to null since that means it is uninitialized
-        $this->collGsDeclaratietabelDureGeneesmiddelensPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsDeclaratietabelDureGeneesmiddelens collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsDeclaratietabelDureGeneesmiddelens($v = true)
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsDeclaratietabelDureGeneesmiddelens collection.
-     *
-     * By default this just sets the collGsDeclaratietabelDureGeneesmiddelens collection to an empty array (like clearcollGsDeclaratietabelDureGeneesmiddelens());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsDeclaratietabelDureGeneesmiddelens($overrideExisting = true)
-    {
-        if (null !== $this->collGsDeclaratietabelDureGeneesmiddelens && !$overrideExisting) {
-            return;
-        }
-        $this->collGsDeclaratietabelDureGeneesmiddelens = new PropelObjectCollection();
-        $this->collGsDeclaratietabelDureGeneesmiddelens->setModel('GsDeclaratietabelDureGeneesmiddelen');
-    }
-
-    /**
-     * Gets an array of GsDeclaratietabelDureGeneesmiddelen objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsHandelsproducten is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     * @throws PropelException
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelens($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsDeclaratietabelDureGeneesmiddelensPartial && !$this->isNew();
-        if (null === $this->collGsDeclaratietabelDureGeneesmiddelens || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsDeclaratietabelDureGeneesmiddelens) {
-                // return empty collection
-                $this->initGsDeclaratietabelDureGeneesmiddelens();
-            } else {
-                $collGsDeclaratietabelDureGeneesmiddelens = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria)
-                    ->filterByGsHandelsproducten($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsDeclaratietabelDureGeneesmiddelensPartial && count($collGsDeclaratietabelDureGeneesmiddelens)) {
-                      $this->initGsDeclaratietabelDureGeneesmiddelens(false);
-
-                      foreach ($collGsDeclaratietabelDureGeneesmiddelens as $obj) {
-                        if (false == $this->collGsDeclaratietabelDureGeneesmiddelens->contains($obj)) {
-                          $this->collGsDeclaratietabelDureGeneesmiddelens->append($obj);
-                        }
-                      }
-
-                      $this->collGsDeclaratietabelDureGeneesmiddelensPartial = true;
-                    }
-
-                    $collGsDeclaratietabelDureGeneesmiddelens->getInternalIterator()->rewind();
-
-                    return $collGsDeclaratietabelDureGeneesmiddelens;
-                }
-
-                if ($partial && $this->collGsDeclaratietabelDureGeneesmiddelens) {
-                    foreach ($this->collGsDeclaratietabelDureGeneesmiddelens as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsDeclaratietabelDureGeneesmiddelens[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsDeclaratietabelDureGeneesmiddelens = $collGsDeclaratietabelDureGeneesmiddelens;
-                $this->collGsDeclaratietabelDureGeneesmiddelensPartial = false;
-            }
-        }
-
-        return $this->collGsDeclaratietabelDureGeneesmiddelens;
-    }
-
-    /**
-     * Sets a collection of GsDeclaratietabelDureGeneesmiddelen objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsDeclaratietabelDureGeneesmiddelens A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsHandelsproducten The current object (for fluent API support)
-     */
-    public function setGsDeclaratietabelDureGeneesmiddelens(PropelCollection $gsDeclaratietabelDureGeneesmiddelens, PropelPDO $con = null)
-    {
-        $gsDeclaratietabelDureGeneesmiddelensToDelete = $this->getGsDeclaratietabelDureGeneesmiddelens(new Criteria(), $con)->diff($gsDeclaratietabelDureGeneesmiddelens);
-
-
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion = clone $gsDeclaratietabelDureGeneesmiddelensToDelete;
-
-        foreach ($gsDeclaratietabelDureGeneesmiddelensToDelete as $gsDeclaratietabelDureGeneesmiddelenRemoved) {
-            $gsDeclaratietabelDureGeneesmiddelenRemoved->setGsHandelsproducten(null);
-        }
-
-        $this->collGsDeclaratietabelDureGeneesmiddelens = null;
-        foreach ($gsDeclaratietabelDureGeneesmiddelens as $gsDeclaratietabelDureGeneesmiddelen) {
-            $this->addGsDeclaratietabelDureGeneesmiddelen($gsDeclaratietabelDureGeneesmiddelen);
-        }
-
-        $this->collGsDeclaratietabelDureGeneesmiddelens = $gsDeclaratietabelDureGeneesmiddelens;
-        $this->collGsDeclaratietabelDureGeneesmiddelensPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsDeclaratietabelDureGeneesmiddelen objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsDeclaratietabelDureGeneesmiddelen objects.
-     * @throws PropelException
-     */
-    public function countGsDeclaratietabelDureGeneesmiddelens(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsDeclaratietabelDureGeneesmiddelensPartial && !$this->isNew();
-        if (null === $this->collGsDeclaratietabelDureGeneesmiddelens || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsDeclaratietabelDureGeneesmiddelens) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsDeclaratietabelDureGeneesmiddelens());
-            }
-            $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByGsHandelsproducten($this)
-                ->count($con);
-        }
-
-        return count($this->collGsDeclaratietabelDureGeneesmiddelens);
-    }
-
-    /**
-     * Method called to associate a GsDeclaratietabelDureGeneesmiddelen object to this object
-     * through the GsDeclaratietabelDureGeneesmiddelen foreign key attribute.
-     *
-     * @param    GsDeclaratietabelDureGeneesmiddelen $l GsDeclaratietabelDureGeneesmiddelen
-     * @return GsHandelsproducten The current object (for fluent API support)
-     */
-    public function addGsDeclaratietabelDureGeneesmiddelen(GsDeclaratietabelDureGeneesmiddelen $l)
-    {
-        if ($this->collGsDeclaratietabelDureGeneesmiddelens === null) {
-            $this->initGsDeclaratietabelDureGeneesmiddelens();
-            $this->collGsDeclaratietabelDureGeneesmiddelensPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsDeclaratietabelDureGeneesmiddelens->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsDeclaratietabelDureGeneesmiddelen($l);
-
-            if ($this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion and $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion->contains($l)) {
-                $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion->remove($this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsDeclaratietabelDureGeneesmiddelen $gsDeclaratietabelDureGeneesmiddelen The gsDeclaratietabelDureGeneesmiddelen object to add.
-     */
-    protected function doAddGsDeclaratietabelDureGeneesmiddelen($gsDeclaratietabelDureGeneesmiddelen)
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelens[]= $gsDeclaratietabelDureGeneesmiddelen;
-        $gsDeclaratietabelDureGeneesmiddelen->setGsHandelsproducten($this);
-    }
-
-    /**
-     * @param	GsDeclaratietabelDureGeneesmiddelen $gsDeclaratietabelDureGeneesmiddelen The gsDeclaratietabelDureGeneesmiddelen object to remove.
-     * @return GsHandelsproducten The current object (for fluent API support)
-     */
-    public function removeGsDeclaratietabelDureGeneesmiddelen($gsDeclaratietabelDureGeneesmiddelen)
-    {
-        if ($this->getGsDeclaratietabelDureGeneesmiddelens()->contains($gsDeclaratietabelDureGeneesmiddelen)) {
-            $this->collGsDeclaratietabelDureGeneesmiddelens->remove($this->collGsDeclaratietabelDureGeneesmiddelens->search($gsDeclaratietabelDureGeneesmiddelen));
-            if (null === $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion) {
-                $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion = clone $this->collGsDeclaratietabelDureGeneesmiddelens;
-                $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion->clear();
-            }
-            $this->gsDeclaratietabelDureGeneesmiddelensScheduledForDeletion[]= clone $gsDeclaratietabelDureGeneesmiddelen;
-            $gsDeclaratietabelDureGeneesmiddelen->setGsHandelsproducten(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsHandelsproducten is new, it will return
-     * an empty collection; or if this GsHandelsproducten has previously
-     * been saved, it will retrieve related GsDeclaratietabelDureGeneesmiddelens from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsHandelsproducten.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelensJoinBeleidsregelOmschrijving($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-        $query->joinWith('BeleidsregelOmschrijving', $join_behavior);
-
-        return $this->getGsDeclaratietabelDureGeneesmiddelens($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsHandelsproducten is new, it will return
-     * an empty collection; or if this GsHandelsproducten has previously
-     * been saved, it will retrieve related GsDeclaratietabelDureGeneesmiddelens from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsHandelsproducten.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelensJoinToedieningsEenheidOmschrijving($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-        $query->joinWith('ToedieningsEenheidOmschrijving', $join_behavior);
-
-        return $this->getGsDeclaratietabelDureGeneesmiddelens($query, $con);
     }
 
     /**
@@ -8263,11 +7907,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collGsDeclaratietabelDureGeneesmiddelens) {
-                foreach ($this->collGsDeclaratietabelDureGeneesmiddelens as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collGsIngegevenSamenstellingens) {
                 foreach ($this->collGsIngegevenSamenstellingens as $o) {
                     $o->clearAllReferences($deep);
@@ -8328,10 +7967,6 @@ abstract class BaseGsHandelsproducten extends BaseObject implements Persistent
             $this->collGsBijzondereKenmerkens->clearIterator();
         }
         $this->collGsBijzondereKenmerkens = null;
-        if ($this->collGsDeclaratietabelDureGeneesmiddelens instanceof PropelCollection) {
-            $this->collGsDeclaratietabelDureGeneesmiddelens->clearIterator();
-        }
-        $this->collGsDeclaratietabelDureGeneesmiddelens = null;
         if ($this->collGsIngegevenSamenstellingens instanceof PropelCollection) {
             $this->collGsIngegevenSamenstellingens->clearIterator();
         }

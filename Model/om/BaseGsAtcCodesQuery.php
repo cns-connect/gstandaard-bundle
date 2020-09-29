@@ -17,7 +17,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodes;
 use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesExtended;
 use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesQuery;
-use PharmaIntelligence\GstandaardBundle\Model\GsAtcdddgegevens;
 use PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDose;
 use PharmaIntelligence\GstandaardBundle\Model\GsGeneriekeProducten;
 
@@ -47,10 +46,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsGeneriekeProducten;
  * @method GsAtcCodesQuery leftJoinGsAtcCodesExtended($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsAtcCodesExtended relation
  * @method GsAtcCodesQuery rightJoinGsAtcCodesExtended($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsAtcCodesExtended relation
  * @method GsAtcCodesQuery innerJoinGsAtcCodesExtended($relationAlias = null) Adds a INNER JOIN clause to the query using the GsAtcCodesExtended relation
- *
- * @method GsAtcCodesQuery leftJoinGsAtcdddgegevens($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsAtcdddgegevens relation
- * @method GsAtcCodesQuery rightJoinGsAtcdddgegevens($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsAtcdddgegevens relation
- * @method GsAtcCodesQuery innerJoinGsAtcdddgegevens($relationAlias = null) Adds a INNER JOIN clause to the query using the GsAtcdddgegevens relation
  *
  * @method GsAtcCodesQuery leftJoinGsDailyDefinedDose($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsDailyDefinedDose relation
  * @method GsAtcCodesQuery rightJoinGsDailyDefinedDose($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsDailyDefinedDose relation
@@ -615,80 +610,6 @@ abstract class BaseGsAtcCodesQuery extends ModelCriteria
         return $this
             ->joinGsAtcCodesExtended($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'GsAtcCodesExtended', '\PharmaIntelligence\GstandaardBundle\Model\GsAtcCodesExtendedQuery');
-    }
-
-    /**
-     * Filter the query by a related GsAtcdddgegevens object
-     *
-     * @param   GsAtcdddgegevens|PropelObjectCollection $gsAtcdddgegevens  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsAtcCodesQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsAtcdddgegevens($gsAtcdddgegevens, $comparison = null)
-    {
-        if ($gsAtcdddgegevens instanceof GsAtcdddgegevens) {
-            return $this
-                ->addUsingAlias(GsAtcCodesPeer::ATCCODE, $gsAtcdddgegevens->getAtccode(), $comparison);
-        } elseif ($gsAtcdddgegevens instanceof PropelObjectCollection) {
-            return $this
-                ->useGsAtcdddgegevensQuery()
-                ->filterByPrimaryKeys($gsAtcdddgegevens->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByGsAtcdddgegevens() only accepts arguments of type GsAtcdddgegevens or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsAtcdddgegevens relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsAtcCodesQuery The current query, for fluid interface
-     */
-    public function joinGsAtcdddgegevens($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsAtcdddgegevens');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsAtcdddgegevens');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsAtcdddgegevens relation GsAtcdddgegevens object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsAtcdddgegevensQuery A secondary query class using the current class as primary query
-     */
-    public function useGsAtcdddgegevensQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinGsAtcdddgegevens($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsAtcdddgegevens', '\PharmaIntelligence\GstandaardBundle\Model\GsAtcdddgegevensQuery');
     }
 
     /**

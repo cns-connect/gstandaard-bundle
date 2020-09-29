@@ -13,16 +13,12 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
-use PharmaIntelligence\GstandaardBundle\Model\GsAanvullendeMedicatiebewakingsgegevens;
-use PharmaIntelligence\GstandaardBundle\Model\GsAanvullendeMedicatiebewakingsgegevensQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerken;
 use PharmaIntelligence\GstandaardBundle\Model\GsBijzondereKenmerkenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDose;
 use PharmaIntelligence\GstandaardBundle\Model\GsDailyDefinedDoseQuery;
-use PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelen;
-use PharmaIntelligence\GstandaardBundle\Model\GsDeclaratietabelDureGeneesmiddelenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsGeneriekeProducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsGeneriekeProductenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproducten;
@@ -185,12 +181,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
     protected $collGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2Partial;
 
     /**
-     * @var        PropelObjectCollection|GsAanvullendeMedicatiebewakingsgegevens[] Collection to store aggregation of GsAanvullendeMedicatiebewakingsgegevens objects.
-     */
-    protected $collGsAanvullendeMedicatiebewakingsgegevenss;
-    protected $collGsAanvullendeMedicatiebewakingsgegevenssPartial;
-
-    /**
      * @var        PropelObjectCollection|GsLogistiekeVerpakkingsinformatie[] Collection to store aggregation of GsLogistiekeVerpakkingsinformatie objects.
      */
     protected $collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen;
@@ -249,18 +239,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
      */
     protected $collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg;
     protected $collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningswegPartial;
-
-    /**
-     * @var        PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] Collection to store aggregation of GsDeclaratietabelDureGeneesmiddelen objects.
-     */
-    protected $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-    protected $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial;
-
-    /**
-     * @var        PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] Collection to store aggregation of GsDeclaratietabelDureGeneesmiddelen objects.
-     */
-    protected $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid;
-    protected $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial;
 
     /**
      * @var        PropelObjectCollection|GsGeneriekeProducten[] Collection to store aggregation of GsGeneriekeProducten objects.
@@ -472,12 +450,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
     protected $gsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingenScheduledForDeletion = null;
 
     /**
@@ -533,18 +505,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $gsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningswegScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -1314,8 +1274,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
 
             $this->collGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2 = null;
 
-            $this->collGsAanvullendeMedicatiebewakingsgegevenss = null;
-
             $this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen = null;
 
             $this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusMetItemsVanEenhedenThesaurusitemVanEenheidHoogte = null;
@@ -1335,10 +1293,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             $this->collGsDailyDefinedDosesRelatedByDddeenheidThesaurusnummerDddeenheid = null;
 
             $this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg = null;
-
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = null;
-
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = null;
 
             $this->collGsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode = null;
 
@@ -1590,24 +1544,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion !== null) {
-                if (!$this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion->isEmpty()) {
-                    foreach ($this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion as $gsAanvullendeMedicatiebewakingsgegevens) {
-                        // need to save related object because we set the relation to null
-                        $gsAanvullendeMedicatiebewakingsgegevens->save($con);
-                    }
-                    $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsAanvullendeMedicatiebewakingsgegevenss !== null) {
-                foreach ($this->collGsAanvullendeMedicatiebewakingsgegevenss as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->gsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingenScheduledForDeletion !== null) {
                 if (!$this->gsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingenScheduledForDeletion->isEmpty()) {
                     foreach ($this->gsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingenScheduledForDeletion as $gsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen) {
@@ -1782,42 +1718,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
 
             if ($this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg !== null) {
                 foreach ($this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion !== null) {
-                if (!$this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion->isEmpty()) {
-                    foreach ($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion as $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-                        // need to save related object because we set the relation to null
-                        $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->save($con);
-                    }
-                    $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel !== null) {
-                foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion !== null) {
-                if (!$this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion->isEmpty()) {
-                    foreach ($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion as $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid) {
-                        // need to save related object because we set the relation to null
-                        $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid->save($con);
-                    }
-                    $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid !== null) {
-                foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -2557,14 +2457,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
                     }
                 }
 
-                if ($this->collGsAanvullendeMedicatiebewakingsgegevenss !== null) {
-                    foreach ($this->collGsAanvullendeMedicatiebewakingsgegevenss as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen !== null) {
                     foreach ($this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -2639,22 +2531,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
 
                 if ($this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg !== null) {
                     foreach ($this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel !== null) {
-                    foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid !== null) {
-                    foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -3020,9 +2896,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             if (null !== $this->collGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2) {
                 $result['GsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2'] = $this->collGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collGsAanvullendeMedicatiebewakingsgegevenss) {
-                $result['GsAanvullendeMedicatiebewakingsgegevenss'] = $this->collGsAanvullendeMedicatiebewakingsgegevenss->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen) {
                 $result['GsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen'] = $this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
@@ -3052,12 +2925,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             }
             if (null !== $this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg) {
                 $result['GsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg'] = $this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-                $result['GsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel'] = $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid) {
-                $result['GsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid'] = $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collGsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode) {
                 $result['GsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode'] = $this->collGsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
@@ -3401,12 +3268,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
                 }
             }
 
-            foreach ($this->getGsAanvullendeMedicatiebewakingsgegevenss() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsAanvullendeMedicatiebewakingsgegevens($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addGsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen($relObj->copy($deepCopy));
@@ -3464,18 +3325,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             foreach ($this->getGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addGsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($relObj->copy($deepCopy));
                 }
             }
 
@@ -3713,9 +3562,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
         if ('GsRzvAanspraakRelatedByRzvThesaurus120RzvvoorwaardenBijlage2' == $relationName) {
             $this->initGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2();
         }
-        if ('GsAanvullendeMedicatiebewakingsgegevens' == $relationName) {
-            $this->initGsAanvullendeMedicatiebewakingsgegevenss();
-        }
         if ('GsLogistiekeVerpakkingsinformatieRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen' == $relationName) {
             $this->initGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen();
         }
@@ -3745,12 +3591,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
         }
         if ('GsDailyDefinedDoseRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg' == $relationName) {
             $this->initGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg();
-        }
-        if ('GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel' == $relationName) {
-            $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel();
-        }
-        if ('GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid' == $relationName) {
-            $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid();
         }
         if ('GsGeneriekeProductenRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode' == $relationName) {
             $this->initGsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode();
@@ -4908,234 +4748,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
         $query->joinWith('GsArtikelEigenschappen', $join_behavior);
 
         return $this->getGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2($query, $con);
-    }
-
-    /**
-     * Clears out the collGsAanvullendeMedicatiebewakingsgegevenss collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     * @see        addGsAanvullendeMedicatiebewakingsgegevenss()
-     */
-    public function clearGsAanvullendeMedicatiebewakingsgegevenss()
-    {
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss = null; // important to set this to null since that means it is uninitialized
-        $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsAanvullendeMedicatiebewakingsgegevenss collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsAanvullendeMedicatiebewakingsgegevenss($v = true)
-    {
-        $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsAanvullendeMedicatiebewakingsgegevenss collection.
-     *
-     * By default this just sets the collGsAanvullendeMedicatiebewakingsgegevenss collection to an empty array (like clearcollGsAanvullendeMedicatiebewakingsgegevenss());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsAanvullendeMedicatiebewakingsgegevenss($overrideExisting = true)
-    {
-        if (null !== $this->collGsAanvullendeMedicatiebewakingsgegevenss && !$overrideExisting) {
-            return;
-        }
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss = new PropelObjectCollection();
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss->setModel('GsAanvullendeMedicatiebewakingsgegevens');
-    }
-
-    /**
-     * Gets an array of GsAanvullendeMedicatiebewakingsgegevens objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsThesauriTotaal is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsAanvullendeMedicatiebewakingsgegevens[] List of GsAanvullendeMedicatiebewakingsgegevens objects
-     * @throws PropelException
-     */
-    public function getGsAanvullendeMedicatiebewakingsgegevenss($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial && !$this->isNew();
-        if (null === $this->collGsAanvullendeMedicatiebewakingsgegevenss || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsAanvullendeMedicatiebewakingsgegevenss) {
-                // return empty collection
-                $this->initGsAanvullendeMedicatiebewakingsgegevenss();
-            } else {
-                $collGsAanvullendeMedicatiebewakingsgegevenss = GsAanvullendeMedicatiebewakingsgegevensQuery::create(null, $criteria)
-                    ->filterByBewakingssoortOmschrijving($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial && count($collGsAanvullendeMedicatiebewakingsgegevenss)) {
-                      $this->initGsAanvullendeMedicatiebewakingsgegevenss(false);
-
-                      foreach ($collGsAanvullendeMedicatiebewakingsgegevenss as $obj) {
-                        if (false == $this->collGsAanvullendeMedicatiebewakingsgegevenss->contains($obj)) {
-                          $this->collGsAanvullendeMedicatiebewakingsgegevenss->append($obj);
-                        }
-                      }
-
-                      $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial = true;
-                    }
-
-                    $collGsAanvullendeMedicatiebewakingsgegevenss->getInternalIterator()->rewind();
-
-                    return $collGsAanvullendeMedicatiebewakingsgegevenss;
-                }
-
-                if ($partial && $this->collGsAanvullendeMedicatiebewakingsgegevenss) {
-                    foreach ($this->collGsAanvullendeMedicatiebewakingsgegevenss as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsAanvullendeMedicatiebewakingsgegevenss[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsAanvullendeMedicatiebewakingsgegevenss = $collGsAanvullendeMedicatiebewakingsgegevenss;
-                $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial = false;
-            }
-        }
-
-        return $this->collGsAanvullendeMedicatiebewakingsgegevenss;
-    }
-
-    /**
-     * Sets a collection of GsAanvullendeMedicatiebewakingsgegevens objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsAanvullendeMedicatiebewakingsgegevenss A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function setGsAanvullendeMedicatiebewakingsgegevenss(PropelCollection $gsAanvullendeMedicatiebewakingsgegevenss, PropelPDO $con = null)
-    {
-        $gsAanvullendeMedicatiebewakingsgegevenssToDelete = $this->getGsAanvullendeMedicatiebewakingsgegevenss(new Criteria(), $con)->diff($gsAanvullendeMedicatiebewakingsgegevenss);
-
-
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion = clone $gsAanvullendeMedicatiebewakingsgegevenssToDelete;
-
-        foreach ($gsAanvullendeMedicatiebewakingsgegevenssToDelete as $gsAanvullendeMedicatiebewakingsgegevensRemoved) {
-            $gsAanvullendeMedicatiebewakingsgegevensRemoved->setBewakingssoortOmschrijving(null);
-        }
-
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss = null;
-        foreach ($gsAanvullendeMedicatiebewakingsgegevenss as $gsAanvullendeMedicatiebewakingsgegevens) {
-            $this->addGsAanvullendeMedicatiebewakingsgegevens($gsAanvullendeMedicatiebewakingsgegevens);
-        }
-
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss = $gsAanvullendeMedicatiebewakingsgegevenss;
-        $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsAanvullendeMedicatiebewakingsgegevens objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsAanvullendeMedicatiebewakingsgegevens objects.
-     * @throws PropelException
-     */
-    public function countGsAanvullendeMedicatiebewakingsgegevenss(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial && !$this->isNew();
-        if (null === $this->collGsAanvullendeMedicatiebewakingsgegevenss || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsAanvullendeMedicatiebewakingsgegevenss) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsAanvullendeMedicatiebewakingsgegevenss());
-            }
-            $query = GsAanvullendeMedicatiebewakingsgegevensQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByBewakingssoortOmschrijving($this)
-                ->count($con);
-        }
-
-        return count($this->collGsAanvullendeMedicatiebewakingsgegevenss);
-    }
-
-    /**
-     * Method called to associate a GsAanvullendeMedicatiebewakingsgegevens object to this object
-     * through the GsAanvullendeMedicatiebewakingsgegevens foreign key attribute.
-     *
-     * @param    GsAanvullendeMedicatiebewakingsgegevens $l GsAanvullendeMedicatiebewakingsgegevens
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function addGsAanvullendeMedicatiebewakingsgegevens(GsAanvullendeMedicatiebewakingsgegevens $l)
-    {
-        if ($this->collGsAanvullendeMedicatiebewakingsgegevenss === null) {
-            $this->initGsAanvullendeMedicatiebewakingsgegevenss();
-            $this->collGsAanvullendeMedicatiebewakingsgegevenssPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsAanvullendeMedicatiebewakingsgegevenss->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsAanvullendeMedicatiebewakingsgegevens($l);
-
-            if ($this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion and $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion->contains($l)) {
-                $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion->remove($this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsAanvullendeMedicatiebewakingsgegevens $gsAanvullendeMedicatiebewakingsgegevens The gsAanvullendeMedicatiebewakingsgegevens object to add.
-     */
-    protected function doAddGsAanvullendeMedicatiebewakingsgegevens($gsAanvullendeMedicatiebewakingsgegevens)
-    {
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss[]= $gsAanvullendeMedicatiebewakingsgegevens;
-        $gsAanvullendeMedicatiebewakingsgegevens->setBewakingssoortOmschrijving($this);
-    }
-
-    /**
-     * @param	GsAanvullendeMedicatiebewakingsgegevens $gsAanvullendeMedicatiebewakingsgegevens The gsAanvullendeMedicatiebewakingsgegevens object to remove.
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function removeGsAanvullendeMedicatiebewakingsgegevens($gsAanvullendeMedicatiebewakingsgegevens)
-    {
-        if ($this->getGsAanvullendeMedicatiebewakingsgegevenss()->contains($gsAanvullendeMedicatiebewakingsgegevens)) {
-            $this->collGsAanvullendeMedicatiebewakingsgegevenss->remove($this->collGsAanvullendeMedicatiebewakingsgegevenss->search($gsAanvullendeMedicatiebewakingsgegevens));
-            if (null === $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion) {
-                $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion = clone $this->collGsAanvullendeMedicatiebewakingsgegevenss;
-                $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion->clear();
-            }
-            $this->gsAanvullendeMedicatiebewakingsgegevenssScheduledForDeletion[]= clone $gsAanvullendeMedicatiebewakingsgegevens;
-            $gsAanvullendeMedicatiebewakingsgegevens->setBewakingssoortOmschrijving(null);
-        }
-
-        return $this;
     }
 
     /**
@@ -6488,31 +6100,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
         return $this->getGsArtikelensRelatedByLandVanHerkomstThesaurusNummerLandVanHerkomstKode($query, $con);
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsThesauriTotaal is new, it will return
-     * an empty collection; or if this GsThesauriTotaal has previously
-     * been saved, it will retrieve related GsArtikelensRelatedByLandVanHerkomstThesaurusNummerLandVanHerkomstKode from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsThesauriTotaal.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensRelatedByLandVanHerkomstThesaurusNummerLandVanHerkomstKodeJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
-
-        return $this->getGsArtikelensRelatedByLandVanHerkomstThesaurusNummerLandVanHerkomstKode($query, $con);
-    }
-
     /**
      * Clears out the collGsArtikelensRelatedByHoofdverpakkingOmschrijvingThesnrHoofdverpakkingOmschrijvingKode collection
      *
@@ -6863,31 +6450,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
         return $this->getGsArtikelensRelatedByHoofdverpakkingOmschrijvingThesnrHoofdverpakkingOmschrijvingKode($query, $con);
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsThesauriTotaal is new, it will return
-     * an empty collection; or if this GsThesauriTotaal has previously
-     * been saved, it will retrieve related GsArtikelensRelatedByHoofdverpakkingOmschrijvingThesnrHoofdverpakkingOmschrijvingKode from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsThesauriTotaal.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensRelatedByHoofdverpakkingOmschrijvingThesnrHoofdverpakkingOmschrijvingKodeJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
-
-        return $this->getGsArtikelensRelatedByHoofdverpakkingOmschrijvingThesnrHoofdverpakkingOmschrijvingKode($query, $con);
-    }
-
     /**
      * Clears out the collGsArtikelensRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode collection
      *
@@ -7234,31 +6796,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
     {
         $query = GsArtikelenQuery::create(null, $criteria);
         $query->joinWith('Registratiehouder', $join_behavior);
-
-        return $this->getGsArtikelensRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsThesauriTotaal is new, it will return
-     * an empty collection; or if this GsThesauriTotaal has previously
-     * been saved, it will retrieve related GsArtikelensRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsThesauriTotaal.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsArtikelen[] List of GsArtikelen objects
-     */
-    public function getGsArtikelensRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKodeJoinLogistiekeInformatie($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsArtikelenQuery::create(null, $criteria);
-        $query->joinWith('LogistiekeInformatie', $join_behavior);
 
         return $this->getGsArtikelensRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode($query, $con);
     }
@@ -8045,506 +7582,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
         $query->joinWith('GsAtcCodes', $join_behavior);
 
         return $this->getGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg($query, $con);
-    }
-
-    /**
-     * Clears out the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     * @see        addGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel()
-     */
-    public function clearGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel()
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = null; // important to set this to null since that means it is uninitialized
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($v = true)
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel collection.
-     *
-     * By default this just sets the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel collection to an empty array (like clearcollGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($overrideExisting = true)
-    {
-        if (null !== $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel && !$overrideExisting) {
-            return;
-        }
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = new PropelObjectCollection();
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->setModel('GsDeclaratietabelDureGeneesmiddelen');
-    }
-
-    /**
-     * Gets an array of GsDeclaratietabelDureGeneesmiddelen objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsThesauriTotaal is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     * @throws PropelException
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial && !$this->isNew();
-        if (null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-                // return empty collection
-                $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel();
-            } else {
-                $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria)
-                    ->filterByBeleidsregelOmschrijving($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial && count($collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel)) {
-                      $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel(false);
-
-                      foreach ($collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel as $obj) {
-                        if (false == $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->contains($obj)) {
-                          $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->append($obj);
-                        }
-                      }
-
-                      $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial = true;
-                    }
-
-                    $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->getInternalIterator()->rewind();
-
-                    return $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-                }
-
-                if ($partial && $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-                    foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-                $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial = false;
-            }
-        }
-
-        return $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-    }
-
-    /**
-     * Sets a collection of GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function setGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel(PropelCollection $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel, PropelPDO $con = null)
-    {
-        $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelToDelete = $this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel(new Criteria(), $con)->diff($gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel);
-
-
-        $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion = $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelToDelete;
-
-        foreach ($gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelToDelete as $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelRemoved) {
-            $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelRemoved->setBeleidsregelOmschrijving(null);
-        }
-
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = null;
-        foreach ($gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel as $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-            $this->addGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel);
-        }
-
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsDeclaratietabelDureGeneesmiddelen objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsDeclaratietabelDureGeneesmiddelen objects.
-     * @throws PropelException
-     */
-    public function countGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial && !$this->isNew();
-        if (null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel());
-            }
-            $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByBeleidsregelOmschrijving($this)
-                ->count($con);
-        }
-
-        return count($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel);
-    }
-
-    /**
-     * Method called to associate a GsDeclaratietabelDureGeneesmiddelen object to this object
-     * through the GsDeclaratietabelDureGeneesmiddelen foreign key attribute.
-     *
-     * @param    GsDeclaratietabelDureGeneesmiddelen $l GsDeclaratietabelDureGeneesmiddelen
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function addGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel(GsDeclaratietabelDureGeneesmiddelen $l)
-    {
-        if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel === null) {
-            $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel();
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($l);
-
-            if ($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion and $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion->contains($l)) {
-                $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion->remove($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel The gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel object to add.
-     */
-    protected function doAddGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel)
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel[]= $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-        $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->setBeleidsregelOmschrijving($this);
-    }
-
-    /**
-     * @param	GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel The gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel object to remove.
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function removeGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel)
-    {
-        if ($this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel()->contains($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel)) {
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->remove($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->search($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel));
-            if (null === $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion) {
-                $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion = clone $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-                $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion->clear();
-            }
-            $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelScheduledForDeletion[]= clone $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel;
-            $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->setBeleidsregelOmschrijving(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsThesauriTotaal is new, it will return
-     * an empty collection; or if this GsThesauriTotaal has previously
-     * been saved, it will retrieve related GsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsThesauriTotaal.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregelJoinGsHandelsproducten($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-        $query->joinWith('GsHandelsproducten', $join_behavior);
-
-        return $this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel($query, $con);
-    }
-
-    /**
-     * Clears out the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     * @see        addGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid()
-     */
-    public function clearGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid()
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = null; // important to set this to null since that means it is uninitialized
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid($v = true)
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial = $v;
-    }
-
-    /**
-     * Initializes the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid collection.
-     *
-     * By default this just sets the collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid collection to an empty array (like clearcollGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid($overrideExisting = true)
-    {
-        if (null !== $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid && !$overrideExisting) {
-            return;
-        }
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = new PropelObjectCollection();
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->setModel('GsDeclaratietabelDureGeneesmiddelen');
-    }
-
-    /**
-     * Gets an array of GsDeclaratietabelDureGeneesmiddelen objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this GsThesauriTotaal is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     * @throws PropelException
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial && !$this->isNew();
-        if (null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid) {
-                // return empty collection
-                $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid();
-            } else {
-                $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria)
-                    ->filterByToedieningsEenheidOmschrijving($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial && count($collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid)) {
-                      $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid(false);
-
-                      foreach ($collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid as $obj) {
-                        if (false == $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->contains($obj)) {
-                          $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->append($obj);
-                        }
-                      }
-
-                      $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial = true;
-                    }
-
-                    $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->getInternalIterator()->rewind();
-
-                    return $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid;
-                }
-
-                if ($partial && $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid) {
-                    foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid as $obj) {
-                        if ($obj->isNew()) {
-                            $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = $collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid;
-                $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial = false;
-            }
-        }
-
-        return $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid;
-    }
-
-    /**
-     * Sets a collection of GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function setGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid(PropelCollection $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid, PropelPDO $con = null)
-    {
-        $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidToDelete = $this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid(new Criteria(), $con)->diff($gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid);
-
-
-        $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion = $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidToDelete;
-
-        foreach ($gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidToDelete as $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheidRemoved) {
-            $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheidRemoved->setToedieningsEenheidOmschrijving(null);
-        }
-
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = null;
-        foreach ($gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid as $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid) {
-            $this->addGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid);
-        }
-
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = $gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid;
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related GsDeclaratietabelDureGeneesmiddelen objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related GsDeclaratietabelDureGeneesmiddelen objects.
-     * @throws PropelException
-     */
-    public function countGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial && !$this->isNew();
-        if (null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid());
-            }
-            $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByToedieningsEenheidOmschrijving($this)
-                ->count($con);
-        }
-
-        return count($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid);
-    }
-
-    /**
-     * Method called to associate a GsDeclaratietabelDureGeneesmiddelen object to this object
-     * through the GsDeclaratietabelDureGeneesmiddelen foreign key attribute.
-     *
-     * @param    GsDeclaratietabelDureGeneesmiddelen $l GsDeclaratietabelDureGeneesmiddelen
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function addGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid(GsDeclaratietabelDureGeneesmiddelen $l)
-    {
-        if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid === null) {
-            $this->initGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid();
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidPartial = true;
-        }
-
-        if (!in_array($l, $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($l);
-
-            if ($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion and $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion->contains($l)) {
-                $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion->remove($this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid The gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid object to add.
-     */
-    protected function doAddGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid)
-    {
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid[]= $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid;
-        $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid->setToedieningsEenheidOmschrijving($this);
-    }
-
-    /**
-     * @param	GsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid The gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid object to remove.
-     * @return GsThesauriTotaal The current object (for fluent API support)
-     */
-    public function removeGsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid)
-    {
-        if ($this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid()->contains($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid)) {
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->remove($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->search($gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid));
-            if (null === $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion) {
-                $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion = clone $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid;
-                $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion->clear();
-            }
-            $this->gsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidScheduledForDeletion[]= clone $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid;
-            $gsDeclaratietabelDureGeneesmiddelenRelatedByThesaurusVerwijzingEenheidEenheid->setToedieningsEenheidOmschrijving(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this GsThesauriTotaal is new, it will return
-     * an empty collection; or if this GsThesauriTotaal has previously
-     * been saved, it will retrieve related GsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in GsThesauriTotaal.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GsDeclaratietabelDureGeneesmiddelen[] List of GsDeclaratietabelDureGeneesmiddelen objects
-     */
-    public function getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheidJoinGsHandelsproducten($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GsDeclaratietabelDureGeneesmiddelenQuery::create(null, $criteria);
-        $query->joinWith('GsHandelsproducten', $join_behavior);
-
-        return $this->getGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid($query, $con);
     }
 
     /**
@@ -15824,11 +14861,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collGsAanvullendeMedicatiebewakingsgegevenss) {
-                foreach ($this->collGsAanvullendeMedicatiebewakingsgegevenss as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen) {
                 foreach ($this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen as $o) {
                     $o->clearAllReferences($deep);
@@ -15876,16 +14908,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             }
             if ($this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg) {
                 foreach ($this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel) {
-                foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid) {
-                foreach ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -16044,10 +15066,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             $this->collGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2->clearIterator();
         }
         $this->collGsRzvAanspraaksRelatedByRzvThesaurus120RzvvoorwaardenBijlage2 = null;
-        if ($this->collGsAanvullendeMedicatiebewakingsgegevenss instanceof PropelCollection) {
-            $this->collGsAanvullendeMedicatiebewakingsgegevenss->clearIterator();
-        }
-        $this->collGsAanvullendeMedicatiebewakingsgegevenss = null;
         if ($this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen instanceof PropelCollection) {
             $this->collGsLogistiekeVerpakkingsinformatiesRelatedByThesaurusSoortenVerpakkingenThesaurusitemSoortenVerpakkingen->clearIterator();
         }
@@ -16088,14 +15106,6 @@ abstract class BaseGsThesauriTotaal extends BaseObject implements Persistent
             $this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg->clearIterator();
         }
         $this->collGsDailyDefinedDosesRelatedByDddToedieningswegThesaurusnummerDddtoedieningsweg = null;
-        if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel instanceof PropelCollection) {
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel->clearIterator();
-        }
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusNummerBeleidsregelItemnummerBeleidsregel = null;
-        if ($this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid instanceof PropelCollection) {
-            $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid->clearIterator();
-        }
-        $this->collGsDeclaratietabelDureGeneesmiddelensRelatedByThesaurusVerwijzingEenheidEenheid = null;
         if ($this->collGsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode instanceof PropelCollection) {
             $this->collGsGeneriekeProductensRelatedByFarmaceutischeVormThesaurusnummerFarmaceutischeVormCode->clearIterator();
         }

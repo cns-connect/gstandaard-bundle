@@ -44,7 +44,7 @@ class GsArtikelenTableMap extends TableMap
         // columns
         $this->addColumn('bestandnummer', 'Bestandnummer', 'INTEGER', false, null, null);
         $this->addColumn('mutatiekode', 'Mutatiekode', 'INTEGER', false, null, null);
-        $this->addForeignPrimaryKey('zinummer', 'Zinummer', 'INTEGER' , 'gs_logistieke_informatie', 'zindex_nummer', true, null, null);
+        $this->addPrimaryKey('zinummer', 'Zinummer', 'INTEGER', true, null, null);
         $this->addForeignKey('handelsproduktkode', 'Handelsproduktkode', 'INTEGER', 'gs_handelsproducten', 'handelsproduktkode', false, null, null);
         $this->addForeignKey('artikelnaamnummer', 'Artikelnaamnummer', 'INTEGER', 'gs_namen', 'naamnummer', false, null, null);
         $this->addColumn('inkoophoeveelheid', 'Inkoophoeveelheid', 'DECIMAL', false, 8, null);
@@ -113,15 +113,12 @@ class GsArtikelenTableMap extends TableMap
         $this->addRelation('LandOmschrijving', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsThesauriTotaal', RelationMap::MANY_TO_ONE, array('land_van_herkomst_thesaurus_nummer' => 'thesaurusnummer', 'land_van_herkomst_kode' => 'thesaurus_itemnummer', ), null, null);
         $this->addRelation('HoofdverpakkingOmschrijving', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsThesauriTotaal', RelationMap::MANY_TO_ONE, array('hoofdverpakking_omschrijving_thesnr' => 'thesaurusnummer', 'hoofdverpakking_omschrijving_kode' => 'thesaurus_itemnummer', ), null, null);
         $this->addRelation('DeelverpakkingOmschrijving', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsThesauriTotaal', RelationMap::MANY_TO_ONE, array('deelverpakking_omschrijving_thesnr' => 'thesaurusnummer', 'deelverpakking_omschrijving_kode' => 'thesaurus_itemnummer', ), null, null);
-        $this->addRelation('LogistiekeInformatie', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsLogistiekeInformatie', RelationMap::MANY_TO_ONE, array('zinummer' => 'zindex_nummer', ), null, null);
         $this->addRelation('GsSupplementaireProductenHistorie', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsSupplementaireProductenHistorie', RelationMap::ONE_TO_MANY, array('zinummer' => 'zindex_nummer', ), null, null, 'GsSupplementaireProductenHistories');
         $this->addRelation('GsArtikelEigenschappen', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsArtikelEigenschappen', RelationMap::ONE_TO_ONE, array('zinummer' => 'zindex_nummer', ), null, null);
         $this->addRelation('GsRzvAanspraak', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsRzvAanspraak', RelationMap::ONE_TO_ONE, array('zinummer' => 'zinummer', ), null, null);
         $this->addRelation('GsLogistiekeVerpakkingsinformatie', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsLogistiekeVerpakkingsinformatie', RelationMap::ONE_TO_MANY, array('zinummer' => 'zindex_nummer', ), null, null, 'GsLogistiekeVerpakkingsinformaties');
         $this->addRelation('GsSupplementaireProductenMetNzaMaximumtarief', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsSupplementaireProductenMetNzaMaximumtarief', RelationMap::ONE_TO_ONE, array('zinummer' => 'zindex_nummer', ), null, null);
         $this->addRelation('GsIndicatiesBijSupplementaireProducten', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsIndicatiesBijSupplementaireProducten', RelationMap::ONE_TO_MANY, array('zinummer' => 'zindex_nummer', ), null, null, 'GsIndicatiesBijSupplementaireProductens');
-        $this->addRelation('GsLeveranciersassortimenten', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsLeveranciersassortimenten', RelationMap::ONE_TO_MANY, array('zinummer' => 'zinummer', ), null, null, 'GsLeveranciersassortimentens');
-        $this->addRelation('GsLogistiekeInformatieRelatedByZindexNummer', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsLogistiekeInformatie', RelationMap::ONE_TO_MANY, array('zinummer' => 'zindex_nummer', ), null, null, 'GsLogistiekeInformatiesRelatedByZindexNummer');
         $this->addRelation('GsPreferentieBeleid', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsPreferentieBeleid', RelationMap::ONE_TO_MANY, array('zinummer' => 'zindex_nummer', ), null, null, 'GsPreferentieBeleids');
         $this->addRelation('GsRelatieTussenZinummerHibc', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsRelatieTussenZinummerHibc', RelationMap::ONE_TO_ONE, array('zinummer' => 'zinummer', ), null, null);
     } // buildRelations()

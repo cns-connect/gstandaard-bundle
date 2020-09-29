@@ -31,22 +31,6 @@
     	<reference local='rzvvoorwaarden_bijlage_2' foreign='thesaurus_itemnummer'/>
     </foreign-key>
   </table>
-  <table name="gs_aanvullende_medicatiebewakingsgegevens" phpName="GsAanvullendeMedicatiebewakingsgegevens" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="thesnr_bewakingssoort" phpName="ThesnrBewakingssoort" type="INTEGER" required="false"/>
-    <column name="bewakingssoort" phpName="Bewakingssoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="medicatiebewaking_identificerende_code" phpName="MedicatiebewakingIdentificerendeCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_aanvullende_voorwaarde" phpName="ThesaurusverwijzingAanvullendeVoorwaarde" type="INTEGER" required="false"/>
-    <column name="medicatiebewaking_aanvullende_voorwaarde" phpName="MedicatiebewakingAanvullendeVoorwaarde" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="codering_waarde_1_alfanumeriek" phpName="CoderingWaarde1Alfanumeriek" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="codering_waarde_2_numeriek" phpName="CoderingWaarde2Numeriek" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="codering_waarde_3_numeriek" phpName="CoderingWaarde3Numeriek" type="INTEGER" required="false"/>
-    <foreign-key foreignTable='gs_thesauri_totaal' phpName="BewakingssoortOmschrijving">
-    	<reference local='thesnr_bewakingssoort' foreign='thesaurusnummer'/>
-    	<reference local='bewakingssoort' foreign='thesaurus_itemnummer'/>
-    </foreign-key>
-  </table>
   <table name="gs_aanvvoorwaarden_medbew_en_tekstblok" phpName="GsAanvvoorwaardenMedbewEnTekstblok" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
@@ -63,14 +47,6 @@
     <column name="codering_waarde_1_alfanumeriek" phpName="CoderingWaarde1Alfanumeriek" type="VARCHAR" size="255" primaryKey="true" required="true"/>
     <column name="codering_waarde_2_numeriek" phpName="CoderingWaarde2Numeriek" type="INTEGER" primaryKey="true" required="true"/>
     <column name="codering_waarde_3_numeriek" phpName="CoderingWaarde3Numeriek" type="INTEGER" required="false"/>
-  </table>
-  <table name="gs_acties_bij_interacties" phpName="GsActiesBijInteracties" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="interactiewaarschuwing_code" phpName="InteractiewaarschuwingCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="volgnummer_actie" phpName="VolgnummerActie" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="acties_bij_interactiesthes_130" phpName="ActiesBijInteractiesthes130" type="INTEGER" required="false"/>
-    <column name="actie_bij_interactie" phpName="ActieBijInteractie" type="INTEGER" required="false"/>
   </table>
   <table name="gs_afgeleide_indicatieaard" phpName="GsAfgeleideIndicatieaard" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -209,9 +185,6 @@
     	<reference local='deelverpakking_omschrijving_thesnr' foreign='thesaurusnummer'/>
     	<reference local='deelverpakking_omschrijving_kode' foreign='thesaurus_itemnummer'/>
     </foreign-key>
-    <foreign-key foreignTable='gs_logistieke_informatie' phpName="LogistiekeInformatie">
-    	<reference local='zinummer' foreign='zindex_nummer'/>
-    </foreign-key>
     <index>
 		<index-column name='mutatiekode'/>
 	</index>
@@ -242,24 +215,6 @@
     <column name="atcnederlandse_omschrijving" phpName="AtcnederlandseOmschrijving" type="VARCHAR" size="255" required="false"/>
     <column name="atcengelse_omschrijving" phpName="AtcengelseOmschrijving" type="VARCHAR" size="255" required="false"/>
     <column name="atcindicator" phpName="Atcindicator" type="VARCHAR" size="255" required="false"/>
-  </table>
-  <table name="gs_atcdddgegevens" phpName="GsAtcdddgegevens" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="atccode" phpName="Atccode" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="atcvolgnummer" phpName="Atcvolgnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="atcnederlandse_omschrijving" phpName="AtcnederlandseOmschrijving" type="VARCHAR" size="255" required="false"/>
-    <column name="atcindicator" phpName="Atcindicator" type="VARCHAR" size="255" required="false"/>
-    <column name="selectiekode_voor_dubbelmedicatie" phpName="SelectiekodeVoorDubbelmedicatie" type="VARCHAR" size="255" required="false"/>
-    <column name="aantal_dddclusters" phpName="AantalDddclusters" type="INTEGER" required="false"/>
-    <column name="dddaantal" phpName="Dddaantal" type="DECIMAL" scale="3" required="false"/>
-    <column name="dddeenheid" phpName="Dddeenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="dddtoedieningsweg_kode" phpName="DddtoedieningswegKode" type="INTEGER" required="false"/>
-    <column name="dddindicator" phpName="Dddindicator" type="VARCHAR" size="255" required="false"/>
-    <column name="dddstatusaanduiding" phpName="Dddstatusaanduiding" type="INTEGER" required="false"/>
-    <foreign-key foreignTable="gs_atc_codes">
-      <reference local="atccode" foreign="atccode"/>
-    </foreign-key>
   </table>
   <table name="gs_bestanden" phpName="GsBestanden" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -437,35 +392,6 @@
     	<reference local='dddtoedieningsweg' foreign='thesaurus_itemnummer'/>
     </foreign-key>
   </table>
-  <table name="gs_declaratietabel_dure_geneesmiddelen" phpName="GsDeclaratietabelDureGeneesmiddelen" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="handelsproduktkode" phpName="Handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorgactiviteit_code" phpName="ZorgactiviteitCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="omschrijving" phpName="Omschrijving" type="VARCHAR" size="255" required="false"/>
-    <column name="hoeveelheid_per_toedieningseenheid" phpName="HoeveelheidPerToedieningseenheid" type="DECIMAL" size="8" scale="2" required="false"/>
-    <column name="thesaurus_verwijzing_eenheid" phpName="ThesaurusVerwijzingEenheid" type="INTEGER" required="false"/>
-    <column name="eenheid" phpName="Eenheid" type="INTEGER" required="false"/>
-    <column name="omrekenfactor_aantal_toedieningseenheden_per_hpk" phpName="OmrekenfactorAantalToedieningseenhedenPerHpk" type="DECIMAL" size="14" scale="8" required="false"/>
-    <column name="tarief" phpName="Tarief" type="DECIMAL" size="8" scale="2" required="false"/>
-    <column name="thesaurus_nummer_beleidsregel" phpName="ThesaurusNummerBeleidsregel" type="INTEGER" required="false"/>
-    <column name="itemnummer_beleidsregel" phpName="ItemnummerBeleidsregel" type="INTEGER" required="false"/>
-    <column name="zorgactiviteit_voldoet_aan_beleidsregel" phpName="ZorgactiviteitVoldoetAanBeleidsregel" type="TINYINT" required="false"/>
-    <column name="startdatum" phpName="Startdatum" type="DATE" required="false"/>
-    <column name="einddatum" phpName="Einddatum" type="DATE" required="false"/>
-    <foreign-key foreignTable="gs_handelsproducten">
-      <reference local="handelsproduktkode" foreign="handelsproduktkode"/>
-    </foreign-key>
-    <foreign-key foreignTable='gs_thesauri_totaal' phpName="BeleidsregelOmschrijving">
-    	<reference local='thesaurus_nummer_beleidsregel' foreign='thesaurusnummer'/>
-    	<reference local='itemnummer_beleidsregel' foreign='thesaurus_itemnummer'/>
-    </foreign-key>
-    <foreign-key foreignTable='gs_thesauri_totaal' phpName="ToedieningsEenheidOmschrijving">
-    	<reference local='thesaurus_verwijzing_eenheid' foreign='thesaurusnummer'/>
-    	<reference local='eenheid' foreign='thesaurus_itemnummer'/>
-    </foreign-key>
-  </table>
-
   <table name="gs_supplementaire_producten_met_nza_maximumtarief" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
@@ -551,23 +477,6 @@
     <column name="thesaurus_afwijkende_toedieningsweg" phpName="ThesaurusAfwijkendeToedieningsweg" type="INTEGER" required="false"/>
     <column name="toedieningsweg_code" phpName="ToedieningswegCode" type="INTEGER" required="false"/>
     <column name="dosiscategorienummer" phpName="Dosiscategorienummer" type="INTEGER" required="false"/>
-  </table>
-  <table name="gs_dosisgegevens" phpName="GsDosisgegevens" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="dosisnummer" phpName="Dosisnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="norm_minimum" phpName="NormMinimum" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="norm_maximum" phpName="NormMaximum" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="absoluut_minimum" phpName="AbsoluutMinimum" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="absoluut_maximum" phpName="AbsoluutMaximum" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="norm_minimum_per_kg" phpName="NormMinimumPerKg" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="norm_maximum_per_kg" phpName="NormMaximumPerKg" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="absoluut_minimum_per_kg" phpName="AbsoluutMinimumPerKg" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="absoluut_maximum_per_kg" phpName="AbsoluutMaximumPerKg" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="norm_minimum_per_m2" phpName="NormMinimumPerM2" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="norm_maximum_per_m2" phpName="NormMaximumPerM2" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="absoluut_minimum_per_m2" phpName="AbsoluutMinimumPerM2" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="absoluut_maximum_per_m2" phpName="AbsoluutMaximumPerM2" type="DECIMAL" size="6" scale="3" required="false"/>
   </table>
   <table name="gs_dubbelmedicatie" phpName="GsDubbelmedicatie" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -884,72 +793,6 @@
     	<reference local='stamtoedieningsweg_code' foreign='thesaurus_itemnummer'/>
     </foreign-key>
   </table>
-  <table name="gs_interacties" phpName="GsInteracties" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="interactiewaarschuwing_code" phpName="InteractiewaarschuwingCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="datum_vastlegging" phpName="DatumVastlegging" type="INTEGER" required="false"/>
-    <column name="datum_opname_in_gstandaard" phpName="DatumOpnameInGstandaard" type="INTEGER" required="false"/>
-    <column name="datum_laaste_mutatie_in_gstandaard" phpName="DatumLaasteMutatieInGstandaard" type="INTEGER" required="false"/>
-    <column name="code_onderbouwing_bewijslast_bij_interactie" phpName="CodeOnderbouwingBewijslastBijInteractie" type="VARCHAR" size="255" required="false"/>
-    <column name="code_ernst_van_potentieel_effect_bij_interactie" phpName="CodeErnstVanPotentieelEffectBijInteractie" type="VARCHAR" size="255" required="false"/>
-    <column name="omschrijving_interactiewaarschuwing" phpName="OmschrijvingInteractiewaarschuwing" type="VARCHAR" size="255" required="false"/>
-    <column name="interactiefolderthesaurus_128" phpName="Interactiefolderthesaurus128" type="INTEGER" required="false"/>
-    <column name="folder" phpName="Folder" type="INTEGER" required="false"/>
-    <column name="interactie" phpName="Interactie" type="TINYINT" required="false"/>
-    <column name="vervolg_actie" phpName="VervolgActie" type="TINYINT" required="false"/>
-    <column name="ia_te_volgen_door_monitoren" phpName="IaTeVolgenDoorMonitoren" type="TINYINT" required="false"/>
-    <column name="ook_bij_staken_van_het_voorschrift" phpName="OokBijStakenVanHetVoorschrift" type="TINYINT" required="false"/>
-    <column name="afhandeling_voorschrijver" phpName="AfhandelingVoorschrijver" type="TINYINT" required="false"/>
-    <column name="afhandeling_balie_in_apotheek" phpName="AfhandelingBalieInApotheek" type="TINYINT" required="false"/>
-    <column name="afhandeling_farmaceutisch_specialist" phpName="AfhandelingFarmaceutischSpecialist" type="TINYINT" required="false"/>
-  </table>
-  <table name="gs_interacties_gegevens" phpName="GsInteractiesGegevens" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="interactiewaarschuwing_code" phpName="InteractiewaarschuwingCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="datum_vastlegging" phpName="DatumVastlegging" type="INTEGER" required="false"/>
-    <column name="datum_opname_in_gstandaard" phpName="DatumOpnameInGstandaard" type="INTEGER" required="false"/>
-    <column name="datum_laaste_mutatie_in_gstandaard" phpName="DatumLaasteMutatieInGstandaard" type="INTEGER" required="false"/>
-    <column name="code_onderbouwing_bewijslast_bij_interactie" phpName="CodeOnderbouwingBewijslastBijInteractie" type="VARCHAR" size="255" required="false"/>
-    <column name="code_ernst_van_potentieel_effect_bij_interactie" phpName="CodeErnstVanPotentieelEffectBijInteractie" type="VARCHAR" size="255" required="false"/>
-    <column name="omschrijving_interactiewaarschuwing" phpName="OmschrijvingInteractiewaarschuwing" type="VARCHAR" size="255" required="false"/>
-    <column name="interactiefolderthesaurus_128" phpName="Interactiefolderthesaurus128" type="INTEGER" required="false"/>
-    <column name="folder" phpName="Folder" type="INTEGER" required="false"/>
-    <column name="interactie" phpName="Interactie" type="TINYINT" required="false"/>
-    <column name="vervolg_actie" phpName="VervolgActie" type="TINYINT" required="false"/>
-    <column name="ia_te_volgen_door_monitoren" phpName="IaTeVolgenDoorMonitoren" type="TINYINT" required="false"/>
-    <column name="ook_bij_staken_van_het_voorschrift" phpName="OokBijStakenVanHetVoorschrift" type="TINYINT" required="false"/>
-    <column name="afhandeling_voorschrijver" phpName="AfhandelingVoorschrijver" type="TINYINT" required="false"/>
-    <column name="afhandeling_balie_in_apotheek" phpName="AfhandelingBalieInApotheek" type="TINYINT" required="false"/>
-    <column name="afhandeling_farmaceutisch_specialist" phpName="AfhandelingFarmaceutischSpecialist" type="TINYINT" required="false"/>
-  </table>
-  <table name="gs_interacties_koppeling" phpName="GsInteractiesKoppeling" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="gpk_code_interactiewaarschuwing_a" phpName="GpkCodeInteractiewaarschuwingA" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="gpk_code_interactiewaarschuwing_b" phpName="GpkCodeInteractiewaarschuwingB" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="interactiewaarschuwing_code" phpName="InteractiewaarschuwingCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="relevante_periode_na_staken_van_a_in_dagen" phpName="RelevantePeriodeNaStakenVanAInDagen" type="INTEGER" required="false"/>
-    <column name="relevante_periode_na_staken_van_b_in_dagen" phpName="RelevantePeriodeNaStakenVanBInDagen" type="INTEGER" required="false"/>
-    <column name="relevant_indien_a_wordt_toegevoegd_aan_b" phpName="RelevantIndienAWordtToegevoegdAanB" type="TINYINT" required="false"/>
-    <column name="relevant_indien_b_wordt_toegevoegd_aan_a" phpName="RelevantIndienBWordtToegevoegdAanA" type="TINYINT" required="false"/>
-  </table>
-  <table name="gs_interacties_niet_bij_bep_specialisme" phpName="GsInteractiesNietBijBepSpecialisme" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="interactiewaarschuwing_code" phpName="InteractiewaarschuwingCode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusnr_zorggroep_1002" phpName="ThesaurusnrZorggroep1002" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorggroepcodering" phpName="Zorggroepcodering" type="INTEGER" primaryKey="true" required="true"/>
-  </table>
-  <table name="gs_interacties_omschrijving_codering_wfg" phpName="GsInteractiesOmschrijvingCoderingWfg" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="soort_codering" phpName="SoortCodering" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="wfgcode" phpName="Wfgcode" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="regelnummer" phpName="Regelnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstuele_omschrijving" phpName="TekstueleOmschrijving" type="VARCHAR" size="255" required="false"/>
-  </table>
   <table name="gs_koppeling_zrs_met_externe_codes" phpName="GsKoppelingZrsMetExterneCodes" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
@@ -959,82 +802,6 @@
     <column name="zorg_registratie_binnen_aaa" phpName="ZorgRegistratieBinnenAaa" type="INTEGER" primaryKey="true" required="true"/>
     <column name="zorg_registratie_binnen_aaa1" phpName="ZorgRegistratieBinnenAaa1" type="INTEGER" primaryKey="true" required="true"/>
     <column name="zorg_registratie_nummer_van_de_actieregel" phpName="ZorgRegistratieNummerVanDeActieregel" type="INTEGER" primaryKey="true" required="true"/>
-  </table>
-  <table name="gs_leveranciersassortimenten" phpName="GsLeveranciersassortimenten" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="assortimentsnummer" phpName="Assortimentsnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zinummer" phpName="Zinummer" type="INTEGER" required="false"/>
-    <column name="intern_artikelnummer_assorthouder" phpName="InternArtikelnummerAssorthouder" type="VARCHAR" size="255" required="false"/>
-    <column name="faktor_van_het_artikelnummer" phpName="FaktorVanHetArtikelnummer" type="DECIMAL" size="6" scale="3" required="false"/>
-    <column name="omschrijving" phpName="Omschrijving" type="VARCHAR" size="255" required="false"/>
-    <column name="assortimentshouder" phpName="Assortimentshouder" type="INTEGER" required="false"/>
-    <column name="datum_van_ingang" phpName="DatumVanIngang" type="DATE" required="false"/>
-    <column name="retourtermijn" phpName="Retourtermijn" type="INTEGER" required="false"/>
-    <column name="retouraanduiding" phpName="Retouraanduiding" type="VARCHAR" size="255" required="false"/>
-    <column name="retourpercentage" phpName="Retourpercentage" type="INTEGER" required="false"/>
-    <column name="assortimentsprijs" phpName="Assortimentsprijs" type="DECIMAL" size="8" scale="2" required="false"/>
-    <column name="opgegeven_verkoopprijs" phpName="OpgegevenVerkoopprijs" type="DECIMAL" size="8" scale="2" required="false"/>
-    <column name="btwkode_van_assortimentshouder" phpName="BtwkodeVanAssortimentshouder" type="INTEGER" required="false"/>
-    <column name="hoeveelheid" phpName="Hoeveelheid" type="DECIMAL" size="8" scale="2" required="false"/>
-    <column name="eenheid" phpName="Eenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="ean_barcode" phpName="EanBarcode" type="bigint" size='14' required="false"/>
-    <column name="hibc_barcode" phpName="HibcBarcode" type="VARCHAR" size="255" required="false"/>
-    <column name="minikaart_kode" phpName="MinikaartKode" type="INTEGER" required="false"/>
-    <column name="bestelmogelijkheid" phpName="Bestelmogelijkheid" type="VARCHAR" size="255" required="false"/>
-    <foreign-key foreignTable="gs_artikelen">
-      <reference local="zinummer" foreign="zinummer"/>
-    </foreign-key>
-    <index>
-    	<index-column name='ean_barcode'></index-column>
-    </index>
-    <index>
-    	<index-column name='hibc_barcode'></index-column>
-    </index>
-  </table>
-  <table name="gs_logistieke_informatie" phpName="GsLogistiekeInformatie" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="gtin" phpName="Gtin" type="bigint" size='14' primaryKey="true" required="true"/>
-    <column name="gtin_van_de_data_leverancier" phpName="GtinVanDeDataLeverancier" type="bigint" size='14'  primaryKey="true" required="true"/>
-    <column name="omschrijving_gtin" phpName="OmschrijvingGtin" type="VARCHAR" size="255" required="false"/>
-    <column name="hoogte_hoeveelheid" phpName="HoogteHoeveelheid" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="hoogte_eenheid" phpName="HoogteEenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="breedte_hoeveelheid" phpName="BreedteHoeveelheid" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="breedte_eenheid" phpName="BreedteEenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="diepte_hoeveelheid" phpName="DiepteHoeveelheid" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="diepte_eenheid" phpName="DiepteEenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="bruto_gewicht_hoeveelheid" phpName="BrutoGewichtHoeveelheid" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="bruto_gewicht_eenheid" phpName="BrutoGewichtEenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="netto_gewicht_hoeveelheid" phpName="NettoGewichtHoeveelheid" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="netto_gewicht_eenheid" phpName="NettoGewichtEenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="indicatie_basiseenheid" phpName="IndicatieBasiseenheid" type="TINYINT" required="false"/>
-    <column name="indicatie_consumenteneenheid" phpName="IndicatieConsumenteneenheid" type="TINYINT" required="false"/>
-    <column name="indicatie_besteleenheid" phpName="IndicatieBesteleenheid" type="TINYINT" required="false"/>
-    <column name="indicatie_levereenheid" phpName="IndicatieLevereenheid" type="TINYINT" required="false"/>
-    <column name="indicatie_factuureenheid" phpName="IndicatieFactuureenheid" type="TINYINT" required="false"/>
-    <column name="startdatum_beschikbaarheid_verpakking" phpName="StartdatumBeschikbaarheidVerpakking" type="VARCHAR" size="255" required="false"/>
-    <column name="einddatum_beschikbaarheid_verpakking" phpName="EinddatumBeschikbaarheidVerpakking" type="VARCHAR" size="255" required="false"/>
-    <column name="stopdatum_verpakking" phpName="StopdatumVerpakking" type="VARCHAR" size="255" required="false"/>
-    <column name="child_gtin" phpName="ChildGtin" type="bigint" size='14'  primaryKey="true" required="true"/>
-    <column name="child_gtin_hoeveelheid" phpName="ChildGtinHoeveelheid" type="INTEGER" required="false"/>
-    <column name="product_type" phpName="ProductType" type="VARCHAR" size="255" required="false"/>
-    <column name="lijstprijs" phpName="Lijstprijs" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="retailprijs" phpName="Retailprijs" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="netto_inhoud_hoeveelheid" phpName="NettoInhoudHoeveelheid" type="DECIMAL" size="12" scale="4" required="false"/>
-    <column name="netto_inhoud_eenheid" phpName="NettoInhoudEenheid" type="VARCHAR" size="255" required="false"/>
-    <column name="zindex_nummer" phpName="ZindexNummer" type="INTEGER" required="false"/>
-    <column name="hoeveelheid_verpakking" phpName="HoeveelheidVerpakking" type="DECIMAL" size="8" scale="2" required="false"/>
-    <column name="memocode_eenheid_verpakking" phpName="MemocodeEenheidVerpakking" type="VARCHAR" size="255" required="false"/>
-    <column name="fabrikant_artikel_codering" phpName="FabrikantArtikelCodering" type="VARCHAR" size="255" required="false"/>
-    <column name="thesaurus_verwijzing_status" phpName="ThesaurusVerwijzingStatus" type="INTEGER" required="false"/>
-    <column name="status" phpName="Status" type="INTEGER" required="false"/>
-    <foreign-key foreignTable='gs_artikelen'>
-    	<reference local='zindex_nummer' foreign='zinummer'/>
-    </foreign-key>
-    <index>
-		<index-column name='gtin'/>
-	</index>
   </table>
   <table name="gs_medicatie_bewaking_koppelen_met_zrs" phpName="GsMedicatieBewakingKoppelenMetZrs" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -1242,15 +1009,6 @@
     <column name="naamnummer_ingang" phpName="NaamnummerIngang" type="INTEGER" primaryKey="true" required="true"/>
     <column name="naamnummer_uitgang" phpName="NaamnummerUitgang" type="INTEGER" primaryKey="true" required="true"/>
   </table>
-  <table name="gs_relaties_tussen_thesaurusitemnummers" phpName="GsRelatiesTussenThesaurusitemnummers" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="thesaurus_relatienummer" phpName="ThesaurusRelatienummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusnummer_in" phpName="ThesaurusnummerIn" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusnummer_uit" phpName="ThesaurusnummerUit" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_itemnummer_in" phpName="ThesaurusItemnummerIn" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_itemnummer_uit" phpName="ThesaurusItemnummerUit" type="INTEGER" primaryKey="true" required="true"/>
-  </table>
   <table name="gs_rubrieken" phpName="GsRubrieken" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
@@ -1331,17 +1089,6 @@
     <column name="versienummer_wcia_tabellen_laatste_wijziging" phpName="VersienummerWciaTabellenLaatsteWijziging" type="INTEGER" required="false"/>
     <column name="versienummer_wcia_tabellen_vervallen" phpName="VersienummerWciaTabellenVervallen" type="INTEGER" required="false"/>
   </table>
-  <table name="gs_teksten" phpName="GsTeksten" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="tekstmodulethesaurus_103" phpName="Tekstmodulethesaurus103" type="INTEGER" required="false"/>
-    <column name="tekstmodule" phpName="Tekstmodule" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst_nivo_kode" phpName="TekstNivoKode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstsoortthesaurus_104" phpName="Tekstsoortthesaurus104" type="INTEGER" required="false"/>
-    <column name="tekstsoort" phpName="Tekstsoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstregelnummer" phpName="Tekstregelnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst" phpName="Tekst" type="VARCHAR" size="255" required="false"/>
-  </table>
   <table name="gs_thesauri_totaal" phpName="GsThesauriTotaal" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
@@ -1382,22 +1129,6 @@
     <column name="hoeveelheid_per_deelverpakking" phpName="HoeveelheidPerDeelverpakking" type="DECIMAL" size="8" scale="2" required="false"/>
     <column name="basiseenheid_verpakking" phpName="BasiseenheidVerpakking" type="VARCHAR" size="255" required="false"/>
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-  </table>
-  <table name="gs_verrichtingen_tabel" phpName="GsVerrichtingenTabel" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="verrichtingsnummer" phpName="Verrichtingsnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_bron_verrichting" phpName="ThesaurusverwijzingBronVerrichting" type="INTEGER" required="false"/>
-    <column name="bron_verrichting" phpName="BronVerrichting" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="verrichtingscode_gehanteerd_door_bron" phpName="VerrichtingscodeGehanteerdDoorBron" type="VARCHAR" size="255" required="false"/>
-    <column name="thesaurusverwijzing_verrichtingsoort" phpName="ThesaurusverwijzingVerrichtingsoort" type="INTEGER" required="false"/>
-    <column name="verrichtingssoort_code" phpName="VerrichtingssoortCode" type="INTEGER" required="false"/>
-    <column name="verrichtingsomschrijving" phpName="Verrichtingsomschrijving" type="VARCHAR" size="255" required="false"/>
-    <column name="memocode" phpName="Memocode" type="VARCHAR" size="255" required="false"/>
-    <column name="ingangsdatum" phpName="Ingangsdatum" type="INTEGER" required="false"/>
-    <column name="vervaldatum" phpName="Vervaldatum" type="INTEGER" required="false"/>
-    <column name="url_voor_beschrijving_van_toepassing_verrichting" phpName="UrlVoorBeschrijvingVanToepassingVerrichting" type="VARCHAR" size="255" required="false"/>
-    <column name="verrichtingsnummer_bovenliggend_niveau" phpName="VerrichtingsnummerBovenliggendNiveau" type="INTEGER" required="false"/>
   </table>
   <table name="gs_versienummer_tabel_wcia" phpName="GsVersienummerTabelWcia" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -1504,19 +1235,5 @@
     <foreign-key foreignTable="gs_namen">
       <reference local="naamnummer_prescriptie_product" foreign="naamnummer"/>
     </foreign-key>
-  </table>
-  <table name="gs_ziccode" phpName="GsZiccode" idMethod="native">
-    <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
-    <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="instellingscode" phpName="Instellingscode" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="naam_van_de_instelling" phpName="NaamVanDeInstelling" type="VARCHAR" size="255" required="false"/>
-    <column name="straatnaam" phpName="Straatnaam" type="VARCHAR" size="255" required="false"/>
-    <column name="huisnummer" phpName="Huisnummer" type="INTEGER" required="false"/>
-    <column name="huisnummer_toevoeging" phpName="HuisnummerToevoeging" type="VARCHAR" size="255" required="false"/>
-    <column name="postcode" phpName="Postcode" type="VARCHAR" size="255" required="false"/>
-    <column name="plaats" phpName="Plaats" type="VARCHAR" size="255" required="false"/>
-    <column name="zoeksleutel" phpName="Zoeksleutel" type="VARCHAR" size="255" required="false"/>
-    <column name="agbcode_van_de_instelling" phpName="AgbcodeVanDeInstelling" type="INTEGER" required="false"/>
-    <column name="agbcode_toevoegsel_lokaties" phpName="AgbcodeToevoegselLokaties" type="VARCHAR" size="255" required="false"/>
   </table>
 </database>

@@ -12,7 +12,6 @@ use \PropelPDO;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelen;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproductenPeer;
-use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatiePeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsNamenPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsNawGegevensGstandaardPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsThesauriTotaalPeer;
@@ -1150,57 +1149,6 @@ abstract class BaseGsArtikelenPeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related LogistiekeInformatie table
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return int Number of matching rows.
-     */
-    public static function doCountJoinLogistiekeInformatie(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        // we're going to modify criteria, so copy it first
-        $criteria = clone $criteria;
-
-        // We need to set the primary table name, since in the case that there are no WHERE columns
-        // it will be impossible for the BasePeer::createSelectSql() method to determine which
-        // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(GsArtikelenPeer::TABLE_NAME);
-
-        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-            $criteria->setDistinct();
-        }
-
-        if (!$criteria->hasSelectClause()) {
-            GsArtikelenPeer::addSelectColumns($criteria);
-        }
-
-        $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-        // Set the correct dbName
-        $criteria->setDbName(GsArtikelenPeer::DATABASE_NAME);
-
-        if ($con === null) {
-            $con = Propel::getConnection(GsArtikelenPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-        }
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
-        $stmt = BasePeer::doCount($criteria, $con);
-
-        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $count = (int) $row[0];
-        } else {
-            $count = 0; // no rows returned; we infer that means 0 matches.
-        }
-        $stmt->closeCursor();
-
-        return $count;
-    }
-
-
-    /**
      * Selects a collection of GsArtikelen objects pre-filled with their GsHandelsproducten objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
@@ -1746,74 +1694,6 @@ abstract class BaseGsArtikelenPeer
 
 
     /**
-     * Selects a collection of GsArtikelen objects pre-filled with their GsLogistiekeInformatie objects.
-     * @param      Criteria  $criteria
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of GsArtikelen objects.
-     * @throws PropelException Any exceptions caught during processing will be
-     *		 rethrown wrapped into a PropelException.
-     */
-    public static function doSelectJoinLogistiekeInformatie(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $criteria = clone $criteria;
-
-        // Set the correct dbName if it has not been overridden
-        if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(GsArtikelenPeer::DATABASE_NAME);
-        }
-
-        GsArtikelenPeer::addSelectColumns($criteria);
-        $startcol = GsArtikelenPeer::NUM_HYDRATE_COLUMNS;
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
-        $stmt = BasePeer::doSelect($criteria, $con);
-        $results = array();
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = GsArtikelenPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = GsArtikelenPeer::getInstanceFromPool($key1))) {
-                // We no longer rehydrate the object, since this can cause data loss.
-                // See http://www.propelorm.org/ticket/509
-                // $obj1->hydrate($row, 0, true); // rehydrate
-            } else {
-
-                $cls = GsArtikelenPeer::getOMClass();
-
-                $obj1 = new $cls();
-                $obj1->hydrate($row);
-                GsArtikelenPeer::addInstanceToPool($obj1, $key1);
-            } // if $obj1 already loaded
-
-            $key2 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol);
-            if ($key2 !== null) {
-                $obj2 = GsLogistiekeInformatiePeer::getInstanceFromPool($key2);
-                if (!$obj2) {
-
-                    $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj2, $key2);
-                } // if obj2 already loaded
-
-                // Add the $obj1 (GsArtikelen) to $obj2 (GsLogistiekeInformatie)
-                // one to one relationship
-                $obj1->setGsLogistiekeInformatie($obj2);
-
-            } // if joined row was not null
-
-            $results[] = $obj1;
-        }
-        $stmt->closeCursor();
-
-        return $results;
-    }
-
-
-    /**
      * Returns the number of rows matching criteria, joining all related tables
      *
      * @param      Criteria $criteria
@@ -1874,8 +1754,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
 
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
         $stmt = BasePeer::doCount($criteria, $con);
 
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -1934,9 +1812,6 @@ abstract class BaseGsArtikelenPeer
         GsThesauriTotaalPeer::addSelectColumns($criteria);
         $startcol10 = $startcol9 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol11 = $startcol10 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -1961,8 +1836,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
@@ -2125,24 +1998,6 @@ abstract class BaseGsArtikelenPeer
                 $obj9->addGsArtikelenRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode($obj1);
             } // if joined row not null
 
-            // Add objects for joined GsLogistiekeInformatie rows
-
-            $key10 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol10);
-            if ($key10 !== null) {
-                $obj10 = GsLogistiekeInformatiePeer::getInstanceFromPool($key10);
-                if (!$obj10) {
-
-                    $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj10 = new $cls();
-                    $obj10->hydrate($row, $startcol10);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj10, $key10);
-                } // if obj10 loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj10 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj10);
-            } // if joined row not null
-
             $results[] = $obj1;
         }
         $stmt->closeCursor();
@@ -2209,8 +2064,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -2284,8 +2137,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
 
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
         $stmt = BasePeer::doCount($criteria, $con);
 
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -2353,8 +2204,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -2424,8 +2273,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
 
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
         $stmt = BasePeer::doCount($criteria, $con);
 
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -2494,8 +2341,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
 
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
         $stmt = BasePeer::doCount($criteria, $con);
 
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -2554,8 +2399,6 @@ abstract class BaseGsArtikelenPeer
         $criteria->addJoin(GsArtikelenPeer::IMPORTEUR_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -2616,8 +2459,6 @@ abstract class BaseGsArtikelenPeer
 
         $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
 
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
         $stmt = BasePeer::doCount($criteria, $con);
 
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -2677,82 +2518,6 @@ abstract class BaseGsArtikelenPeer
 
         $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
 
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
-
-        $stmt = BasePeer::doCount($criteria, $con);
-
-        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $count = (int) $row[0];
-        } else {
-            $count = 0; // no rows returned; we infer that means 0 matches.
-        }
-        $stmt->closeCursor();
-
-        return $count;
-    }
-
-
-    /**
-     * Returns the number of rows matching criteria, joining the related LogistiekeInformatie table
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return int Number of matching rows.
-     */
-    public static function doCountJoinAllExceptLogistiekeInformatie(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        // we're going to modify criteria, so copy it first
-        $criteria = clone $criteria;
-
-        // We need to set the primary table name, since in the case that there are no WHERE columns
-        // it will be impossible for the BasePeer::createSelectSql() method to determine which
-        // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(GsArtikelenPeer::TABLE_NAME);
-
-        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-            $criteria->setDistinct();
-        }
-
-        if (!$criteria->hasSelectClause()) {
-            GsArtikelenPeer::addSelectColumns($criteria);
-        }
-
-        $criteria->clearOrderByColumns(); // ORDER BY should not affect count
-
-        // Set the correct dbName
-        $criteria->setDbName(GsArtikelenPeer::DATABASE_NAME);
-
-        if ($con === null) {
-            $con = Propel::getConnection(GsArtikelenPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-        }
-
-        $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::LEVERANCIER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::IMPORTEUR_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addMultipleJoin(array(
-        array(GsArtikelenPeer::LAND_VAN_HERKOMST_THESAURUS_NUMMER, GsThesauriTotaalPeer::THESAURUSNUMMER),
-        array(GsArtikelenPeer::LAND_VAN_HERKOMST_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
-      ), $join_behavior);
-
-        $criteria->addMultipleJoin(array(
-        array(GsArtikelenPeer::HOOFDVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
-        array(GsArtikelenPeer::HOOFDVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
-      ), $join_behavior);
-
-        $criteria->addMultipleJoin(array(
-        array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
-        array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
-      ), $join_behavior);
-
         $stmt = BasePeer::doCount($criteria, $con);
 
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -2811,9 +2576,6 @@ abstract class BaseGsArtikelenPeer
         GsThesauriTotaalPeer::addSelectColumns($criteria);
         $startcol9 = $startcol8 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol10 = $startcol9 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::LEVERANCIER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
@@ -2836,8 +2598,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -2990,25 +2750,6 @@ abstract class BaseGsArtikelenPeer
 
             } // if joined row is not null
 
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key9 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol9);
-                if ($key9 !== null) {
-                    $obj9 = GsLogistiekeInformatiePeer::getInstanceFromPool($key9);
-                    if (!$obj9) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj9 = new $cls();
-                    $obj9->hydrate($row, $startcol9);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj9, $key9);
-                } // if $obj9 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj9 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj9);
-
-            } // if joined row is not null
-
             $results[] = $obj1;
         }
         $stmt->closeCursor();
@@ -3062,9 +2803,6 @@ abstract class BaseGsArtikelenPeer
         GsThesauriTotaalPeer::addSelectColumns($criteria);
         $startcol9 = $startcol8 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol10 = $startcol9 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::LEVERANCIER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
@@ -3087,8 +2825,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -3241,25 +2977,6 @@ abstract class BaseGsArtikelenPeer
 
             } // if joined row is not null
 
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key9 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol9);
-                if ($key9 !== null) {
-                    $obj9 = GsLogistiekeInformatiePeer::getInstanceFromPool($key9);
-                    if (!$obj9) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj9 = new $cls();
-                    $obj9->hydrate($row, $startcol9);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj9, $key9);
-                } // if $obj9 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj9 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj9);
-
-            } // if joined row is not null
-
             $results[] = $obj1;
         }
         $stmt->closeCursor();
@@ -3307,9 +3024,6 @@ abstract class BaseGsArtikelenPeer
         GsThesauriTotaalPeer::addSelectColumns($criteria);
         $startcol7 = $startcol6 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -3328,8 +3042,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -3441,25 +3153,6 @@ abstract class BaseGsArtikelenPeer
 
                 // Add the $obj1 (GsArtikelen) to the collection in $obj6 (GsThesauriTotaal)
                 $obj6->addGsArtikelenRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key7 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsLogistiekeInformatiePeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj7);
 
             } // if joined row is not null
 
@@ -3510,9 +3203,6 @@ abstract class BaseGsArtikelenPeer
         GsThesauriTotaalPeer::addSelectColumns($criteria);
         $startcol7 = $startcol6 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -3531,8 +3221,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -3644,25 +3332,6 @@ abstract class BaseGsArtikelenPeer
 
                 // Add the $obj1 (GsArtikelen) to the collection in $obj6 (GsThesauriTotaal)
                 $obj6->addGsArtikelenRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key7 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsLogistiekeInformatiePeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj7);
 
             } // if joined row is not null
 
@@ -3713,9 +3382,6 @@ abstract class BaseGsArtikelenPeer
         GsThesauriTotaalPeer::addSelectColumns($criteria);
         $startcol7 = $startcol6 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -3734,8 +3400,6 @@ abstract class BaseGsArtikelenPeer
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
         array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
       ), $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -3850,25 +3514,6 @@ abstract class BaseGsArtikelenPeer
 
             } // if joined row is not null
 
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key7 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsLogistiekeInformatiePeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj7);
-
-            } // if joined row is not null
-
             $results[] = $obj1;
         }
         $stmt->closeCursor();
@@ -3916,9 +3561,6 @@ abstract class BaseGsArtikelenPeer
         GsNawGegevensGstandaardPeer::addSelectColumns($criteria);
         $startcol7 = $startcol6 + GsNawGegevensGstandaardPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -3928,8 +3570,6 @@ abstract class BaseGsArtikelenPeer
         $criteria->addJoin(GsArtikelenPeer::IMPORTEUR_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -4041,25 +3681,6 @@ abstract class BaseGsArtikelenPeer
 
                 // Add the $obj1 (GsArtikelen) to the collection in $obj6 (GsNawGegevensGstandaard)
                 $obj6->addGsArtikelenRelatedByRegistratiehouderKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key7 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsLogistiekeInformatiePeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj7);
 
             } // if joined row is not null
 
@@ -4110,9 +3731,6 @@ abstract class BaseGsArtikelenPeer
         GsNawGegevensGstandaardPeer::addSelectColumns($criteria);
         $startcol7 = $startcol6 + GsNawGegevensGstandaardPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -4122,8 +3740,6 @@ abstract class BaseGsArtikelenPeer
         $criteria->addJoin(GsArtikelenPeer::IMPORTEUR_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -4235,25 +3851,6 @@ abstract class BaseGsArtikelenPeer
 
                 // Add the $obj1 (GsArtikelen) to the collection in $obj6 (GsNawGegevensGstandaard)
                 $obj6->addGsArtikelenRelatedByRegistratiehouderKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key7 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsLogistiekeInformatiePeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj7);
 
             } // if joined row is not null
 
@@ -4304,9 +3901,6 @@ abstract class BaseGsArtikelenPeer
         GsNawGegevensGstandaardPeer::addSelectColumns($criteria);
         $startcol7 = $startcol6 + GsNawGegevensGstandaardPeer::NUM_HYDRATE_COLUMNS;
 
-        GsLogistiekeInformatiePeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsLogistiekeInformatiePeer::NUM_HYDRATE_COLUMNS;
-
         $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
@@ -4316,8 +3910,6 @@ abstract class BaseGsArtikelenPeer
         $criteria->addJoin(GsArtikelenPeer::IMPORTEUR_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
 
         $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ZINUMMER, GsLogistiekeInformatiePeer::ZINDEX_NUMMER, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -4429,276 +4021,6 @@ abstract class BaseGsArtikelenPeer
 
                 // Add the $obj1 (GsArtikelen) to the collection in $obj6 (GsNawGegevensGstandaard)
                 $obj6->addGsArtikelenRelatedByRegistratiehouderKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsLogistiekeInformatie rows
-
-                $key7 = GsLogistiekeInformatiePeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsLogistiekeInformatiePeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsLogistiekeInformatiePeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsLogistiekeInformatiePeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsLogistiekeInformatie)
-                $obj1->setGsLogistiekeInformatie($obj7);
-
-            } // if joined row is not null
-
-            $results[] = $obj1;
-        }
-        $stmt->closeCursor();
-
-        return $results;
-    }
-
-
-    /**
-     * Selects a collection of GsArtikelen objects pre-filled with all related objects except LogistiekeInformatie.
-     *
-     * @param      Criteria  $criteria
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of GsArtikelen objects.
-     * @throws PropelException Any exceptions caught during processing will be
-     *		 rethrown wrapped into a PropelException.
-     */
-    public static function doSelectJoinAllExceptLogistiekeInformatie(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $criteria = clone $criteria;
-
-        // Set the correct dbName if it has not been overridden
-        // $criteria->getDbName() will return the same object if not set to another value
-        // so == check is okay and faster
-        if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(GsArtikelenPeer::DATABASE_NAME);
-        }
-
-        GsArtikelenPeer::addSelectColumns($criteria);
-        $startcol2 = GsArtikelenPeer::NUM_HYDRATE_COLUMNS;
-
-        GsHandelsproductenPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + GsHandelsproductenPeer::NUM_HYDRATE_COLUMNS;
-
-        GsNamenPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + GsNamenPeer::NUM_HYDRATE_COLUMNS;
-
-        GsNawGegevensGstandaardPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + GsNawGegevensGstandaardPeer::NUM_HYDRATE_COLUMNS;
-
-        GsNawGegevensGstandaardPeer::addSelectColumns($criteria);
-        $startcol6 = $startcol5 + GsNawGegevensGstandaardPeer::NUM_HYDRATE_COLUMNS;
-
-        GsNawGegevensGstandaardPeer::addSelectColumns($criteria);
-        $startcol7 = $startcol6 + GsNawGegevensGstandaardPeer::NUM_HYDRATE_COLUMNS;
-
-        GsThesauriTotaalPeer::addSelectColumns($criteria);
-        $startcol8 = $startcol7 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
-
-        GsThesauriTotaalPeer::addSelectColumns($criteria);
-        $startcol9 = $startcol8 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
-
-        GsThesauriTotaalPeer::addSelectColumns($criteria);
-        $startcol10 = $startcol9 + GsThesauriTotaalPeer::NUM_HYDRATE_COLUMNS;
-
-        $criteria->addJoin(GsArtikelenPeer::HANDELSPRODUKTKODE, GsHandelsproductenPeer::HANDELSPRODUKTKODE, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::ARTIKELNAAMNUMMER, GsNamenPeer::NAAMNUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::LEVERANCIER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::IMPORTEUR_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addJoin(GsArtikelenPeer::REGISTRATIEHOUDER_KODE, GsNawGegevensGstandaardPeer::NAW_NUMMER, $join_behavior);
-
-        $criteria->addMultipleJoin(array(
-        array(GsArtikelenPeer::LAND_VAN_HERKOMST_THESAURUS_NUMMER, GsThesauriTotaalPeer::THESAURUSNUMMER),
-        array(GsArtikelenPeer::LAND_VAN_HERKOMST_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
-      ), $join_behavior);
-
-        $criteria->addMultipleJoin(array(
-        array(GsArtikelenPeer::HOOFDVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
-        array(GsArtikelenPeer::HOOFDVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
-      ), $join_behavior);
-
-        $criteria->addMultipleJoin(array(
-        array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_THESNR, GsThesauriTotaalPeer::THESAURUSNUMMER),
-        array(GsArtikelenPeer::DEELVERPAKKING_OMSCHRIJVING_KODE, GsThesauriTotaalPeer::THESAURUS_ITEMNUMMER),
-      ), $join_behavior);
-
-
-        $stmt = BasePeer::doSelect($criteria, $con);
-        $results = array();
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = GsArtikelenPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = GsArtikelenPeer::getInstanceFromPool($key1))) {
-                // We no longer rehydrate the object, since this can cause data loss.
-                // See http://www.propelorm.org/ticket/509
-                // $obj1->hydrate($row, 0, true); // rehydrate
-            } else {
-                $cls = GsArtikelenPeer::getOMClass();
-
-                $obj1 = new $cls();
-                $obj1->hydrate($row);
-                GsArtikelenPeer::addInstanceToPool($obj1, $key1);
-            } // if obj1 already loaded
-
-                // Add objects for joined GsHandelsproducten rows
-
-                $key2 = GsHandelsproductenPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-                if ($key2 !== null) {
-                    $obj2 = GsHandelsproductenPeer::getInstanceFromPool($key2);
-                    if (!$obj2) {
-
-                        $cls = GsHandelsproductenPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol2);
-                    GsHandelsproductenPeer::addInstanceToPool($obj2, $key2);
-                } // if $obj2 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj2 (GsHandelsproducten)
-                $obj2->addGsArtikelen($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsNamen rows
-
-                $key3 = GsNamenPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-                if ($key3 !== null) {
-                    $obj3 = GsNamenPeer::getInstanceFromPool($key3);
-                    if (!$obj3) {
-
-                        $cls = GsNamenPeer::getOMClass();
-
-                    $obj3 = new $cls();
-                    $obj3->hydrate($row, $startcol3);
-                    GsNamenPeer::addInstanceToPool($obj3, $key3);
-                } // if $obj3 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj3 (GsNamen)
-                $obj3->addGsArtikelen($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsNawGegevensGstandaard rows
-
-                $key4 = GsNawGegevensGstandaardPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-                if ($key4 !== null) {
-                    $obj4 = GsNawGegevensGstandaardPeer::getInstanceFromPool($key4);
-                    if (!$obj4) {
-
-                        $cls = GsNawGegevensGstandaardPeer::getOMClass();
-
-                    $obj4 = new $cls();
-                    $obj4->hydrate($row, $startcol4);
-                    GsNawGegevensGstandaardPeer::addInstanceToPool($obj4, $key4);
-                } // if $obj4 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj4 (GsNawGegevensGstandaard)
-                $obj4->addGsArtikelenRelatedByLeverancierKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsNawGegevensGstandaard rows
-
-                $key5 = GsNawGegevensGstandaardPeer::getPrimaryKeyHashFromRow($row, $startcol5);
-                if ($key5 !== null) {
-                    $obj5 = GsNawGegevensGstandaardPeer::getInstanceFromPool($key5);
-                    if (!$obj5) {
-
-                        $cls = GsNawGegevensGstandaardPeer::getOMClass();
-
-                    $obj5 = new $cls();
-                    $obj5->hydrate($row, $startcol5);
-                    GsNawGegevensGstandaardPeer::addInstanceToPool($obj5, $key5);
-                } // if $obj5 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj5 (GsNawGegevensGstandaard)
-                $obj5->addGsArtikelenRelatedByImporteurKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsNawGegevensGstandaard rows
-
-                $key6 = GsNawGegevensGstandaardPeer::getPrimaryKeyHashFromRow($row, $startcol6);
-                if ($key6 !== null) {
-                    $obj6 = GsNawGegevensGstandaardPeer::getInstanceFromPool($key6);
-                    if (!$obj6) {
-
-                        $cls = GsNawGegevensGstandaardPeer::getOMClass();
-
-                    $obj6 = new $cls();
-                    $obj6->hydrate($row, $startcol6);
-                    GsNawGegevensGstandaardPeer::addInstanceToPool($obj6, $key6);
-                } // if $obj6 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj6 (GsNawGegevensGstandaard)
-                $obj6->addGsArtikelenRelatedByRegistratiehouderKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsThesauriTotaal rows
-
-                $key7 = GsThesauriTotaalPeer::getPrimaryKeyHashFromRow($row, $startcol7);
-                if ($key7 !== null) {
-                    $obj7 = GsThesauriTotaalPeer::getInstanceFromPool($key7);
-                    if (!$obj7) {
-
-                        $cls = GsThesauriTotaalPeer::getOMClass();
-
-                    $obj7 = new $cls();
-                    $obj7->hydrate($row, $startcol7);
-                    GsThesauriTotaalPeer::addInstanceToPool($obj7, $key7);
-                } // if $obj7 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj7 (GsThesauriTotaal)
-                $obj7->addGsArtikelenRelatedByLandVanHerkomstThesaurusNummerLandVanHerkomstKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsThesauriTotaal rows
-
-                $key8 = GsThesauriTotaalPeer::getPrimaryKeyHashFromRow($row, $startcol8);
-                if ($key8 !== null) {
-                    $obj8 = GsThesauriTotaalPeer::getInstanceFromPool($key8);
-                    if (!$obj8) {
-
-                        $cls = GsThesauriTotaalPeer::getOMClass();
-
-                    $obj8 = new $cls();
-                    $obj8->hydrate($row, $startcol8);
-                    GsThesauriTotaalPeer::addInstanceToPool($obj8, $key8);
-                } // if $obj8 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj8 (GsThesauriTotaal)
-                $obj8->addGsArtikelenRelatedByHoofdverpakkingOmschrijvingThesnrHoofdverpakkingOmschrijvingKode($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined GsThesauriTotaal rows
-
-                $key9 = GsThesauriTotaalPeer::getPrimaryKeyHashFromRow($row, $startcol9);
-                if ($key9 !== null) {
-                    $obj9 = GsThesauriTotaalPeer::getInstanceFromPool($key9);
-                    if (!$obj9) {
-
-                        $cls = GsThesauriTotaalPeer::getOMClass();
-
-                    $obj9 = new $cls();
-                    $obj9->hydrate($row, $startcol9);
-                    GsThesauriTotaalPeer::addInstanceToPool($obj9, $key9);
-                } // if $obj9 already loaded
-
-                // Add the $obj1 (GsArtikelen) to the collection in $obj9 (GsThesauriTotaal)
-                $obj9->addGsArtikelenRelatedByDeelverpakkingOmschrijvingThesnrDeelverpakkingOmschrijvingKode($obj1);
 
             } // if joined row is not null
 

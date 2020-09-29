@@ -58,7 +58,6 @@ class GsAtcCodesTableMap extends TableMap
     {
         $this->addRelation('GsArtikelEigenschappen', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsArtikelEigenschappen', RelationMap::ONE_TO_MANY, array('atccode' => 'atc', ), null, null, 'GsArtikelEigenschappens');
         $this->addRelation('GsAtcCodesExtended', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsAtcCodesExtended', RelationMap::ONE_TO_ONE, array('atccode' => 'atccode', ), null, null);
-        $this->addRelation('GsAtcdddgegevens', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsAtcdddgegevens', RelationMap::ONE_TO_MANY, array('atccode' => 'atccode', ), null, null, 'GsAtcdddgegevenss');
         $this->addRelation('GsDailyDefinedDose', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsDailyDefinedDose', RelationMap::ONE_TO_MANY, array('atccode' => 'atccode', ), null, null, 'GsDailyDefinedDoses');
         $this->addRelation('GsGeneriekeProducten', 'PharmaIntelligence\\GstandaardBundle\\Model\\GsGeneriekeProducten', RelationMap::ONE_TO_MANY, array('atccode' => 'atccode', ), null, null, 'GsGeneriekeProductens');
     } // buildRelations()

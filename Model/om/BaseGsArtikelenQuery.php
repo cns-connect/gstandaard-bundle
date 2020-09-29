@@ -18,8 +18,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsHandelsproducten;
 use PharmaIntelligence\GstandaardBundle\Model\GsIndicatiesBijSupplementaireProducten;
-use PharmaIntelligence\GstandaardBundle\Model\GsLeveranciersassortimenten;
-use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatie;
 use PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeVerpakkingsinformatie;
 use PharmaIntelligence\GstandaardBundle\Model\GsNamen;
 use PharmaIntelligence\GstandaardBundle\Model\GsNawGegevensGstandaard;
@@ -179,10 +177,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsThesauriTotaal;
  * @method GsArtikelenQuery rightJoinDeelverpakkingOmschrijving($relationAlias = null) Adds a RIGHT JOIN clause to the query using the DeelverpakkingOmschrijving relation
  * @method GsArtikelenQuery innerJoinDeelverpakkingOmschrijving($relationAlias = null) Adds a INNER JOIN clause to the query using the DeelverpakkingOmschrijving relation
  *
- * @method GsArtikelenQuery leftJoinLogistiekeInformatie($relationAlias = null) Adds a LEFT JOIN clause to the query using the LogistiekeInformatie relation
- * @method GsArtikelenQuery rightJoinLogistiekeInformatie($relationAlias = null) Adds a RIGHT JOIN clause to the query using the LogistiekeInformatie relation
- * @method GsArtikelenQuery innerJoinLogistiekeInformatie($relationAlias = null) Adds a INNER JOIN clause to the query using the LogistiekeInformatie relation
- *
  * @method GsArtikelenQuery leftJoinGsSupplementaireProductenHistorie($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsSupplementaireProductenHistorie relation
  * @method GsArtikelenQuery rightJoinGsSupplementaireProductenHistorie($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsSupplementaireProductenHistorie relation
  * @method GsArtikelenQuery innerJoinGsSupplementaireProductenHistorie($relationAlias = null) Adds a INNER JOIN clause to the query using the GsSupplementaireProductenHistorie relation
@@ -206,14 +200,6 @@ use PharmaIntelligence\GstandaardBundle\Model\GsThesauriTotaal;
  * @method GsArtikelenQuery leftJoinGsIndicatiesBijSupplementaireProducten($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsIndicatiesBijSupplementaireProducten relation
  * @method GsArtikelenQuery rightJoinGsIndicatiesBijSupplementaireProducten($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsIndicatiesBijSupplementaireProducten relation
  * @method GsArtikelenQuery innerJoinGsIndicatiesBijSupplementaireProducten($relationAlias = null) Adds a INNER JOIN clause to the query using the GsIndicatiesBijSupplementaireProducten relation
- *
- * @method GsArtikelenQuery leftJoinGsLeveranciersassortimenten($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsLeveranciersassortimenten relation
- * @method GsArtikelenQuery rightJoinGsLeveranciersassortimenten($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsLeveranciersassortimenten relation
- * @method GsArtikelenQuery innerJoinGsLeveranciersassortimenten($relationAlias = null) Adds a INNER JOIN clause to the query using the GsLeveranciersassortimenten relation
- *
- * @method GsArtikelenQuery leftJoinGsLogistiekeInformatieRelatedByZindexNummer($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsLogistiekeInformatieRelatedByZindexNummer relation
- * @method GsArtikelenQuery rightJoinGsLogistiekeInformatieRelatedByZindexNummer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsLogistiekeInformatieRelatedByZindexNummer relation
- * @method GsArtikelenQuery innerJoinGsLogistiekeInformatieRelatedByZindexNummer($relationAlias = null) Adds a INNER JOIN clause to the query using the GsLogistiekeInformatieRelatedByZindexNummer relation
  *
  * @method GsArtikelenQuery leftJoinGsPreferentieBeleid($relationAlias = null) Adds a LEFT JOIN clause to the query using the GsPreferentieBeleid relation
  * @method GsArtikelenQuery rightJoinGsPreferentieBeleid($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GsPreferentieBeleid relation
@@ -624,8 +610,6 @@ abstract class BaseGsArtikelenQuery extends ModelCriteria
      * $query->filterByZinummer(array('min' => 12)); // WHERE zinummer >= 12
      * $query->filterByZinummer(array('max' => 12)); // WHERE zinummer <= 12
      * </code>
-     *
-     * @see       filterByLogistiekeInformatie()
      *
      * @param     mixed $zinummer The value to use as filter.
      *              Use scalar values for equality.
@@ -3307,82 +3291,6 @@ abstract class BaseGsArtikelenQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related GsLogistiekeInformatie object
-     *
-     * @param   GsLogistiekeInformatie|PropelObjectCollection $gsLogistiekeInformatie The related object(s) to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsArtikelenQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByLogistiekeInformatie($gsLogistiekeInformatie, $comparison = null)
-    {
-        if ($gsLogistiekeInformatie instanceof GsLogistiekeInformatie) {
-            return $this
-                ->addUsingAlias(GsArtikelenPeer::ZINUMMER, $gsLogistiekeInformatie->getZindexNummer(), $comparison);
-        } elseif ($gsLogistiekeInformatie instanceof PropelObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(GsArtikelenPeer::ZINUMMER, $gsLogistiekeInformatie->toKeyValue('ZindexNummer', 'ZindexNummer'), $comparison);
-        } else {
-            throw new PropelException('filterByLogistiekeInformatie() only accepts arguments of type GsLogistiekeInformatie or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the LogistiekeInformatie relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsArtikelenQuery The current query, for fluid interface
-     */
-    public function joinLogistiekeInformatie($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('LogistiekeInformatie');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'LogistiekeInformatie');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the LogistiekeInformatie relation GsLogistiekeInformatie object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatieQuery A secondary query class using the current class as primary query
-     */
-    public function useLogistiekeInformatieQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinLogistiekeInformatie($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'LogistiekeInformatie', '\PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatieQuery');
-    }
-
-    /**
      * Filter the query by a related GsSupplementaireProductenHistorie object
      *
      * @param   GsSupplementaireProductenHistorie|PropelObjectCollection $gsSupplementaireProductenHistorie  the related object to use as filter
@@ -3824,154 +3732,6 @@ abstract class BaseGsArtikelenQuery extends ModelCriteria
         return $this
             ->joinGsIndicatiesBijSupplementaireProducten($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'GsIndicatiesBijSupplementaireProducten', '\PharmaIntelligence\GstandaardBundle\Model\GsIndicatiesBijSupplementaireProductenQuery');
-    }
-
-    /**
-     * Filter the query by a related GsLeveranciersassortimenten object
-     *
-     * @param   GsLeveranciersassortimenten|PropelObjectCollection $gsLeveranciersassortimenten  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsArtikelenQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsLeveranciersassortimenten($gsLeveranciersassortimenten, $comparison = null)
-    {
-        if ($gsLeveranciersassortimenten instanceof GsLeveranciersassortimenten) {
-            return $this
-                ->addUsingAlias(GsArtikelenPeer::ZINUMMER, $gsLeveranciersassortimenten->getZinummer(), $comparison);
-        } elseif ($gsLeveranciersassortimenten instanceof PropelObjectCollection) {
-            return $this
-                ->useGsLeveranciersassortimentenQuery()
-                ->filterByPrimaryKeys($gsLeveranciersassortimenten->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByGsLeveranciersassortimenten() only accepts arguments of type GsLeveranciersassortimenten or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsLeveranciersassortimenten relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsArtikelenQuery The current query, for fluid interface
-     */
-    public function joinGsLeveranciersassortimenten($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsLeveranciersassortimenten');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsLeveranciersassortimenten');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsLeveranciersassortimenten relation GsLeveranciersassortimenten object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsLeveranciersassortimentenQuery A secondary query class using the current class as primary query
-     */
-    public function useGsLeveranciersassortimentenQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinGsLeveranciersassortimenten($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsLeveranciersassortimenten', '\PharmaIntelligence\GstandaardBundle\Model\GsLeveranciersassortimentenQuery');
-    }
-
-    /**
-     * Filter the query by a related GsLogistiekeInformatie object
-     *
-     * @param   GsLogistiekeInformatie|PropelObjectCollection $gsLogistiekeInformatie  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 GsArtikelenQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByGsLogistiekeInformatieRelatedByZindexNummer($gsLogistiekeInformatie, $comparison = null)
-    {
-        if ($gsLogistiekeInformatie instanceof GsLogistiekeInformatie) {
-            return $this
-                ->addUsingAlias(GsArtikelenPeer::ZINUMMER, $gsLogistiekeInformatie->getZindexNummer(), $comparison);
-        } elseif ($gsLogistiekeInformatie instanceof PropelObjectCollection) {
-            return $this
-                ->useGsLogistiekeInformatieRelatedByZindexNummerQuery()
-                ->filterByPrimaryKeys($gsLogistiekeInformatie->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByGsLogistiekeInformatieRelatedByZindexNummer() only accepts arguments of type GsLogistiekeInformatie or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the GsLogistiekeInformatieRelatedByZindexNummer relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return GsArtikelenQuery The current query, for fluid interface
-     */
-    public function joinGsLogistiekeInformatieRelatedByZindexNummer($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GsLogistiekeInformatieRelatedByZindexNummer');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'GsLogistiekeInformatieRelatedByZindexNummer');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the GsLogistiekeInformatieRelatedByZindexNummer relation GsLogistiekeInformatie object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatieQuery A secondary query class using the current class as primary query
-     */
-    public function useGsLogistiekeInformatieRelatedByZindexNummerQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinGsLogistiekeInformatieRelatedByZindexNummer($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GsLogistiekeInformatieRelatedByZindexNummer', '\PharmaIntelligence\GstandaardBundle\Model\GsLogistiekeInformatieQuery');
     }
 
     /**
