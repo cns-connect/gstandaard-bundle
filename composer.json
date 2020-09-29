@@ -18,10 +18,9 @@
 		}
 	],
 	"autoload" : {
-		"psr-0" : {
-			"PharmaIntelligence\\GstandaardBundle" : ""
+		"psr-4" : {
+			"PharmaIntelligence\\GstandaardBundle\\" : ""
 		}
 	},
-	"target-dir" : "PharmaIntelligence/GstandaardBundle",
 	"minimum-stability" : "dev"
 }
