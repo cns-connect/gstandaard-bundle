@@ -10,7 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use PharmaIntelligence\GstandaardBundle\Model\GsNawGegevensGstandaardQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Console\Input\InputArgument;
 
