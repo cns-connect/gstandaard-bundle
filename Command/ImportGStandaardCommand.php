@@ -365,30 +365,35 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			$sql = 'UPDATE '.constant($omClass.'Peer::TABLE_NAME').' SET mutatiekode = 0 WHERE mutatiekode = '.self::MUTATIE_WIJZIGEN;
 			Propel::getConnection()->query($sql);
 
+			// Prepare statement
+			unset($importData['_attributes']);
+			$adapter = Propel::getDB();
+			$sql = sprintf(
+				'REPLACE INTO %s (%s) VALUES (%s)',
+				$adapter->quoteIdentifierTable(constant($omClass . 'Peer::TABLE_NAME')),
+				implode(', ', array_map(function($s) use($adapter) { return $adapter->quoteIdentifier($s); }, array_keys($importData))),
+				implode(', ', array_fill(0, count($importData), '?'))
+			);
+			$stmt = Propel::getConnection()->prepare($sql);
+
+			$do_update_all = ($this->importType == self::IMPORT_FULL || $fileName == 'BST000T');
 			while(!feof($fh)) {
 				if (!strlen($row = rtrim(fgets($fh), "\r\n\x1A"))) {
 					continue;
 				}
 				$progress->advance();
 				$rowData = $this->getRowData($row, $importData);
-				if($this->importType == self::IMPORT_FULL || $fileName == 'BST000T') {
-					$this->updateRow($rowData, $omClass);
-
-				}
-				else {
-					switch($rowData['mutatiekode']) {
-						case self::MUTATIE_GEEN:
-							break;
-						case self::MUTATIE_NIEUW:
-							$this->updateRow($rowData, $omClass);
-							break;
-						case self::MUTATIE_VERWIJDER:
-							$this->updateRow($rowData, $omClass);
-							break;
-						case self::MUTATIE_WIJZIGEN:
-							$this->updateRow($rowData, $omClass);
-							break;
-					}
+				switch($do_update_all ? self::MUTATIE_NIEUW : $rowData['mutatiekode']) {
+					case self::MUTATIE_NIEUW:
+					case self::MUTATIE_VERWIJDER:
+					case self::MUTATIE_WIJZIGEN:
+						try {
+							$stmt->execute(array_values($rowData));
+						}
+						catch(\PDOException $e) {
+							throw new \Exception(sprintf('Failed executing: %s with values %s', $sql, var_export(array_values($rowData), true)), 0, $e);
+						}
+						break;
 				}
 			}
 			fclose($fh);
@@ -407,26 +412,6 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 			$this->output->writeln('<info>Tijd: '. (time()-$start).' seconden</info>');
 			$this->output->writeln(' ');
-		}
-
-
-		protected function updateRow($rowData, $omClass) {
-
-			$peerClass = $omClass.'Peer';
-			$values = $rowData;
-
-
-			$sql = 'REPLACE '.constant($peerClass.'::TABLE_NAME').' (';
-			$sql .= implode(', ', array_keys($values));
-			$sql .= ') VALUES (';
-
-			$sql .= implode(', ', array_fill(0, count($values), '?'));
-			$sql .= ')';
-			$stmt = Propel::getConnection()->prepare($sql);
-			$values = array_values($values);
-			$stmt->execute($values);
-
-			return;
 		}
 
 		protected function getRowData($rowString, $importData) {
