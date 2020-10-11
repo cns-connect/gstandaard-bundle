@@ -1154,7 +1154,7 @@
 		<column name='thesnr_hulpmiddel_aard' type='integer' required='false'/>
 		<column name='hulpmiddel_aard' type='integer' required='false'/>
 		<column name='hulpmiddel_aard_hoeveelheid' type='integer' required='false'/>
-		<column name='meervoudig_product_jn' type='char' size='1' required='false'/>
+		<column name='meervoudig_product_jn' type="BOOLEAN" required='false'/>
 		<column name='thesnr_reden_hulpstof_identificerend' type='integer' required='false'/>
 		<column name='reden_hulpstof_identificerend' type='integer' required='false'/>
 		<column name='thesnr_verwijzing_extra_kenmerk' type='integer' required='false'/>

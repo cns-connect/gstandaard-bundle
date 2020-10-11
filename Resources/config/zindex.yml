@@ -276,7 +276,7 @@ import:
     thesnr_hulpmiddel_aard: {start: 67, length: 4, type: integer}
     hulpmiddel_aard: {start: 71, length: 6, type: integer}
     hulpmiddel_aard_hoeveelheid: {start: 77, length: 2, type: integer}
-    meervoudig_product_jn: {start: 79, length: 1, type: varchar}
+    meervoudig_product_jn: {start: 79, length: 1, type: boolean}
     thesnr_reden_hulpstof_identificerend: {start: 80, length: 4, type: integer}
     reden_hulpstof_identificerend: {start: 84, length: 6, type: integer}
     thesnr_verwijzing_extra_kenmerk: {start: 90, length: 4, type: integer}
