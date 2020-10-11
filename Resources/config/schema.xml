@@ -917,8 +917,6 @@
     <column name="uzovi_code_zorgverzekeraar" phpName="UzoviCodeZorgverzekeraar" type="INTEGER" primaryKey="true" required="true"/>
     <column name="thesaurusverwijzing_preferentie_status" phpName="ThesaurusverwijzingPreferentieStatus" type="INTEGER" required="false"/>
     <column name="preferentie_status" phpName="PreferentieStatus" type="INTEGER" required="false"/>
-    <column name="startdatum_preferentie_status" phpName="StartdatumPreferentieStatus" type="DATE" primaryKey="true" required="true"/>
-    <column name="einddatum_preferentie_status" phpName="EinddatumPreferentieStatus" type="DATE" primaryKey="true" required="true"/>
     <column name="preferentie_cluster_code" phpName="PreferentieClusterCode" type="INTEGER" required="false"/>
     <column name="prkcode" phpName="Prkcode" type="INTEGER" required="false"/>
     <column name="handelsproduktkode" phpName="Handelsproduktkode" type="INTEGER" required="false"/>
