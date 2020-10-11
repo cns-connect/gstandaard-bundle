@@ -242,13 +242,13 @@
     <column name="bewakingssoort" phpName="Bewakingssoort" type="INTEGER" required="false"/>
     <column name="thesnr_folder" phpName="ThesnrFolder" type="INTEGER" required="false"/>
     <column name="folder" phpName="Folder" type="INTEGER" required="false"/>
-    <column name="volgens_deskundigen_jn" phpName="VolgensDeskundigenJn" type="TINYINT" required="false"/>
-    <column name="actie_nodig_jn" phpName="ActieNodigJn" type="TINYINT" required="false"/>
+    <column name="volgens_deskundigen_jn" phpName="VolgensDeskundigenJn" type="BOOLEAN" required="false"/>
+    <column name="actie_nodig_jn" phpName="ActieNodigJn" type="BOOLEAN" required="false"/>
     <column name="datum_vastlegging_winap" phpName="DatumVastleggingWinap" type="INTEGER" required="false"/>
     <column name="datum_opvoer_gstandaard" phpName="DatumOpvoerGstandaard" type="INTEGER" required="false"/>
     <column name="datum_mutatie_gstandaard" phpName="DatumMutatieGstandaard" type="INTEGER" required="false"/>
     <column name="creatinine_klaring" phpName="CreatinineKlaring" type="INTEGER" required="false"/>
-    <column name="bewaking_te_volgen_door_monitoren" phpName="BewakingTeVolgenDoorMonitoren" type="TINYINT" required="false"/>
+    <column name="bewaking_te_volgen_door_monitoren" phpName="BewakingTeVolgenDoorMonitoren" type="BOOLEAN" required="false"/>
   </table>
   <table name="gs_bewakingen_te_controleren_indicaties" phpName="GsBewakingenTeControlerenIndicaties" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -312,7 +312,7 @@
     <column name="lichaamsoppervlakte_in_m2_tot" phpName="LichaamsoppervlakteInM2Tot" type="DECIMAL" size="6" scale="3" required="false"/>
     <column name="frequentie_aantal" phpName="FrequentieAantal" type="DECIMAL" size="4" scale="2" required="false"/>
     <column name="frequentie_tijdseenheid" phpName="FrequentieTijdseenheid" type="INTEGER" required="false"/>
-    <column name="basisset_voor_denekamp_berekening" phpName="BasissetVoorDenekampBerekening" type="TINYINT" required="false"/>
+    <column name="basisset_voor_denekamp_berekening" phpName="BasissetVoorDenekampBerekening" type="BOOLEAN" required="false"/>
     <column name="dosisnummer" phpName="Dosisnummer" type="INTEGER" required="false"/>
   </table>
   <table name="gs_codering_gedifferentieerde_tarieven" phpName="GsCoderingGedifferentieerdeTarieven" idMethod="native">
@@ -445,7 +445,7 @@
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
     <column name="generiekeproductcode" phpName="Generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="vrijgave_door_het_winap" phpName="VrijgaveDoorHetWinap" type="TINYINT" required="false"/>
+    <column name="vrijgave_door_het_winap" phpName="VrijgaveDoorHetWinap" type="BOOLEAN" required="false"/>
     <column name="min_leeftijd_in_maanden_voor_verstrekking" phpName="MinLeeftijdInMaandenVoorVerstrekking" type="INTEGER" required="false"/>
     <column name="thesaurus_geslachtscodering" phpName="ThesaurusGeslachtscodering" type="INTEGER" required="false"/>
     <column name="toegestaan_voor_geslacht" phpName="ToegestaanVoorGeslacht" type="INTEGER" required="false"/>
@@ -510,7 +510,7 @@
     <column name="prkcode" phpName="Prkcode" type="INTEGER" required="false"/>
     <column name="toedieningswegen_thesaurusnummer" phpName="ToedieningswegenThesaurusnummer" type="INTEGER" required="false"/>
     <column name="enkelvoudige_toedieningsweg_itemnr" phpName="EnkelvoudigeToedieningswegItemnr" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="toedieningsweg_geregistreerd" phpName="ToedieningswegGeregistreerd" type="TINYINT" required="false"/>
+    <column name="toedieningsweg_geregistreerd" phpName="ToedieningswegGeregistreerd" type="BOOLEAN" required="false"/>
     <column name="voorkeurstoedieningsweg_indicatie_thesaurusnummer" phpName="VoorkeurstoedieningswegIndicatieThesaurusnummer" type="INTEGER" required="false"/>
     <column name="voorkeurstoedieningsweg_indicatie_itemnummer" phpName="VoorkeurstoedieningswegIndicatieItemnummer" type="INTEGER" required="false"/>
     <column name="bron_toedieningsweg_thesaurusnummer" phpName="BronToedieningswegThesaurusnummer" type="INTEGER" required="false"/>
@@ -1039,7 +1039,7 @@
     <column name="hoeveelheid_stamnaam" phpName="HoeveelheidStamnaam" type="DECIMAL" size="12" scale="3" required="false"/>
     <column name="thesaurusverwijzig_eenh_hoeveelh_stamnaam" phpName="ThesaurusverwijzigEenhHoeveelhStamnaam" type="INTEGER" required="false"/>
     <column name="eenheid_hoeveelheid_stamnaam" phpName="EenheidHoeveelheidStamnaam" type="INTEGER" required="false"/>
-    <column name="sterktes_mogen_worden_opgeteld_jn" phpName="SterktesMogenWordenOpgeteldJn" type="TINYINT" required="false"/>
+    <column name="sterktes_mogen_worden_opgeteld_jn" phpName="SterktesMogenWordenOpgeteldJn" type="BOOLEAN" required="false"/>
   </table>
   <table name="gs_stamnaam_stamtoedieningsweg" phpName="GsStamnaamStamtoedieningsweg" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
