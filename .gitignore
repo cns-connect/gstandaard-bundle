@@ -1,3 +1,5 @@
 /composer.lock
 /vendor
+/Model/map/
+/Model/om/
 .DS_Store
