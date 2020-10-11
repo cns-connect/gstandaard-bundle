@@ -1119,14 +1119,14 @@
   <table name="gs_verpakkingsthesaurus" phpName="GsVerpakkingsthesaurus" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="identificatie_nummer" phpName="IdentificatieNummer" type="VARCHAR" size="255" required="false"/>
+    <column name="identificatie_nummer_10tallig" phpName="IdentificatieNummer10tallig" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="identificatie_nummer_36tallig" phpName="IdentificatieNummer36tallig" type="VARCHAR" size="255" required="false"/>
     <column name="aantal_hoofdverpakkingen" phpName="AantalHoofdverpakkingen" type="INTEGER" required="false"/>
     <column name="hoofdverpakking_omschrijving_kode" phpName="HoofdverpakkingOmschrijvingKode" type="INTEGER" required="false"/>
     <column name="aantal_deelverpakkingen" phpName="AantalDeelverpakkingen" type="INTEGER" required="false"/>
     <column name="deelverpakking_omschrijving_kode" phpName="DeelverpakkingOmschrijvingKode" type="INTEGER" required="false"/>
     <column name="hoeveelheid_per_deelverpakking" phpName="HoeveelheidPerDeelverpakking" type="DECIMAL" size="8" scale="2" required="false"/>
     <column name="basiseenheid_verpakking" phpName="BasiseenheidVerpakking" type="VARCHAR" size="255" required="false"/>
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
   </table>
   <table name="gs_versienummer_tabel_wcia" phpName="GsVersienummerTabelWcia" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>

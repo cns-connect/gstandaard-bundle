@@ -380,8 +380,8 @@ import:
     _attributes: {table: gs_verpakkingsthesaurus, modelClass: GsVerpakkingsthesaurus, peerClass: GsVerpakkingsthesaurusPeer}
     bestandnummer: {start: 0, length: 4, type: integer}
     mutatiekode: {start: 4, length: 1, type: integer}
-    identificatie_nummer: {start: 5, length: 4, type: integer, primaryKey: true}
-    identificatie_nummer: {start: 9, length: 3, type: varchar(255)}
+    identificatie_nummer_10tallig: {start: 5, length: 4, type: integer, primaryKey: true}
+    identificatie_nummer_36tallig: {start: 9, length: 3, type: varchar(255)}
     aantal_hoofdverpakkingen: {start: 12, length: 5, type: integer}
     hoofdverpakking_omschrijving_kode: {start: 17, length: 3, type: integer}
     aantal_deelverpakkingen: {start: 20, length: 5, type: integer}
