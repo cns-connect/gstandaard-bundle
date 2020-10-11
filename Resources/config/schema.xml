@@ -65,8 +65,8 @@
   <table name="gs_logistieke_verpakkingsinformatie" phpName="GsLogistiekeVerpakkingsinformatie" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="gln" type="BIGINT" size="13" primaryKey="true" required="true"/>
-    <column name="gtin" type="BIGINT" size="14" primaryKey="true" required="true"/>
+    <column name="gln" type="BIGINT" primaryKey="true" required="true"/>
+    <column name="gtin" type="BIGINT" primaryKey="true" required="true"/>
     <column name="zindex_nummer" phpName="ZindexNummer" type="INTEGER" required="false"/>
     <column name="thesaurus_soorten_verpakkingen" type="INTEGER" required="false"/>
     <column name="thesaurusitem_soorten_verpakkingen" type="INTEGER" required="false"/>
@@ -74,7 +74,7 @@
     <column name="onderscheidend_kenmerk" type="VARCHAR" size="255" required="false"/>
     <column name="startdatum_beschikbaarheid_verpakking" type="date" required="false"/>
     <column name="einddatum_beschikbaarheid_verpakking" type="date" required="false"/>
-    <column name="gtin_van_het_verpakt_item" type="BIGINT" size="14" primaryKey="true" required="true"/>
+    <column name="gtin_van_het_verpakt_item" type="BIGINT" primaryKey="true" required="true"/>
     <column name="aantal_van_het_verpakt_item" type="INTEGER" required="false"/>
     <column name="thesaurus_met_items_van_eenheden" type="INTEGER" required="false"/>
     <column name="hoogte_van_verpakking" type="DECIMAL" size="12" scale="4" required="false"/>
