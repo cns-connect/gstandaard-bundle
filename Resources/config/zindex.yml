@@ -268,7 +268,7 @@ import:
     generiekeproductcode: {start: 20, length: 8, type: integer}
     thesnr_reden_voorschrijven_hpk_niveau: {start: 28,length: 4, type: integer}
     reden_voorschrijven_hpk_niveau: {start: 32, length: 6, type: integer, null0: true}
-    thesnr_emballagetype: {start:38 , length: 4, type: integer}
+    thesnr_emballagetype: {start: 38, length: 4, type: integer}
     emballagetype: {start: 42, length: 6, type: integer}
     thesnr_basiseenheid_product: {start: 48, length: 4, type: integer}
     basiseenheid_product: {start: 52, length: 6, type: integer}

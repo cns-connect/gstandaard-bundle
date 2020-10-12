@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Console\Input\InputArgument;
 
 use Propel;
+use Symfony\Component\Yaml\Yaml;
 
 class ImportGStandaardCommand extends ContainerAwareCommand
 {
@@ -294,7 +295,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		$this->output = $output;
 		$start = time();
 		$zindexConfig = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/config/zindex.yml');
-		$this->zindexConfig = \sfYaml::load($zindexConfig);
+		$this->zindexConfig = Yaml::parseFile($zindexConfig);
 		self::sortConfigByDependencies($this->zindexConfig['import']);
 		$this->mapRecordlengths();
 		foreach($this->zindexConfig['import'] as $fileName => $import) {
