@@ -13,6 +13,8 @@ use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Console\Input\InputArgument;
 
+use Propel;
+
 class ImportGStandaardCommand extends ContainerAwareCommand
 {
 	protected $output = null;
@@ -82,7 +84,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	public function updateAddOnHistorie(InputInterface $input, OutputInterface $output) {
 	    $output->writeln(date('[H:i:s]').' Add-ons wegschrijven in historie-bestand');
 	    $datumAddOn = date('Y-m-01');
-	    $statement = \Propel::getConnection()->prepare("
+	    $statement = Propel::getConnection()->prepare("
 	        REPLACE INTO gs_supplementaire_producten_historie
 	        SELECT ?, zindex_nummer, nza_maximum_tarief_inc_btw_laag, thesaurus_nummer_soort_supplementair_product, soort_supplementair_product
 	        FROM gs_supplementaire_producten_met_nza_maximumtarief
@@ -140,9 +142,9 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	protected function updateCacheTables(InputInterface $input, OutputInterface $output) {
 		$output->writeln('<info>Cache tabellen bijwerken</info>');
 		$output->writeln('Truncating gs_artikel_eigenschappen');
-		\Propel::getConnection()->query('TRUNCATE TABLE gs_artikel_eigenschappen;');
+		Propel::getConnection()->query('TRUNCATE TABLE gs_artikel_eigenschappen;');
 		$output->writeln('Filling gs_artikel_eigenschappen');
-		\Propel::getConnection()->query('
+		Propel::getConnection()->query('
 				REPLACE INTO gs_artikel_eigenschappen (
                     zindex_nummer
                 ,   verpakkings_hoeveelheid
@@ -242,7 +244,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 				WHERE zinummer > 0
 				GROUP BY a.`zinummer`');
 		$output->writeln('Filling ATC extended table');
-		\Propel::getConnection()->query("
+		Propel::getConnection()->query("
 		    REPLACE INTO gs_atc_codes_extended
             SELECT
             	a.atccode AS atccode
@@ -288,7 +290,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		else {
 			$output->writeln('<info>Volledige G-Standaard importeren</info>');
 		}
-		\Propel::disableInstancePooling();
+		Propel::disableInstancePooling();
 		$this->output = $output;
 		$start = time();
 		$zindexConfig = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/config/zindex.yml');
@@ -361,7 +363,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 			// Vorige maand gewijzigde rijen op code geen wijzigingen zetten.
 			$sql = 'UPDATE '.constant($omClass.'Peer::TABLE_NAME').' SET mutatiekode = 0 WHERE mutatiekode = '.self::MUTATIE_WIJZIGEN;
-			\Propel::getConnection()->query($sql);
+			Propel::getConnection()->query($sql);
 
 			while(!feof($fh)) {
 				if (!strlen($row = rtrim(fgets($fh), "\r\n\x1A"))) {
@@ -420,7 +422,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 			$sql .= implode(', ', array_fill(0, count($values), '?'));
 			$sql .= ')';
-			$stmt = \Propel::getConnection()->prepare($sql);
+			$stmt = Propel::getConnection()->prepare($sql);
 			$values = array_values($values);
 			$stmt->execute($values);
 
