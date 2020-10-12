@@ -427,7 +427,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			foreach($importData as $fieldName => $params) {
 				if($fieldName == '_attributes')
 					continue;
-				$rowData[$fieldName] = trim(substr($rowString, $params['start'], $params['length']));
+				$rowData[$fieldName] = rtrim(substr($rowString, $params['start'], $params['length']));
 			}
 			return $this->mapDataRow($importData, $rowData);
 		}
