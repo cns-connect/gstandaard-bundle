@@ -81,8 +81,8 @@ import:
     datum_inschrijving_registratie: {start: 91, length: 8, type: date}
     aantal_ddds_per_verpakking: {start: 99, length: 10, type: decimal, scale: 3}
     fabrikant_artikelkodering: {start: 109, length: 12, type: varchar(255)}
-    registratiehouder_kode: {start: 121, length: 5, type: integer}
-    importeur_kode: {start: 126, length: 5, type: integer}
+    registratiehouder_kode: {start: 121, length: 5, type: integer, null0: true}
+    importeur_kode: {start: 126, length: 5, type: integer, null0: true}
     leverancier_kode: {start: 131, length: 5, type: integer}
     land_van_herkomst_thesaurus_nummer: {start: 136, length: 3, type: integer}
     land_van_herkomst_kode: {start: 139, length: 3, type: integer}
@@ -116,7 +116,7 @@ import:
     mutatiekode: {start: 4, length: 1, type: integer}
     gln: {start: 5, length: 13, type: integer, primaryKey: true}
     gtin: {start: 18, length: 14, type: integer, primaryKey: true}
-    zindex_nummer: {start: 32, length: 8, type: integer}
+    zindex_nummer: {start: 32, length: 8, type: integer, null0: true}
     thesaurus_soorten_verpakkingen: {start: 40, length: 4, type: integer}
     thesaurusitem_soorten_verpakkingen: {start: 44, length: 6, type: integer}
     naam_op_verpakking: {start: 50, length: 140, type: varchar(255)}
@@ -125,9 +125,9 @@ import:
     einddatum_beschikbaarheid_verpakking: {start: 248, length: 8, type: dateus}
     gtin_van_het_verpakt_item:  {start: 256, length: 14, type: integer, primaryKey: true}
     aantal_van_het_verpakt_item:  {start: 270, length: 6, type: integer}
-    thesaurus_met_items_van_eenheden:  {start: 276, length: 4, type: integer}
+    thesaurus_met_items_van_eenheden:  {start: 276, length: 4, type: integer, null0: true}
     hoogte_van_verpakking: {start: 280, length: 8, type: decimal, scale: 2}
-    thesaurusitem_van_eenheid_hoogte: {start: 288, length: 6, type: integer}
+    thesaurusitem_van_eenheid_hoogte: {start: 288, length: 6, type: integer, null0: true}
     breedte_van_verpakking: {start: 294, length: 8, type: decimal, scale: 2}
     thesaurusitem_van_eenheid_breedte: {start: 302, length: 6, type: integer}
     diepte_van_verpakking: {start: 308, length: 8, type: decimal, scale: 2}
@@ -141,9 +141,9 @@ import:
     thesaurus_rzv_verstrekking: {start: 13, length: 4, type: integer}
     rzvverstrekking: {start: 17, length: 6, type: integer}
     thesaurus_rzv_hulpmiddelen: {start: 23, length: 4, type: integer}
-    hulpmiddelen_zorg: {start: 27, length: 6, type: integer}
+    hulpmiddelen_zorg: {start: 27, length: 6, type: integer, null0: true}
     rzv_thesaurus_120: {start: 33, length: 4, type: integer}
-    rzvvoorwaarden_bijlage_2: {start: 37, length: 6, type: integer}
+    rzvvoorwaarden_bijlage_2: {start: 37, length: 6, type: integer, null0: true}
     tekstmodule: {start: 43, length: 3, type: integer}
     tekst_verwijzing: {start: 46, length: 3, type: integer}
 
@@ -152,7 +152,7 @@ import:
     bestandnummer: {start: 0, length: 4, type: integer}
     mutatiekode: {start: 4, length: 1, type: integer}
     handelsproduktkode: {start: 5, length: 8, type: integer, primaryKey: true}
-    prkcode: {start: 13, length: 8, type: integer}
+    prkcode: {start: 13, length: 8, type: integer, null0: true}
     medisch_hulpmiddelkode: {start: 21, length: 8, type: integer}
     handelsproduktnaamnummer: {start: 29, length: 7, type: integer}
     merkstamnaam: {start: 36, length: 50, type: varchar(255)}
@@ -210,7 +210,7 @@ import:
     kode_radioactieve_stof: {start: 350, length: 1, type: varchar(255)}
     soort_hulpmiddel: {start: 351, length: 6, type: integer}
     rzv_thesaurus_120: {start: 357, length: 4, type: integer}
-    rzvvoorwaarden_bijlage_2: {start: 361, length: 6, type: integer}
+    rzvvoorwaarden_bijlage_2: {start: 361, length: 6, type: integer, null0: true}
     tekstmodule: {start: 367, length: 3, type: integer}
     tekst_verwijzing: {start: 370, length: 3, type: integer}
     hulpmiddel_volgens_awbz: {start: 373, length: 1, type: varchar(255)}
@@ -267,7 +267,7 @@ import:
     naamnummer_prescriptie_product: {start: 13, length: 7, type: integer}
     generiekeproductcode: {start: 20, length: 8, type: integer}
     thesnr_reden_voorschrijven_hpk_niveau: {start: 28,length: 4, type: integer}
-    reden_voorschrijven_hpk_niveau: {start: 32, length: 6, type: integer}
+    reden_voorschrijven_hpk_niveau: {start: 32, length: 6, type: integer, null0: true}
     thesnr_emballagetype: {start:38 , length: 4, type: integer}
     emballagetype: {start: 42, length: 6, type: integer}
     thesnr_basiseenheid_product: {start: 48, length: 4, type: integer}
@@ -278,9 +278,9 @@ import:
     hulpmiddel_aard_hoeveelheid: {start: 77, length: 2, type: integer}
     meervoudig_product_jn: {start: 79, length: 1, type: boolean}
     thesnr_reden_hulpstof_identificerend: {start: 80, length: 4, type: integer}
-    reden_hulpstof_identificerend: {start: 84, length: 6, type: integer}
+    reden_hulpstof_identificerend: {start: 84, length: 6, type: integer, null0: true}
     thesnr_verwijzing_extra_kenmerk: {start: 90, length: 4, type: integer}
-    verwijzing_extra_kenmerk: {start: 94, length: 6, type: integer}
+    verwijzing_extra_kenmerk: {start: 94, length: 6, type: integer, null0: true}
 
   BST059T:
     _attributes: {table: gs_voorschrijfpr_identificerende_velden, modelClass: GsVoorschrijfprIdentificerendeVelden, peerClass: GsVoorschrijfprIdentificerendeVeldenPeer}
@@ -509,7 +509,8 @@ import:
     _attributes: {table: gs_bijzondere_kenmerken, modelClass: GsBijzondereKenmerken, peerClass: GsBijzondereKenmerkenPeer}
     bestandnummer: {start: 0, length: 4, type: integer}
     mutatiekode: {start: 4, length: 1, type: integer}
-    prkcode: {start: 5, length: 8, type: integer, primaryKey: true}
+    prkcode_key: {start: 5, length: 8, type: integer, primaryKey: true}
+    prkcode: {start: 5, length: 8, type: integer, null0: true}
     handelsproduktkode: {start: 13, length: 8, type: integer, primaryKey: true}
     thesnr_bijzondere_kenmerken: {start: 21, length: 4, type: integer}
     bijzondere_kenmerk: {start: 25, length: 6, type: integer, primaryKey: true}

@@ -359,7 +359,10 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			$sql = 'UPDATE '.constant($omClass.'Peer::TABLE_NAME').' SET mutatiekode = 0 WHERE mutatiekode = '.self::MUTATIE_WIJZIGEN;
 			\Propel::getConnection()->query($sql);
 
-			while(($row = fgets($fh)) == true) {
+			while(!feof($fh)) {
+				if (!strlen($row = rtrim(fgets($fh), "\r\n\x1A"))) {
+					continue;
+				}
 				$progress->advance();
 				$rowData = $this->getRowData($row, $importData);
 				if($this->importType == self::IMPORT_FULL || $fileName == 'BST000T') {
@@ -442,7 +445,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 						break;
 					case 'integer':
 						if (($row[$field] = ltrim($row[$field], '0')) == '')
-							$row[$field] = '0';
+							$row[$field] = empty($fieldOptions['null0']) ? '0' : NULL;
 						break;
 					case 'date':
 						$date = $row[$field];

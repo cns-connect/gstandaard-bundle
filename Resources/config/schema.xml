@@ -262,7 +262,8 @@
   <table name="gs_bijzondere_kenmerken" phpName="GsBijzondereKenmerken" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
-    <column name="prkcode" phpName="Prkcode" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="prkcode_key" phpName="PrkcodeKey" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="prkcode" phpName="Prkcode" type="INTEGER" required="false"/>
     <column name="handelsproduktkode" phpName="Handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
     <column name="thesnr_bijzondere_kenmerken" phpName="ThesnrBijzondereKenmerken" type="INTEGER" required="false"/>
     <column name="bijzondere_kenmerk" phpName="BijzondereKenmerk" type="INTEGER" primaryKey="true" required="true"/>
@@ -731,11 +732,11 @@
     	<reference local='produktgroep_thesaurusnummer' foreign='thesaurusnummer'/>
     	<reference local='produktgroep_kode' foreign='thesaurus_itemnummer'/>
     </foreign-key>
-    <foreign-key foreignTable='gs_thesauri_totaal' phpName="RzvVerstrekkingOmschrijving" skipSql='true'>
+    <foreign-key foreignTable='gs_thesauri_totaal' phpName="RzvVerstrekkingOmschrijving">
     	<reference local='thesaurus_rzv_verstrekking' foreign='thesaurusnummer'/>
     	<reference local='rzvverstrekking' foreign='thesaurus_itemnummer'/>
     </foreign-key>
-    <foreign-key foreignTable='gs_thesauri_totaal' phpName="RzvBijlage2Omschrijving" skipSql='true'>
+    <foreign-key foreignTable='gs_thesauri_totaal' phpName="RzvBijlage2Omschrijving">
     	<reference local='rzv_thesaurus_120' foreign='thesaurusnummer'/>
     	<reference local='rzvvoorwaarden_bijlage_2' foreign='thesaurus_itemnummer'/>
     </foreign-key>
