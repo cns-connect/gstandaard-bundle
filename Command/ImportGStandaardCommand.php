@@ -447,15 +447,15 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 						break;
 					case 'date':
 						$date = $row[$field];
-						if(empty($date))
-							$date = null;
+						if(!((int) $date))
+							$row[$field] = null;
 						else
 							$row[$field] = substr($date, 4, 4).'-'.substr($date, 2, 2).'-'.substr($date, 0, 2);
 						break;
 					case 'dateus':
 						    $date = $row[$field];
-						    if(empty($date)) {
-						        $date = null;
+						    if(!((int) $date)) {
+						        $row[$field] = null;
 						    } else {
 						        $row[$field] = substr($date, 0, 4).'-'.substr($date, 4, 2).'-'.substr($date, 6, 2);
 						    }
