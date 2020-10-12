@@ -438,7 +438,9 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 					continue;
 				switch($fieldOptions['type']) {
 					case 'decimal':
-						$row[$field] = $row[$field]/pow(10, $fieldOptions['scale']);
+						$value = $row[$field];
+						$roffset = -$fieldOptions['scale'] ?: strlen($value);
+						$row[$field] = substr($value, 0, $roffset) . '.' . substr($value, $roffset);
 						break;
 					case 'integer':
 						$row[$field] = ltrim($row[$field], 0);
