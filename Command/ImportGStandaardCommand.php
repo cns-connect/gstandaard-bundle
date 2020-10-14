@@ -288,12 +288,12 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		else {
 			$output->writeln('<info>Volledige G-Standaard importeren</info>');
 		}
-		\Propel::getConnection()->query('SET FOREIGN_KEY_CHECKS = 0;');
 		\Propel::disableInstancePooling();
 		$this->output = $output;
 		$start = time();
 		$zindexConfig = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/config/zindex.yml');
 		$this->zindexConfig = \sfYaml::load($zindexConfig);
+		self::sortConfigByDependencies($this->zindexConfig['import']);
 		$this->mapRecordlengths();
 		foreach($this->zindexConfig['import'] as $fileName => $import) {
 		    if($this->bestand !== self::ALLE_BESTANDEN && $fileName != $this->bestand) {
@@ -302,8 +302,12 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			try {
 				$this->import($fileName, $import);
 			}
+			catch(\InvalidArgumentException $e) {
+				$output->writeln('<error>Skipping missing '.$fileName.'</error>');
+			}
 			catch(\Exception $e) {
 				$output->writeln('<error>Import '.$fileName.' failed: '.$e->getMessage().'</error>');
+				throw $e;
 			}
 		}
 		$output->writeln('G-standaard bijgewerkt');
@@ -500,4 +504,43 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			fclose($fh);
 			$this->recordMap = $map;
 		}
+
+	/**
+	* Sorts given z-index configuration in-place by keys, such that files that depend
+	 * on other files appear later in the array, and hence foreign key constraints
+	 * can be enforced during imports in this order.
+	 *
+	 * @param array $importConfig
+	 */
+	protected static function sortConfigByDependencies(array &$importConfig) {
+		$fAddDeps = function(&$deps, $local) use (&$fAddDeps) {
+			foreach($local->getRelations() as $relation) {
+				if ($relation->getLocalTable() === $local) {
+					$foreign = $relation->getForeignTable();
+					if (!isset($deps[$name = $foreign->getPhpName()])) {
+						$deps[$name] = true;
+						$fAddDeps($deps, $foreign);
+					}
+				}
+			}
+		};
+		foreach($importConfig as $fileName => &$import) {
+			$deps = array();
+			$class = sprintf('PharmaIntelligence\\GstandaardBundle\\Model\\%sPeer', $import['_attributes']['modelClass']);
+			$fAddDeps($deps,$class::getTableMap());
+			$import['_attributes']['filename'] = $fileName;
+			$import['_attributes']['deps'] = $deps;
+		}
+		unset($import);
+		uasort($importConfig, function($a, $b) {
+			if (isset($a['_attributes']['deps'][$b['_attributes']['modelClass']]))
+				return 1;    // A depends on B
+			elseif (isset($b['_attributes']['deps'][$a['_attributes']['modelClass']]))
+				return -1;   // B depends on A
+			elseif ($delta = count($a['_attributes']['deps']) - count($b['_attributes']['deps']))
+				return $delta;  // Delta in number of dependencies
+			else
+				return strcmp($a['_attributes']['filename'], $b['_attributes']['filename']);  // Filename
+		});
+	}
 }
