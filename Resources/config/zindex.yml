@@ -8,7 +8,7 @@ import:
     bestandscode: {start: 75, length: 8, type: integer}
     recordlengte: {start: 83, length: 4, type: integer}
     ingangsdatum: {start: 87, length: 8, type: date}
-    eindedatum_uitlevering: {start: 95, length: 8, type: date}
+    eindedatum_uitlevering: {start: 95, length: 8, type: date, null0: true}
     uitgavedatum: {start: 103, length: 8, type: date}
     status: {start: 111, length: 1, type: varchar(255)}
     aantal_ongewijzigde_records: {start: 112, length: 8, type: integer}
@@ -32,7 +32,7 @@ import:
     aantal_decimalen: {start: 103, length: 2, type: integer}
     opmaak: {start: 105, length: 6, type: varchar(255)}
     gebruik_van_veld: {start: 111, length: 1, type: char}
-    datum_gebruik: {start: 112, length: 8, type: dateus}
+    datum_gebruik: {start: 112, length: 8, type: dateus, null0: true}
 
   BST004T:
     _attributes: {table: gs_artikelen, modelClass: GsArtikelen, peerClass: GsArtikelenPeer}
@@ -50,7 +50,7 @@ import:
     deelverpakking_omschrijving_kode: {start: 55, length: 3, type: integer}
     hoeveelheid_per_deelverpakking: {start: 58, length: 8, type: decimal, scale: 2}
     un_kode: {start: 66, length: 1, type: varchar(255)}
-    un_datum: {start: 67, length: 8, type: date}
+    un_datum: {start: 67, length: 8, type: date, null0: true}
     kode_wet_op_de_geneesmiddelen: {start: 75, length: 1, type: varchar(255)}
     kode_koelkast: {start: 76, length: 1, type: varchar(255)}
     kode_kliniekverpakking: {start: 77, length: 1, type: varchar(255)}
@@ -59,7 +59,7 @@ import:
     rvgnummer_1: {start: 80, length: 5, type: integer}
     rvgnummer_2: {start: 85, length: 1, type: varchar(255)}
     rvgnummer_3: {start: 86, length: 5, type: integer}
-    datum_inschrijving_registratie: {start: 91, length: 8, type: date}
+    datum_inschrijving_registratie: {start: 91, length: 8, type: date, null0: true}
     aantal_ddds_per_verpakking: {start: 99, length: 10, type: decimal, scale: 3}
     fabrikant_artikelkodering: {start: 109, length: 12, type: varchar(255)}
     registratiehouder_kode: {start: 121, length: 5, type: integer, null0: true}
@@ -67,8 +67,8 @@ import:
     leverancier_kode: {start: 131, length: 5, type: integer}
     land_van_herkomst_thesaurus_nummer: {start: 136, length: 3, type: integer}
     land_van_herkomst_kode: {start: 139, length: 3, type: integer}
-    datum_invoer_verpakking: {start: 142, length: 8, type: date}
-    datum_afvoer_verpakking: {start: 150, length: 8, type: date}
+    datum_invoer_verpakking: {start: 142, length: 8, type: date, null0: true}
+    datum_afvoer_verpakking: {start: 150, length: 8, type: date, null0: true}
     produktkoppel_kode: {start: 158, length: 8, type: integer}
     wtgkode: {start: 166, length: 1, type: integer}
     btwkode_voor_declaratie: {start: 167, length: 1, type: integer}
@@ -77,9 +77,9 @@ import:
     verkoopprijs_exclusief_btw: {start: 170, length: 12, type: decimal, scale: 6}
     vergoedingsprijs: {start: 182, length: 8, type: decimal, scale: 2}
     referentieprijs: {start: 190, length: 8, type: decimal, scale: 2}
-    datum_schorsing: {start: 198, length: 8, type: date}
-    datum_doorhaling: {start: 206, length: 8, type: date}
-    mutatie_datum: {start: 214, length: 8, type: date}
+    datum_schorsing: {start: 198, length: 8, type: date, null0: true}
+    datum_doorhaling: {start: 206, length: 8, type: date, null0: true}
+    mutatie_datum: {start: 214, length: 8, type: date, null0: true}
     uitgavedatum: {start: 222, length: 8, type: date}
     gvs_cluster_kode: {start: 230, length: 11, type: varchar(255)}
     gvs_vergoedingslimiet: {start: 241, length: 12, type: decimal, scale: 5}
@@ -103,7 +103,7 @@ import:
     naam_op_verpakking: {start: 50, length: 140, type: varchar(255)}
     onderscheidend_kenmerk: {start: 190, length: 50, type: varchar(255)}
     startdatum_beschikbaarheid_verpakking: {start: 240, length: 8, type: dateus}
-    einddatum_beschikbaarheid_verpakking: {start: 248, length: 8, type: dateus}
+    einddatum_beschikbaarheid_verpakking: {start: 248, length: 8, type: dateus, null0: true}
     gtin_van_het_verpakt_item: {start: 256, length: 14, type: integer, primaryKey: true}
     aantal_van_het_verpakt_item: {start: 270, length: 6, type: integer}
     thesaurus_met_items_van_eenheden: {start: 276, length: 4, type: integer, null0: true}
@@ -364,7 +364,7 @@ import:
     aanvullende_contract_informatie: {start: 57, length: 10, type: varchar(255), primaryKey: true}
     tarief_prijs_bedrag: {start: 67, length: 16, type: decimal, scale: 6}
     startdatum_van_tariefprijsbedrag: {start: 83, length: 8, type: dateus}
-    einddatum_van_tariefprijsbedrag: {start: 91, length: 8, type: dateus}
+    einddatum_van_tariefprijsbedrag: {start: 91, length: 8, type: dateus, null0: true}
 
   BST200T:
     _attributes: {table: gs_relatie_tussen_zinummer_hibc, modelClass: GsRelatieTussenZinummerHibc, peerClass: GsRelatieTussenZinummerHibcPeer}
@@ -529,8 +529,8 @@ import:
     tekstsoort: {start: 145, length: 3, type: integer}
     tekst_nivo_kode: {start: 148, length: 8, type: integer}
     datum_van_1e_opname: {start: 156, length: 8, type: date}
-    datum_van_laatste_mutatie: {start: 164, length: 8, type: date}
-    datum_van_inactief_maken: {start: 172, length: 8, type: date}
+    datum_van_laatste_mutatie: {start: 164, length: 8, type: date, null0: true}
+    datum_van_inactief_maken: {start: 172, length: 8, type: date, null0: true}
     thesaurusnummer: {start: 180, length: 4, type: integer}
     thesaurus_itemnummer: {start: 184, length: 6, type: integer}
 
@@ -697,9 +697,9 @@ import:
     folder: {start: 77, length: 6, type: integer}
     volgens_deskundigen_jn: {start: 83, length: 1, type: boolean}
     actie_nodig_jn: {start: 84, length: 1, type: boolean}
-    datum_vastlegging_winap: {start: 85, length: 8, type: date}
+    datum_vastlegging_winap: {start: 85, length: 8, type: date, null0: true}
     datum_opvoer_gstandaard: {start: 93, length: 8, type: date}
-    datum_mutatie_gstandaard: {start: 101, length: 8, type: date}
+    datum_mutatie_gstandaard: {start: 101, length: 8, type: date, null0: true}
     creatinine_klaring: {start: 109, length: 5, type: integer}
     bewaking_te_volgen_door_monitoren: {start: 114, length: 1, type: boolean}
 

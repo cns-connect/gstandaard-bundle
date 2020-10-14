@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" namespace="PharmaIntelligence\GstandaardBundle\Model">
   <table name="gs_supplementaire_producten_historie" idMethod="native">
-    <column name="datum_product" type="date" primaryKey="true"/>
+    <column name="datum_product" type="date" primaryKey="true" required="true"/>
     <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="nza_maximum_tarief_inc_btw_laag" type="decimal" size="14" scale="6"/>
-    <column name="thesaurus_nummer_soort_supplementair_product" type="integer"/>
-    <column name="soort_supplementair_product" type="integer"/>
+    <column name="nza_maximum_tarief_inc_btw_laag" type="decimal" size="14" scale="6" required="true"/>
+    <column name="thesaurus_nummer_soort_supplementair_product" type="integer" required="true"/>
+    <column name="soort_supplementair_product" type="integer" required="true"/>
     <foreign-key foreignTable="gs_artikelen">
       <reference local="zindex_nummer" foreign="zinummer"/>
     </foreign-key>
@@ -16,37 +16,37 @@
   </table>
   <table name="gs_artikel_eigenschappen" phpName="GsArtikelEigenschappen" readOnly="true" >
     <column name="zindex_nummer" type="integer" required="true" primaryKey="true" autoIncrement="false"/>
-    <column name="verpakkings_hoeveelheid" type="decimal" size="18" scale="2"/>
-    <column name="verpakkings_hoeveelheid_omschrijving" type="varchar" size="255"/>
-    <column name="hoofdverpakking_omschrijving" type="varchar" size="255"/>
-    <column name="deelverpakking_omschrijving" type="varchar" size="255"/>
-    <column name="basiseenheid_omschrijving" type="varchar" size="255"/>
-    <column name="inkoophoeveelheid_omschrijving" type="varchar" size="255"/>
-    <column name="hpk" type="integer"/>
-    <column name="prk" type="integer"/>
-    <column name="gpk" type="integer"/>
-    <column name="atc" type="varchar" size="8"/>
-    <column name="etiket_naam" type="varchar" size="255"/>
-    <column name="merk_naam" type="varchar" size="255"/>
-    <column name="hpk_naam" type="varchar" size="255"/>
-    <column name="prk_naam" type="varchar" size="255"/>
-    <column name="gpk_naam" type="varchar" size="255"/>
-    <column name="stof_naam" type="varchar" size="255"/>
-    <column name="atc_naam" type="varchar" size="255"/>
-    <column name="leverancier_nummer" type="integer"/>
-    <column name="leverancier_naam" type="varchar" size="255"/>
-    <column name="is_zvz" type="boolean"/>
-    <column name="is_dwg" type="boolean"/>
-    <column name="artikelnummer_fabrikant" type="varchar" size="255"/>
-    <column name="toedieningsvorm" type="varchar" size="255"/>
-    <column name="toedieningsweg" type="varchar" size="255"/>
-    <column name="farmaceutische_vorm" type="varchar" size="255"/>
-    <column name="productgroep" type="varchar" size="255"/>
-    <column name="primaire_werkzame_stof_naam" type="varchar" size="255"/>
-    <column name="primaire_werkzame_stof_eenheid" type="varchar" size="255"/>
-    <column name="primaire_werkzame_stof_hoeveelheid" type="decimal" size="20" scale="5"/>
-    <column name="meest_recente_aip" type="decimal" size="8" scale="2"/>
-    <column name="emballage_naam" type="varchar" size="255"/>
+    <column name="verpakkings_hoeveelheid" type="decimal" size="18" scale="2" required="true"/>
+    <column name="verpakkings_hoeveelheid_omschrijving" type="varchar" size="255" required="true"/>
+    <column name="hoofdverpakking_omschrijving" type="varchar" size="255" required="true"/>
+    <column name="deelverpakking_omschrijving" type="varchar" size="255" required="true"/>
+    <column name="basiseenheid_omschrijving" type="varchar" size="255" required="true"/>
+    <column name="inkoophoeveelheid_omschrijving" type="varchar" size="255" required="true"/>
+    <column name="hpk" type="integer" required="true"/>
+    <column name="prk" type="integer" required="false"/>
+    <column name="gpk" type="integer" required="false"/>
+    <column name="atc" type="varchar" size="8" required="false"/>
+    <column name="etiket_naam" type="varchar" size="255" required="true"/>
+    <column name="merk_naam" type="varchar" size="255" required="true"/>
+    <column name="hpk_naam" type="varchar" size="255" required="true"/>
+    <column name="prk_naam" type="varchar" size="255" required="false"/>
+    <column name="gpk_naam" type="varchar" size="255" required="false"/>
+    <column name="stof_naam" type="varchar" size="255" required="false"/>
+    <column name="atc_naam" type="varchar" size="255" required="false"/>
+    <column name="leverancier_nummer" type="integer" required="true"/>
+    <column name="leverancier_naam" type="varchar" size="255" required="true"/>
+    <column name="is_zvz" type="boolean" required="true"/>
+    <column name="is_dwg" type="boolean" required="true"/>
+    <column name="artikelnummer_fabrikant" type="varchar" size="255" required="true"/>
+    <column name="toedieningsvorm" type="varchar" size="255" required="false"/>
+    <column name="toedieningsweg" type="varchar" size="255" required="false"/>
+    <column name="farmaceutische_vorm" type="varchar" size="255" required="false"/>
+    <column name="productgroep" type="varchar" size="255" required="true"/>
+    <column name="primaire_werkzame_stof_naam" type="varchar" size="255" required="false"/>
+    <column name="primaire_werkzame_stof_eenheid" type="varchar" size="255" required="false"/>
+    <column name="primaire_werkzame_stof_hoeveelheid" type="decimal" size="20" scale="5" required="false"/>
+    <column name="meest_recente_aip" type="decimal" size="8" scale="2" required="true"/>
+    <column name="emballage_naam" type="varchar" size="255" required="false"/>
     <index>
       <index-column name="hpk"/>
     </index>
@@ -98,9 +98,9 @@
   </table>
   <table name="gs_atc_codes_extended">
     <column name="atccode" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="atcnederlandse_omschrijving" type="VARCHAR" size="255" required="false"/>
-    <column name="anatomische_hoofdgroep_code" type="VARCHAR" size="255" required="false"/>
-    <column name="anatomische_hoofdgroep" type="VARCHAR" size="255" required="false"/>
+    <column name="atcnederlandse_omschrijving" type="VARCHAR" size="255" required="true"/>
+    <column name="anatomische_hoofdgroep_code" type="VARCHAR" size="255" required="true"/>
+    <column name="anatomische_hoofdgroep" type="VARCHAR" size="255" required="true"/>
     <column name="therapeutische_hoofdgroep_code" type="VARCHAR" size="255" required="false"/>
     <column name="therapeutische_hoofdgroep" type="VARCHAR" size="255" required="false"/>
     <column name="therapeutische_subgroep_code" type="VARCHAR" size="255" required="false"/>
@@ -109,7 +109,7 @@
     <column name="chemische_subgroep" type="VARCHAR" size="255" required="false"/>
     <column name="chemische_stofnaam_code" type="VARCHAR" size="255" required="false"/>
     <column name="chemische_stofnaam" type="VARCHAR" size="255" required="false"/>
-    <column name="volledige_naam" type="longvarchar" required="false"/>
+    <column name="volledige_naam" type="VARCHAR" size="255" required="true"/>
     <column name="merken" type="VARCHAR" size="255" required="false"/>
     <foreign-key foreignTable="gs_atc_codes">
       <reference local="atccode" foreign="atccode"/>
