@@ -77,11 +77,11 @@
     <column name="gtin_van_het_verpakt_item" type="BIGINT" primaryKey="true" required="true"/>
     <column name="aantal_van_het_verpakt_item" type="INTEGER" required="false"/>
     <column name="thesaurus_met_items_van_eenheden" type="INTEGER" required="false"/>
-    <column name="hoogte_van_verpakking" type="DECIMAL" size="12" scale="4" required="false"/>
+    <column name="hoogte_van_verpakking" type="DECIMAL" size="8" scale="2" required="false"/>
     <column name="thesaurusitem_van_eenheid_hoogte" type='integer' required="false"/>
-    <column name="breedte_van_verpakking" type="DECIMAL" size="12" scale="4" required="false"/>
+    <column name="breedte_van_verpakking" type="DECIMAL" size="8" scale="2" required="false"/>
     <column name="thesaurusitem_van_eenheid_breedte" type='integer' required="false"/>
-    <column name="diepte_van_verpakking" type="DECIMAL" size="12" scale="4" required="false"/>
+    <column name="diepte_van_verpakking" type="DECIMAL" size="8" scale="2" required="false"/>
     <column name="thesaurusitem_van_eenheid_diepte" type='integer' required="false"/>
     <foreign-key foreignTable='gs_thesauri_totaal' phpName="SoortenVerpakkingOmschrijving">
     	<reference local='thesaurus_soorten_verpakkingen' foreign='thesaurusnummer'/>
@@ -128,7 +128,7 @@
     <column name="rvgnummer_2" phpName="Rvgnummer2" type="VARCHAR" size="255" required="false"/>
     <column name="rvgnummer_3" phpName="Rvgnummer3" type="INTEGER" required="false"/>
     <column name="datum_inschrijving_registratie" phpName="DatumInschrijvingRegistratie" type="DATE" required="false"/>
-    <column name="aantal_ddds_per_verpakking" phpName="AantalDddsPerVerpakking" type="DECIMAL" scale="3" required="false"/>
+    <column name="aantal_ddds_per_verpakking" phpName="AantalDddsPerVerpakking" type="DECIMAL" size="10" scale="3" required="false"/>
     <column name="fabrikant_artikelkodering" phpName="FabrikantArtikelkodering" type="VARCHAR" size="255" required="false"/>
     <column name="registratiehouder_kode" phpName="RegistratiehouderKode" type="INTEGER" required="false"/>
     <column name="importeur_kode" phpName="ImporteurKode" type="INTEGER" required="false"/>
@@ -223,9 +223,9 @@
     <column name="bestandomschrijving" phpName="Bestandomschrijving" type="VARCHAR" size="255" required="false"/>
     <column name="bestandscode" phpName="Bestandscode" type="INTEGER" required="false"/>
     <column name="recordlengte" phpName="Recordlengte" type="INTEGER" required="false"/>
-    <column name="ingangsdatum" phpName="Ingangsdatum" type="INTEGER" required="false"/>
-    <column name="eindedatum_uitlevering" phpName="EindedatumUitlevering" type="INTEGER" required="false"/>
-    <column name="uitgavedatum" phpName="Uitgavedatum" type="INTEGER" required="false"/>
+    <column name="ingangsdatum" phpName="Ingangsdatum" type="DATE" required="false"/>
+    <column name="eindedatum_uitlevering" phpName="EindedatumUitlevering" type="DATE" required="false"/>
+    <column name="uitgavedatum" phpName="Uitgavedatum" type="DATE" required="false"/>
     <column name="status" phpName="Status" type="VARCHAR" size="255" required="false"/>
     <column name="aantal_ongewijzigde_records" phpName="AantalOngewijzigdeRecords" type="INTEGER" required="false"/>
     <column name="aantal_vervallen_records" phpName="AantalVervallenRecords" type="INTEGER" required="false"/>
@@ -244,9 +244,9 @@
     <column name="folder" phpName="Folder" type="INTEGER" required="false"/>
     <column name="volgens_deskundigen_jn" phpName="VolgensDeskundigenJn" type="BOOLEAN" required="false"/>
     <column name="actie_nodig_jn" phpName="ActieNodigJn" type="BOOLEAN" required="false"/>
-    <column name="datum_vastlegging_winap" phpName="DatumVastleggingWinap" type="INTEGER" required="false"/>
-    <column name="datum_opvoer_gstandaard" phpName="DatumOpvoerGstandaard" type="INTEGER" required="false"/>
-    <column name="datum_mutatie_gstandaard" phpName="DatumMutatieGstandaard" type="INTEGER" required="false"/>
+    <column name="datum_vastlegging_winap" phpName="DatumVastleggingWinap" type="DATE" required="false"/>
+    <column name="datum_opvoer_gstandaard" phpName="DatumOpvoerGstandaard" type="DATE" required="false"/>
+    <column name="datum_mutatie_gstandaard" phpName="DatumMutatieGstandaard" type="DATE" required="false"/>
     <column name="creatinine_klaring" phpName="CreatinineKlaring" type="INTEGER" required="false"/>
     <column name="bewaking_te_volgen_door_monitoren" phpName="BewakingTeVolgenDoorMonitoren" type="BOOLEAN" required="false"/>
   </table>
@@ -374,7 +374,7 @@
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
     <column name="atccode" phpName="Atccode" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="dddaantal" phpName="Dddaantal" type="DECIMAL" scale="3" primaryKey="true" required="true"/>
+    <column name="dddaantal" phpName="Dddaantal" type="DECIMAL" size="10" scale="3" primaryKey="true" required="true"/>
     <column name="dddeenheid_thesaurusnummer" phpName="DddeenheidThesaurusnummer" type="INTEGER" required="false"/>
     <column name="dddeenheid" phpName="Dddeenheid" type="INTEGER" primaryKey="true" required="true"/>
     <column name="ddd_toedieningsweg_thesaurusnummer" phpName="DddToedieningswegThesaurusnummer" type="INTEGER" required="false"/>
@@ -543,6 +543,7 @@
     <column name="kode_rijvaardigheid" phpName="KodeRijvaardigheid" type="VARCHAR" size="255" required="false"/>
     <column name="kode_vergift" phpName="KodeVergift" type="VARCHAR" size="255" required="false"/>
     <column name="kode_opiumwet" phpName="KodeOpiumwet" type="VARCHAR" size="255" required="false"/>
+    <column name="cas_nummer_lengte_10" type="INTEGER" required="false"/>
   </table>
   <table name="gs_generieke_producten" phpName="GsGeneriekeProducten" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -602,7 +603,7 @@
     <column name="generiekeproductcode" phpName="Generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
     <column name="prkcode" phpName="Prkcode" type="INTEGER" primaryKey="true" required="true"/>
     <column name="handelsproduktkode" phpName="Handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="datum_wijzigingopsplitsing_op_ddmmjjjj" phpName="DatumWijzigingopsplitsingOpDdmmjjjj" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="datum_wijzigingopsplitsing_op_ddmmjjjj" phpName="DatumWijzigingopsplitsingOpDdmmjjjj" type="DATE" primaryKey="true" required="true"/>
     <column name="thesaurus_reden_wijziging" phpName="ThesaurusRedenWijziging" type="INTEGER" required="false"/>
     <column name="reden_van_wijziging_itemnummer" phpName="RedenVanWijzigingItemnummer" type="INTEGER" required="false"/>
     <column name="generiekeproductcode_nieuw" phpName="GeneriekeproductcodeNieuw" type="INTEGER" required="false"/>
@@ -763,7 +764,7 @@
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
     <column name="groepkode" phpName="Groepkode" type="INTEGER" primaryKey="true" required="true"/>
     <column name="groepnaam" phpName="Groepnaam" type="VARCHAR" size="255" required="false"/>
-    <column name="groepvolgorde_kode" phpName="GroepvolgordeKode" type="INTEGER" required="false"/>
+    <column name="groepvolgorde_kode" phpName="GroepvolgordeKode" type="VARCHAR" size="255" required="false"/>
   </table>
   <table name="gs_ingegeven_samenstellingen" phpName="GsIngegevenSamenstellingen" idMethod="native">
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
@@ -860,8 +861,8 @@
     <column name="gln_code" phpName="GlnCode" type="bigint" required="false"/>
     <column name="uzovi_code" phpName="UzoviCode" type="INTEGER" required="false"/>
     <column name="agb_code" phpName="AgbCode" type="INTEGER" required="false"/>
-    <column name="reservenummer_1" phpName="Reservenummer1" type="INTEGER" required="false"/>
-    <column name="reservenummer_2" phpName="Reservenummer2" type="INTEGER" required="false"/>
+    <column name="reservenummer_1" phpName="Reservenummer1" type="BIGINT" required="false"/>
+    <column name="reservenummer_2" phpName="Reservenummer2" type="BIGINT" required="false"/>
     <index name="naw_nummer">
       <index-column name="naw_nummer"/>
     </index>
@@ -941,8 +942,8 @@
     <column name="unieke_id_van_bron" phpName="UniekeIdVanBron" type="VARCHAR" size="255" primaryKey="true" required="true"/>
     <column name="aanvullende_contract_informatie" phpName="AanvullendeContractInformatie" type="VARCHAR" size="255" primaryKey="true" required="true"/>
     <column name="tarief_prijs_bedrag" phpName="TariefPrijsBedrag" type="DECIMAL" size="16" scale="6" required="false"/>
-    <column name="startdatum_van_tariefprijsbedrag" phpName="StartdatumVanTariefprijsbedrag" type="INTEGER" required="false"/>
-    <column name="einddatum_van_tariefprijsbedrag" phpName="EinddatumVanTariefprijsbedrag" type="INTEGER" required="false"/>
+    <column name="startdatum_van_tariefprijsbedrag" phpName="StartdatumVanTariefprijsbedrag" type="DATE" required="false"/>
+    <column name="einddatum_van_tariefprijsbedrag" phpName="EinddatumVanTariefprijsbedrag" type="DATE" required="false"/>
     <foreign-key foreignTable='gs_thesauri_totaal' phpName="SoortCoderingOmschrijving">
     	<reference local='thesaurusverwijzing_soort_codering' foreign='thesaurusnummer'/>
     	<reference local='soort_codering' foreign='thesaurus_itemnummer'/>
@@ -980,7 +981,7 @@
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
     <column name="zinummer" phpName="Zinummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="hibcbarcode" phpName="Hibcbarcode" type="VARCHAR" size="255" required="false"/>
+    <column name="hibcbarcode" phpName="Hibcbarcode" type="VARCHAR" size="255" primaryKey="true" required="true"/>
     <column name="handelsproduktkode" phpName="Handelsproduktkode" type="VARCHAR" size="255" required="false"/>
     <column name="identificatie_nummer" phpName="IdentificatieNummer" type="VARCHAR" size="255" required="false"/>
     <foreign-key foreignTable="gs_artikelen">
@@ -1011,8 +1012,8 @@
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
     <column name="naam_van_het_bestand" phpName="NaamVanHetBestand" type="VARCHAR" size="255" primaryKey="true" required="true"/>
-    <column name="volgnummer" phpName="Volgnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="naam_van_de_rubriek" phpName="NaamVanDeRubriek" type="VARCHAR" size="255" required="false"/>
+    <column name="volgnummer" phpName="Volgnummer" type="INTEGER" required="true"/>
+    <column name="naam_van_de_rubriek" phpName="NaamVanDeRubriek" type="VARCHAR" size="255" primaryKey="true" required="true"/>
     <column name="omschrijving_van_de_rubriek" phpName="OmschrijvingVanDeRubriek" type="VARCHAR" size="255" required="false"/>
     <column name="rubriekscode" phpName="Rubriekscode" type="INTEGER" required="false"/>
     <column name="sleutelkode_van_de_rubriek" phpName="SleutelkodeVanDeRubriek" type="VARCHAR" size="255" required="false"/>
