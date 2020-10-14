@@ -1,23 +1,4 @@
-
 import:
-  BST020T:
-    _attributes: {table: gs_namen, modelClass: GsNamen, peerClass: GsNamenPeer}
-    bestandnummer: {start: 0, length: 4, type: integer}
-    mutatiekode: {start: 4, length: 1, type: integer}
-    naamnummer: {start: 5, length: 7, type: integer, primaryKey: true}
-    memokode: {start: 12, length: 6, type: varchar(255)}
-    etiketnaam: {start: 18, length: 27, type: varchar(255)}
-    korte_handelsnaam: {start: 45, length: 40, type: varchar(255)}
-    naam_volledig: {start: 85, length: 50, type: varchar(255)}
-
-  BST025T:
-    _attributes: {table: gs_relaties_tussen_namen, modelClass: GsRelatiesTussenNamen, peerClass: GsRelatiesTussenNamenPeer}
-    bestandnummer: {start: 0, length: 4, type: integer}
-    mutatiekode: {start: 4, length: 1, type: integer}
-    relatie_soort: {start: 5, length: 3, type: integer, primaryKey: true}
-    naamnummer_ingang: {start: 8, length: 7, type: integer, primaryKey: true}
-    naamnummer_uitgang: {start: 15, length: 7, type: integer, primaryKey: true}
-
   BST000T:
     _attributes: {table: gs_bestanden, modelClass: GsBestanden, peerClass: GsBestandenPeer}
     bestandnummer: {start: 0, length: 4, type: integer}
@@ -123,9 +104,9 @@ import:
     onderscheidend_kenmerk: {start: 190, length: 50, type: varchar(255)}
     startdatum_beschikbaarheid_verpakking: {start: 240, length: 8, type: dateus}
     einddatum_beschikbaarheid_verpakking: {start: 248, length: 8, type: dateus}
-    gtin_van_het_verpakt_item:  {start: 256, length: 14, type: integer, primaryKey: true}
-    aantal_van_het_verpakt_item:  {start: 270, length: 6, type: integer}
-    thesaurus_met_items_van_eenheden:  {start: 276, length: 4, type: integer, null0: true}
+    gtin_van_het_verpakt_item: {start: 256, length: 14, type: integer, primaryKey: true}
+    aantal_van_het_verpakt_item: {start: 270, length: 6, type: integer}
+    thesaurus_met_items_van_eenheden: {start: 276, length: 4, type: integer, null0: true}
     hoogte_van_verpakking: {start: 280, length: 8, type: decimal, scale: 2}
     thesaurusitem_van_eenheid_hoogte: {start: 288, length: 6, type: integer, null0: true}
     breedte_van_verpakking: {start: 294, length: 8, type: decimal, scale: 2}
@@ -146,6 +127,24 @@ import:
     rzvvoorwaarden_bijlage_2: {start: 37, length: 6, type: integer, null0: true}
     tekstmodule: {start: 43, length: 3, type: integer}
     tekst_verwijzing: {start: 46, length: 3, type: integer}
+
+  BST020T:
+    _attributes: {table: gs_namen, modelClass: GsNamen, peerClass: GsNamenPeer}
+    bestandnummer: {start: 0, length: 4, type: integer}
+    mutatiekode: {start: 4, length: 1, type: integer}
+    naamnummer: {start: 5, length: 7, type: integer, primaryKey: true}
+    memokode: {start: 12, length: 6, type: varchar(255)}
+    etiketnaam: {start: 18, length: 27, type: varchar(255)}
+    korte_handelsnaam: {start: 45, length: 40, type: varchar(255)}
+    naam_volledig: {start: 85, length: 50, type: varchar(255)}
+
+  BST025T:
+    _attributes: {table: gs_relaties_tussen_namen, modelClass: GsRelatiesTussenNamen, peerClass: GsRelatiesTussenNamenPeer}
+    bestandnummer: {start: 0, length: 4, type: integer}
+    mutatiekode: {start: 4, length: 1, type: integer}
+    relatie_soort: {start: 5, length: 3, type: integer, primaryKey: true}
+    naamnummer_ingang: {start: 8, length: 7, type: integer, primaryKey: true}
+    naamnummer_uitgang: {start: 15, length: 7, type: integer, primaryKey: true}
 
   BST031T:
     _attributes: {table: gs_handelsproducten, modelClass: GsHandelsproducten, peerClass: GsHandelsproductenPeer}
@@ -263,10 +262,10 @@ import:
     _attributes: {table: gs_prescriptie_product, modelClass: GsPrescriptieProduct, peerClass: GsPrescriptieProductPeer}
     bestandnummer: {start: 0, length: 4, type: integer}
     mutatiekode: {start: 4, length: 1, type: integer}
-    prkcode: {start: 5, length: 8, type: integer, primaryKey: true} ### VOLGORDE VANAF HIER
+    prkcode: {start: 5, length: 8, type: integer, primaryKey: true}
     naamnummer_prescriptie_product: {start: 13, length: 7, type: integer}
     generiekeproductcode: {start: 20, length: 8, type: integer}
-    thesnr_reden_voorschrijven_hpk_niveau: {start: 28,length: 4, type: integer}
+    thesnr_reden_voorschrijven_hpk_niveau: {start: 28, length: 4, type: integer}
     reden_voorschrijven_hpk_niveau: {start: 32, length: 6, type: integer, null0: true}
     thesnr_emballagetype: {start: 38, length: 4, type: integer}
     emballagetype: {start: 42, length: 6, type: integer}
@@ -591,7 +590,6 @@ import:
     groepkode: {start: 5, length: 4, type: integer, primaryKey: true}
     groepnaam: {start: 10, length: 50, type: varchar(255)}
     groepvolgorde_kode: {start: 60, length: 11, type: varchar(255)}
-
 
   BST601T:
     _attributes: {table: gs_aanvvoorwaarden_medbew_en_tekstblok, modelClass: GsAanvvoorwaardenMedbewEnTekstblok, peerClass: GsAanvvoorwaardenMedbewEnTekstblokPeer}
@@ -985,7 +983,6 @@ import:
     tekstregelnummer: {start: 41, length: 6, type: integer, primaryKey: true}
     tekst: {start: 47, length: 132, type: varchar(255)}
 
-
   BST936T:
     _attributes: {table: gs_relatie_ongewenste_groepensnk, modelClass: GsRelatieOngewensteGroepensnk, peerClass: GsRelatieOngewensteGroepensnkPeer}
     bestandnummer: {start: 0, length: 4, type: integer}
@@ -993,7 +990,6 @@ import:
     stamnaamcode: {start: 5, length: 6, type: integer, primaryKey: true}
     ongewenste_groepen_thesaurus_122: {start: 11, length: 3, type: integer}
     ongewenste_groepsnummer: {start: 14, length: 3, type: integer, primaryKey: true}
-
 
   BST950T:
     _attributes: {table: gs_codering_gedifferentieerde_tarieven, modelClass: GsCoderingGedifferentieerdeTarieven, peerClass: GsCoderingGedifferentieerdeTarievenPeer}
