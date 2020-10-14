@@ -53,6 +53,11 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		        null,
 		        InputOption::VALUE_NONE,
 		        'Geen historie wegschrijven')
+			->addOption(
+				'resume',
+				null,
+				InputOption::VALUE_NONE,
+				'Hervat import van resterende bestanden na een afgebroken import')
             ->addArgument('bestand', InputArgument::OPTIONAL, 'bestand om te importeren', self::ALLE_BESTANDEN)
 		;
 	}
@@ -63,8 +68,16 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	    if($this->bestand !== self::ALLE_BESTANDEN) {
 	        $output->writeln('Alleen bestand '.$this->bestand);
 	    }
-		$this->downloadGStandaard($input, $output);
-		$this->extractGStandaard($input, $output);
+
+		$downloadDirectory = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/g-standaard/');
+		if (!$input->getOption('resume')) {
+			if (glob($downloadDirectory . DIRECTORY_SEPARATOR . 'BST*')) {
+				throw new \Exception('Voorgaande import niet voltooid, hervat met --resume of wis eerst alle bestanden uit ' . $downloadDirectory);
+			}
+			$this->downloadGStandaard($input, $output, $downloadDirectory);
+			$this->extractGStandaard($input, $output, $downloadDirectory);
+		}
+
 		if(!$input->getOption('skipHistorie')) {
 		  $this->updateAddOnHistorie($input, $output);
 		} else {
@@ -94,9 +107,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	    $output->writeln(date('[H:i:s]').' Add-ons wegschrijven afgerond');
 	}
 
-	protected function downloadGStandaard(InputInterface $input, OutputInterface $output) {
+	protected function downloadGStandaard(InputInterface $input, OutputInterface $output, $downloadDirectory) {
 		$output->writeln(date('[H:i:s]').' Start downloaden G-Standaard');
-		$downloadDirectory = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/g-standaard/');
 		$downloadLocation = $downloadDirectory.'GSTNDDB.ZIP';
 
 		$user = $this->getContainer()->getParameter('pi.gstandaard.user');
@@ -126,9 +138,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		$output->writeln(date('[H:i:s]').' Gereed downloaden G-Standaard');
 	}
 
-	protected function extractGStandaard(InputInterface $input, OutputInterface $output) {
+	protected function extractGStandaard(InputInterface $input, OutputInterface $output, $outputLocation) {
 		$output->writeln(date('[H:i:s]').' Start uitpakken G-Standaard');
-		$outputLocation = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/g-standaard/');
 		$zip = new \ZipArchive();
 		$result = $zip->open($outputLocation.'GSTNDDB.ZIP');
 		if($result !== true) {
@@ -398,7 +409,9 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 				}
 			}
 			fclose($fh);
-			unlink($fullFilename);
+			if ($fileName != 'BST000T') {
+				unlink($fullFilename);
+			}
 			$progress->finish();
 			$this->output->writeln('');
 			$this->output->writeln('<comment>'.$this->recordMap[$fileName]['totaal'].' records in G-Standaard.</comment>');
