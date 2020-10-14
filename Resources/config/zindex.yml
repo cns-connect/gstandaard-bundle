@@ -394,7 +394,7 @@ import:
     bestandnummer: {start: 0, length: 4, type: integer}
     mutatiekode: {start: 4, length: 1, type: integer}
     thesaurusnummer_soort_naw: {start: 5, length: 4, type: integer}
-    naw_soort: {start: 9, length: 6, type: integer, primaryKey: true}
+    naw_soort: {start: 9, length: 6, type: integer, primaryKey: false}
     naw_nummer: {start: 15, length: 7, type: integer, primaryKey: true}
     memocode_onderneming_3_posities_alfanumeriek: {start: 22, length: 3, type: varchar(255)}
     memocode_onderneming_2_posities_numeriek: {start: 25, length: 2, type: integer}

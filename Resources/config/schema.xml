@@ -841,7 +841,7 @@
     <column name="bestandnummer" phpName="Bestandnummer" type="INTEGER" required="false"/>
     <column name="mutatiekode" phpName="Mutatiekode" type="INTEGER" required="false"/>
     <column name="thesaurusnummer_soort_naw" phpName="ThesaurusnummerSoortNaw" type="INTEGER" required="false"/>
-    <column name="naw_soort" phpName="NawSoort" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="naw_soort" phpName="NawSoort" type="INTEGER" required="true"/>
     <column name="naw_nummer" phpName="NawNummer" type="INTEGER" primaryKey="true" required="true"/>
     <column name="memocode_onderneming_3_posities_alfanumeriek" phpName="MemocodeOnderneming3PositiesAlfanumeriek" type="VARCHAR" size="255" required="false"/>
     <column name="memocode_onderneming_2_posities_numeriek" phpName="MemocodeOnderneming2PositiesNumeriek" type="INTEGER" required="false"/>
