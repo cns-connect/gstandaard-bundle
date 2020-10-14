@@ -19,6 +19,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 	protected $importType = self::IMPORT_FULL;
 
+	protected $zindexConfig;
+
 	protected $recordMap = array();
 
 	const IMPORT_FULL = 1;
