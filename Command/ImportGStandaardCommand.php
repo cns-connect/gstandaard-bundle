@@ -356,15 +356,28 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		}
 	}
 
-		protected function import($fileName, array $importData) {
+	protected function iterateGFile($filename, $unlink = false) {
+		$pathname = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/g-standaard/' . $filename);
+		if (!($fh = fopen($pathname, 'r'))) {
+			throw new \Exception('Failed opening ' . $pathname);
+		}
+		$definition = $this->zindexConfig['import'][$filename];
+		while(!feof($fh)) {
+			if (strlen($line = rtrim(fgets($fh), "\r\n\x1A"))) {
+				yield $this->getRowData($line, $definition);
+			}
+		}
+		fclose($fh);
+		if ($unlink) {
+			unlink($pathname);
+		}
+	}
+
+		protected function import($fileName) {
 			$start = time();
 			$this->output->writeln('<info>Importing '.$importData['_attributes']['table'].' ('.$fileName.')</info>');
-			$fullFilename = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/g-standaard/'.$fileName);
 			$omClass = 'PharmaIntelligence\\GstandaardBundle\\Model\\'.$importData['_attributes']['modelClass'];
 
-			if(!file_exists($fullFilename))
-				throw new \Exception($fullFilename.' does not exists');
-			$fh = fopen($fullFilename, 'r');
 			$progress = new ProgressBar($this->output, $this->recordMap[$fileName]['totaal']);
 			$progress->setFormat('debug');
 			$progress->start();
@@ -389,12 +402,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			$stmt = Propel::getConnection()->prepare($sql);
 
 			$do_update_all = ($this->importType == self::IMPORT_FULL || $fileName == 'BST000T');
-			while(!feof($fh)) {
-				if (!strlen($row = rtrim(fgets($fh), "\r\n\x1A"))) {
-					continue;
-				}
+			foreach($this->iterateGFile($fileName, $fileName != 'BST000T') as $rowData) {
 				$progress->advance();
-				$rowData = $this->getRowData($row, $importData);
 				switch($do_update_all ? self::MUTATIE_NIEUW : $rowData['mutatiekode']) {
 					case self::MUTATIE_NIEUW:
 					case self::MUTATIE_VERWIJDER:
@@ -407,10 +416,6 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 						}
 						break;
 				}
-			}
-			fclose($fh);
-			if ($fileName != 'BST000T') {
-				unlink($fullFilename);
 			}
 			$progress->finish();
 			$this->output->writeln('');
@@ -488,12 +493,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		}
 
 		protected function mapRecordlengths() {
-			$fileDefinition = $this->zindexConfig['import']['BST000T'];
-			$fileName = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/g-standaard/BST000T');
-			$fh = fopen($fileName, 'r');
 			$map = [];
-			while(($row = fgets($fh)) == true) {
-				$rowData = $this->getRowData($row, $fileDefinition);
+			foreach($this->iterateGFile('BST000T') as $rowData) {
 				$map[$rowData['naam_van_het_bestand']] = [
 					'totaal' => $rowData['totaal_aantal_records'],
 					'gewijzigd' => $rowData['aantal_gewijzigde_records'],
@@ -502,7 +503,6 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 					'ongewijzigd' => $rowData['aantal_ongewijzigde_records']
 				];
 			}
-			fclose($fh);
 			$this->recordMap = $map;
 		}
 
