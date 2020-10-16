@@ -675,6 +675,24 @@ import:
     basisset_voor_denekamp_berekening: {start: 69, length: 1, type: boolean, description: 'GPDDEN : Basisset voor Denekamp berekening (J/N)'}
     dosisnummer: {start: 70, length: 10, type: integer, description: 'GPDDNR : Dosisnummer'}
 
+  BST649T:
+    _attributes: {table: gs_dosisgegevens, modelClass: GsDosisgegevens, peerClass: GsDosisgegevensPeer, description: 'BST649T : Dosisgegevens - Nieuw per 01/11/2016'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    dosisnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'GPDDNR : Dosisnummer'}
+    norm_minimum: {start: 15, length: 11, type: decimal, scale: 3, description: 'GPNRMMIN : Norm minimum'}
+    norm_maximum: {start: 26, length: 11, type: decimal, scale: 3, description: 'GPNRMMAX : Norm maximum'}
+    absoluut_minimum: {start: 37, length: 11, type: decimal, scale: 3, description: 'GPABSMIN : Absoluut minimum'}
+    absoluut_maximum: {start: 48, length: 11, type: decimal, scale: 3, description: 'GPABSMAX : Absoluut maximum'}
+    norm_minimum_per_kg: {start: 59, length: 11, type: decimal, scale: 3, description: 'GPNRMMINK : Norm minimum per KG'}
+    norm_maximum_per_kg: {start: 70, length: 11, type: decimal, scale: 3, description: 'GPNRMMAXK : Norm maximum per KG'}
+    absoluut_minimum_per_kg: {start: 81, length: 11, type: decimal, scale: 3, description: 'GPABSMINK : Absoluut minimum per KG'}
+    absoluut_maximum_per_kg: {start: 92, length: 11, type: decimal, scale: 3, description: 'GPABSMAXK : Absoluut maximum per KG'}
+    norm_minimum_per_m2: {start: 103, length: 11, type: decimal, scale: 3, description: 'GPNRMMINM : Norm minimum per M2'}
+    norm_maximum_per_m2: {start: 114, length: 11, type: decimal, scale: 3, description: 'GPNRMMAXM : Norm maximum per M2'}
+    absoluut_minimum_per_m2: {start: 125, length: 11, type: decimal, scale: 3, description: 'GPABSMINM : Absoluut minimum per M2'}
+    absoluut_maximum_per_m2: {start: 136, length: 11, type: decimal, scale: 3, description: 'GPABSMAXM : Absoluut maximum per M2'}
+
   BST655T:
     _attributes: {table: gs_bewakingen_te_controleren_indicaties, modelClass: GsBewakingenTeControlerenIndicaties, peerClass: GsBewakingenTeControlerenIndicatiesPeer, description: 'BST655T : Bewakingen: te controleren indicaties'}
     bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
@@ -734,6 +752,189 @@ import:
     tekstmodule: {start: 13, length: 3, type: integer, description: 'TXMOD : Tekstmodule'}
     tekstsoort: {start: 16, length: 3, type: integer, primaryKey: true, description: 'TXSRTT : Tekstsoort'}
     tekst_nivo_kode: {start: 19, length: 8, type: integer, primaryKey: true, description: 'TXKODE : Tekst nivo kode'}
+
+  BST681T:
+    _attributes: {table: gs_mfb_trigger_geneesmiddelkeuze, modelClass: GsMfbTriggerGeneesmiddelkeuze, peerClass: GsMfbTriggerGeneesmiddelkeuzePeer, description: 'BST681T : MFB: Trigger geneesmiddelkeuze'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    waardelijst_nummer: {start: 5, length: 6, type: integer, primaryKey: true, description: 'MFBWNR : Waardelijst nummer'}
+    protocolnummer: {start: 11, length: 10, type: integer, primaryKey: true, description: 'MFBPNR : Protocolnummer'}
+    protocol_uitvoeren_na_receptverwerking: {start: 21, length: 1, type: boolean, description: 'MFBPROC : Protocol uitvoeren na receptverwerking (J/N)'}
+    thesaurusnummer_procesreden: {start: 22, length: 4, type: integer, description: 'THMFBR : Thesaurusnummer procesreden'}
+    itemnummer_procesreden: {start: 26, length: 6, type: integer, primaryKey: true, description: 'MFBPRR : Itemnummer procesreden'}
+
+  BST682T:
+    _attributes: {table: gs_mfb_vervanging_medicatiebewaking, modelClass: GsMfbVervangingMedicatiebewaking, peerClass: GsMfbVervangingMedicatiebewakingPeer, description: 'BST682T : MFB: Vervanging medicatiebewaking'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    protocolnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBPNR : Protocolnummer'}
+    thesnr_bewakingssoort: {start: 15, length: 4, type: integer, description: 'THCTST : Thes.nr. Bewakingssoort (=1015)'}
+    bewakingssoort: {start: 19, length: 6, type: integer, primaryKey: true, description: 'CISRT : Bewakingssoort'}
+    medicatiebewaking_identificerende_code: {start: 25, length: 8, type: integer, primaryKey: true, description: 'MBCODE : Medicatiebewaking identificerende code'}
+
+  BST684T:
+    _attributes: {table: gs_mfb_koppeling_externe_coderingen, modelClass: GsMfbKoppelingExterneCoderingen, peerClass: GsMfbKoppelingExterneCoderingenPeer, description: 'BST684T : MFB: Koppeling externe coderingen'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    aansturing_van_soort: {start: 5, length: 1, type: integer, primaryKey: true, description: 'MFBAANST : Aansturing van soort'}
+    parameterattribuutnummer: {start: 6, length: 10, type: integer, primaryKey: true, description: 'MFBNR : Parameter/Attribuutnummer'}
+    thesnr_externe_code_type: {start: 16, length: 4, type: integer, description: 'THMFBEX : Thes.nr. Externe code type (=2011)'}
+    itemnummer_externe_codering_soort: {start: 20, length: 6, type: integer, primaryKey: true, description: 'MFBEXSRT : Itemnummer externe codering soort'}
+    externe_codering: {start: 26, length: 20, type: varchar, primaryKey: true, description: 'MFBAEXID : Externe codering'}
+
+  BST685T:
+    _attributes: {table: gs_mfb_parameters, modelClass: GsMfbParameters, peerClass: GsMfbParametersPeer, description: 'BST685T : MFB: Parameters'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    parameternummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBPANR : Parameternummer'}
+    versienummer_1e_opname: {start: 15, length: 4, type: integer, description: 'MFBVNOPN : Versienummer 1e opname'}
+    versienummer_laatste_wijziging: {start: 19, length: 4, type: integer, description: 'MFBVNWYZ : Versienummer laatste wijziging'}
+    versienummer_vervallen: {start: 23, length: 4, type: integer, description: 'MFBVNVV : Versienummer vervallen'}
+    parameter_omschrijving: {start: 27, length: 80, type: varchar, description: 'MFBPAOMS : Parameter omschrijving'}
+    vervaltermijn_labmeetwaarden_in_dagen: {start: 107, length: 4, type: integer, description: 'MFBPAVT : Vervaltermijn lab-/meetwaarden in dagen'}
+    thesaurus_nummer: {start: 111, length: 4, type: integer, description: 'THMFBP : Thesaurus nummer'}
+    itemnummer_in_thesaurus: {start: 115, length: 6, type: integer, description: 'MFBPITNR : Itemnummer in thesaurus'}
+    thesaurus_verwijzing_tekstmodule: {start: 121, length: 4, type: integer, description: 'THMODU : Thesaurus verwijzing tekstmodule (=103)'}
+    tekstmodule: {start: 125, length: 6, type: integer, description: 'TXMODU : Tekstmodule'}
+
+  BST686T:
+    _attributes: {table: gs_mfb_attributen, modelClass: GsMfbAttributen, peerClass: GsMfbAttributenPeer, description: 'BST686T : MFB: Attributen'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    attribuutnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBATNR : Attribuutnummer'}
+    attribuuttype: {start: 15, length: 2, type: integer, description: 'MFBATTYP : Attribuuttype (1=getal, 2=boolean)'}
+    versienummer_1e_opname: {start: 17, length: 4, type: integer, description: 'MFBVNOPN : Versienummer 1e opname'}
+    versienummer_laatste_wijziging: {start: 21, length: 4, type: integer, description: 'MFBVNWYZ : Versienummer laatste wijziging'}
+    versienummer_vervallen: {start: 25, length: 4, type: integer, description: 'MFBVNVV : Versienummer vervallen'}
+    attribuut_omschrijving: {start: 29, length: 80, type: varchar, description: 'MFBATOMS : Attribuut omschrijving'}
+    thesaurus_nummer: {start: 109, length: 4, type: integer, description: 'THMFBP : Thesaurus nummer'}
+    itemnummer_in_thesaurus: {start: 113, length: 6, type: integer, description: 'MFBPITNR : Itemnummer in thesaurus'}
+    thesaurus_verwijzing_tekstmodule: {start: 119, length: 4, type: integer, description: 'THMODU : Thesaurus verwijzing tekstmodule (=103)'}
+    tekstmodule: {start: 123, length: 6, type: integer, description: 'TXMODU : Tekstmodule'}
+
+  BST689T:
+    _attributes: {table: gs_mfb_functie, modelClass: GsMfbFunctie, peerClass: GsMfbFunctiePeer, description: 'BST689T : MFB: Functie'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    functienummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBFUNNR : Functienummer'}
+    versienummer_1e_opname: {start: 15, length: 4, type: integer, description: 'MFBVNOPN : Versienummer 1e opname'}
+    versienummer_laatste_wijziging: {start: 19, length: 4, type: integer, description: 'MFBVNWYZ : Versienummer laatste wijziging'}
+    versienummer_vervallen: {start: 23, length: 4, type: integer, description: 'MFBVNVV : Versienummer vervallen'}
+    functie_omschrijving: {start: 27, length: 80, type: varchar, description: 'MFBFUOMS : Functie omschrijving'}
+    thesaurus_verwijzing_tekstmodule: {start: 107, length: 4, type: integer, description: 'THMODU : Thesaurus verwijzing tekstmodule (=103)'}
+    tekstmodule: {start: 111, length: 6, type: integer, description: 'TXMODU : Tekstmodule'}
+
+  BST690T:
+    _attributes: {table: gs_mfb_protocol, modelClass: GsMfbProtocol, peerClass: GsMfbProtocolPeer, description: 'BST690T : MFB: Protocol'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    protocolnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBPNR : Protocolnummer'}
+    releasenummer_protocol: {start: 15, length: 6, type: integer, primaryKey: true, description: 'MFBPNRV : Releasenummer protocol'}
+    datum_vervallen: {start: 21, length: 8, type: date, null0: true, description: 'MFBPDVV : Datum vervallen (DDMMJJJJ)'}
+    veld_heeft_geen_betekenis: {start: 29, length: 4, type: varchar, description: '*DUMMY : Veld heeft geen betekenis (meer)'}
+    protocol_omschrijving: {start: 33, length: 80, type: varchar, description: 'MFBPOMS : Protocol omschrijving'}
+    alleen_voor_testapotheken: {start: 113, length: 1, type: boolean, description: 'MFBPWIN : Alleen voor testapotheken (J/N)'}
+    thesaurus_nummer_bronvermelding: {start: 114, length: 4, type: integer, description: 'THMFBB : Thesaurus nummer bronvermelding'}
+    itemnummer_bron: {start: 118, length: 6, type: integer, description: 'MFBBRON : Itemnummer bron'}
+    datum_vrijgave: {start: 124, length: 8, type: date, description: 'MFBPWIND : Datum vrijgave (DDMMJJJJ)'}
+    knooppuntnummer: {start: 132, length: 10, type: integer, description: 'MFBKNR : Knooppuntnummer'}
+    thesaurus_verwijzing_tekstmodule: {start: 142, length: 4, type: integer, description: 'THMODU : Thesaurus verwijzing tekstmodule (=103)'}
+    tekstmodule: {start: 146, length: 6, type: integer, description: 'TXMODU : Tekstmodule'}
+
+  BST691T:
+    _attributes: {table: gs_mfb_protocol_flow, modelClass: GsMfbProtocolFlow, peerClass: GsMfbProtocolFlowPeer, description: 'BST691T : MFB: Protocol flow'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    protocolnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBPNR : Protocolnummer'}
+    releasenummer_protocol: {start: 15, length: 6, type: integer, primaryKey: true, description: 'MFBPNRV : Releasenummer protocol'}
+    knooppuntnummer: {start: 21, length: 10, type: integer, primaryKey: true, description: 'MFBKNR : Knooppuntnummer'}
+    antwoord_ja_vervolg_knooppuntnummer: {start: 31, length: 10, type: integer, description: 'MFBPJK : Antwoord ja vervolg knooppuntnummer'}
+    antwoord_ja_actienummer: {start: 41, length: 10, type: integer, description: 'MFBPJA : Antwoord ja actienummer'}
+    antwoord_nee_vervolg_knooppuntnummer: {start: 51, length: 10, type: integer, description: 'MFBPNK : Antwoord nee vervolg knooppuntnummer'}
+    antwoord_nee_actienummer: {start: 61, length: 10, type: integer, description: 'MFBPNA : Antwoord nee actienummer'}
+    vraagnummer: {start: 71, length: 10, type: integer, description: 'MFBVNR : Vraagnummer'}
+
+  BST692T:
+    _attributes: {table: gs_mfb_vragen, modelClass: GsMfbVragen, peerClass: GsMfbVragenPeer, description: 'BST692T : MFB: Vragen'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    vraagnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBVNR : Vraagnummer'}
+    vraag_omschrijving: {start: 15, length: 80, type: varchar, description: 'MFBVOMS : Vraag omschrijving'}
+    protocol_attribuut_ophalen: {start: 95, length: 4, type: integer, description: 'MFBFUWO : Protocol attribuut ophalen'}
+    functienummer: {start: 99, length: 10, type: integer, description: 'MFBFUNNR : Functienummer'}
+    scoreteller_bij_jaantwoord: {start: 109, length: 10, type: integer, description: 'MFBVSTJ : Scoreteller bij ja-antwoord'}
+    verklarende_tekst_bij_jaantwoord: {start: 119, length: 80, type: varchar, description: 'MFBVSTJT : Verklarende tekst bij ja-antwoord'}
+    scoreteller_bij_neeantwoord: {start: 199, length: 10, type: integer, description: 'MFBVSTN : Scoreteller bij nee-antwoord'}
+    verklarende_tekst_bij_neeantwoord: {start: 209, length: 80, type: varchar, description: 'MFBVSTNT : Verklarende tekst bij nee-antwoord'}
+    operator: {start: 289, length: 2, type: varchar, description: 'MFBVOPER : Operator'}
+    waarde: {start: 291, length: 10, type: decimal, scale: 2, description: 'MFBVW : Waarde'}
+
+  BST693T:
+    _attributes: {table: gs_mfb_actie, modelClass: GsMfbActie, peerClass: GsMfbActiePeer, description: 'BST693T : MFB: Actie'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    actienummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBANR : Actienummer'}
+    actie_omschrijving: {start: 15, length: 80, type: varchar, description: 'MFBAOMS : Actie omschrijving'}
+    actie_janee: {start: 95, length: 1, type: varchar, description: 'MFBAJN : Actie ja/nee'}
+    patient_blijven_monitoren_janee: {start: 96, length: 1, type: varchar, description: 'MFBMON : Patient blijven monitoren ja/nee'}
+    thesaurus_verwijzing_tekstmodule: {start: 97, length: 4, type: integer, description: 'THMODU : Thesaurus verwijzing tekstmodule (=103)'}
+    tekstmodule: {start: 101, length: 6, type: integer, description: 'TXMODU : Tekstmodule'}
+
+  BST694T:
+    _attributes: {table: gs_mfb_actie_parameter, modelClass: GsMfbActieParameter, peerClass: GsMfbActieParameterPeer, description: 'BST694T : MFB: Actie - Parameter'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    actienummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBANR : Actienummer'}
+    parameterattribuutnummer: {start: 15, length: 10, type: integer, primaryKey: true, description: 'MFBNR : Parameter/Attribuutnummer'}
+    aansturing_van_soort: {start: 25, length: 1, type: integer, primaryKey: true, description: 'MFBAANST : Aansturing van soort'}
+
+  BST695T:
+    _attributes: {table: gs_mfb_vraag_functie_parameter, modelClass: GsMfbVraagFunctieParameter, peerClass: GsMfbVraagFunctieParameterPeer, description: 'BST695T : MFB: Vraag - Functie - Parameter'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    vraagnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBVNR : Vraagnummer'}
+    functienummer: {start: 15, length: 10, type: integer, primaryKey: true, description: 'MFBFUNNR : Functienummer'}
+    volgnummer: {start: 25, length: 4, type: integer, primaryKey: true, description: 'MFBFUNS1 : Volgnummer'}
+    parameternummer: {start: 29, length: 10, type: integer, description: 'MFBPANR : Parameternummer'}
+
+  BST696T:
+    _attributes: {table: gs_mfb_vraag_functie_waardelijst, modelClass: GsMfbVraagFunctieWaardelijst, peerClass: GsMfbVraagFunctieWaardelijstPeer, description: 'BST696T : MFB: Vraag - Functie - Waardelijst'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    vraagnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBVNR : Vraagnummer'}
+    functienummer: {start: 15, length: 10, type: integer, primaryKey: true, description: 'MFBFUNNR : Functienummer'}
+    volgnummer: {start: 25, length: 4, type: integer, primaryKey: true, description: 'MFBFUNS2 : Volgnummer'}
+    waardelijst_nummer: {start: 29, length: 6, type: integer, description: 'MFBWNR : Waardelijst nummer'}
+    operator_waardelijst: {start: 35, length: 2, type: varchar, description: 'MFBVOPEW : Operator waardelijst'}
+
+  BST697T:
+    _attributes: {table: gs_mfb_vraag_functie_attribuut, modelClass: GsMfbVraagFunctieAttribuut, peerClass: GsMfbVraagFunctieAttribuutPeer, description: 'BST697T : MFB: Vraag - Functie - Attribuut'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    vraagnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBVNR : Vraagnummer'}
+    functienummer: {start: 15, length: 10, type: integer, primaryKey: true, description: 'MFBFUNNR : Functienummer'}
+    volgnummer: {start: 25, length: 4, type: integer, primaryKey: true, description: 'MFBFUNS3 : Volgnummer'}
+    attribuutnummer: {start: 29, length: 10, type: integer, description: 'MFBATNR : Attribuutnummer'}
+    protocol_attribuut_toekennen: {start: 39, length: 4, type: integer, description: 'MFBFUWT : Protocol attribuut toekennen'}
+
+  BST698T:
+    _attributes: {table: gs_mfb_protocol_label, modelClass: GsMfbProtocolLabel, peerClass: GsMfbProtocolLabelPeer, description: 'BST698T : MFB: Protocol - Label'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    protocolnummer: {start: 5, length: 10, type: integer, primaryKey: true, description: 'MFBPNR : Protocolnummer'}
+    releasenummer_protocol: {start: 15, length: 6, type: integer, primaryKey: true, description: 'MFBPNRV : Releasenummer protocol'}
+    thesaurus_verwijzing_label: {start: 21, length: 4, type: integer, description: 'MFBTHLBL : Thesaurus verwijzing Label (=2005)'}
+    itemnummer_label: {start: 25, length: 6, type: integer, primaryKey: true, description: 'MFBLBLNR : Itemnummer Label'}
+
+  BST699T:
+    _attributes: {table: gs_mfb_waardelijsten_meerdere_niveaus, modelClass: GsMfbWaardelijstenMeerdereNiveaus, peerClass: GsMfbWaardelijstenMeerdereNiveausPeer, description: 'BST699T : MFB: Waardelijsten meerdere niveaus'}
+    bestandnummer: {start: 0, length: 4, type: integer, description: 'BSTNUM : Bestand-nummer'}
+    mutatiekode: {start: 4, length: 1, type: integer, description: 'MUTKOD : Mutatiecode'}
+    waardelijst_nummer: {start: 5, length: 6, type: integer, primaryKey: true, description: 'MFBWNR : Waardelijst nummer'}
+    waardelijst_omschrijving: {start: 11, length: 80, type: varchar, description: 'MFBWOMS : Waardelijst omschrijving'}
+    thesaurus_verwijzing_soort_code: {start: 91, length: 4, type: integer, description: 'THSRTCDE : Thesaurus verwijzing soort code'}
+    soort_code: {start: 95, length: 6, type: integer, primaryKey: true, description: 'SRTCODE : Soort code (item uit thesaurus 1750)'}
+    code_van_specifiek_niveau: {start: 101, length: 10, type: varchar, primaryKey: true, description: 'CODENV : Code van specifiek niveau'}
 
   BST701T:
     _attributes: {table: gs_ingegeven_samenstellingen, modelClass: GsIngegevenSamenstellingen, peerClass: GsIngegevenSamenstellingenPeer, description: 'BST701T : Ingegeven samenstellingen'}

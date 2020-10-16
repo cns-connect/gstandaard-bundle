@@ -315,6 +315,9 @@
     <column name="frequentie_tijdseenheid" type="INTEGER" required="true" description="GPDFEE : Frequentie  tijdseenheid"/>
     <column name="basisset_voor_denekamp_berekening" type="BOOLEAN" required="true" description="GPDDEN : Basisset voor Denekamp berekening (J/N)"/>
     <column name="dosisnummer" type="INTEGER" required="true" description="GPDDNR : Dosisnummer"/>
+    <foreign-key foreignTable="gs_dosisgegevens" phpName="DosisGegevens">
+      <reference local="dosisnummer" foreign="dosisnummer"/>
+    </foreign-key>
   </table>
   <table name="gs_codering_gedifferentieerde_tarieven" description="BST950T : Codering Gedifferentieerde tarieven">
     <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
@@ -1232,5 +1235,189 @@
     <foreign-key foreignTable="gs_namen">
       <reference local="naamnummer_prescriptie_product" foreign="naamnummer"/>
     </foreign-key>
+  </table>
+  <table name="gs_dosisgegevens" description="BST649T : Dosisgegevens - Nieuw per 01/11/2016">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="dosisnummer" type="INTEGER" primaryKey="true" required="true" description="GPDDNR : Dosisnummer"/>
+    <column name="norm_minimum" type="DECIMAL" size="11" scale="3" required="true" description="GPNRMMIN : Norm minimum"/>
+    <column name="norm_maximum" type="DECIMAL" size="11" scale="3" required="true" description="GPNRMMAX : Norm maximum"/>
+    <column name="absoluut_minimum" type="DECIMAL" size="11" scale="3" required="true" description="GPABSMIN : Absoluut minimum"/>
+    <column name="absoluut_maximum" type="DECIMAL" size="11" scale="3" required="true" description="GPABSMAX : Absoluut maximum"/>
+    <column name="norm_minimum_per_kg" type="DECIMAL" size="11" scale="3" required="true" description="GPNRMMINK : Norm minimum per KG"/>
+    <column name="norm_maximum_per_kg" type="DECIMAL" size="11" scale="3" required="true" description="GPNRMMAXK : Norm maximum per KG"/>
+    <column name="absoluut_minimum_per_kg" type="DECIMAL" size="11" scale="3" required="true" description="GPABSMINK : Absoluut minimum per KG"/>
+    <column name="absoluut_maximum_per_kg" type="DECIMAL" size="11" scale="3" required="true" description="GPABSMAXK : Absoluut maximum per KG"/>
+    <column name="norm_minimum_per_m2" type="DECIMAL" size="11" scale="3" required="true" description="GPNRMMINM : Norm minimum per M2"/>
+    <column name="norm_maximum_per_m2" type="DECIMAL" size="11" scale="3" required="true" description="GPNRMMAXM : Norm maximum per M2"/>
+    <column name="absoluut_minimum_per_m2" type="DECIMAL" size="11" scale="3" required="true" description="GPABSMINM : Absoluut minimum per M2"/>
+    <column name="absoluut_maximum_per_m2" type="DECIMAL" size="11" scale="3" required="true" description="GPABSMAXM : Absoluut maximum per M2"/>
+  </table>
+  <table name="gs_mfb_trigger_geneesmiddelkeuze" description="BST681T : MFB: Trigger geneesmiddelkeuze">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="waardelijst_nummer" type="INTEGER" primaryKey="true" required="true" description="MFBWNR : Waardelijst nummer"/>
+    <column name="protocolnummer" type="INTEGER" primaryKey="true" required="true" description="MFBPNR : Protocolnummer"/>
+    <column name="protocol_uitvoeren_na_receptverwerking" type="BOOLEAN" required="true" description="MFBPROC : Protocol uitvoeren na receptverwerking (J/N)"/>
+    <column name="thesaurusnummer_procesreden" type="INTEGER" required="true" description="THMFBR : Thesaurusnummer procesreden"/>
+    <column name="itemnummer_procesreden" type="INTEGER" primaryKey="true" required="true" description="MFBPRR : Itemnummer procesreden"/>
+  </table>
+  <table name="gs_mfb_vervanging_medicatiebewaking" description="BST682T : MFB: Vervanging medicatiebewaking">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="protocolnummer" type="INTEGER" primaryKey="true" required="true" description="MFBPNR : Protocolnummer"/>
+    <column name="thesnr_bewakingssoort" type="INTEGER" required="true" description="THCTST : Thes.nr. Bewakingssoort (=1015)"/>
+    <column name="bewakingssoort" type="INTEGER" primaryKey="true" required="true" description="CISRT : Bewakingssoort"/>
+    <column name="medicatiebewaking_identificerende_code" type="INTEGER" primaryKey="true" required="true" description="MBCODE : Medicatiebewaking identificerende code"/>
+  </table>
+  <table name="gs_mfb_koppeling_externe_coderingen" description="BST684T : MFB: Koppeling externe coderingen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="aansturing_van_soort" type="INTEGER" primaryKey="true" required="true" description="MFBAANST : Aansturing van soort"/>
+    <column name="parameterattribuutnummer" type="INTEGER" primaryKey="true" required="true" description="MFBNR : Parameter/Attribuutnummer"/>
+    <column name="thesnr_externe_code_type" type="INTEGER" required="true" description="THMFBEX : Thes.nr. Externe code type (=2011)"/>
+    <column name="itemnummer_externe_codering_soort" type="INTEGER" primaryKey="true" required="true" description="MFBEXSRT : Itemnummer externe codering soort"/>
+    <column name="externe_codering" type="VARCHAR" size="20" primaryKey="true" required="true" description="MFBAEXID : Externe codering"/>
+  </table>
+  <table name="gs_mfb_parameters" description="BST685T : MFB: Parameters">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="parameternummer" type="INTEGER" primaryKey="true" required="true" description="MFBPANR : Parameternummer"/>
+    <column name="versienummer_1e_opname" type="INTEGER" required="true" description="MFBVNOPN : Versienummer 1e opname"/>
+    <column name="versienummer_laatste_wijziging" type="INTEGER" required="true" description="MFBVNWYZ : Versienummer laatste wijziging"/>
+    <column name="versienummer_vervallen" type="INTEGER" required="true" description="MFBVNVV : Versienummer vervallen"/>
+    <column name="parameter_omschrijving" type="VARCHAR" size="80" required="true" description="MFBPAOMS : Parameter omschrijving"/>
+    <column name="vervaltermijn_labmeetwaarden_in_dagen" type="INTEGER" required="true" description="MFBPAVT : Vervaltermijn lab-/meetwaarden in dagen"/>
+    <column name="thesaurus_nummer" type="INTEGER" required="true" description="THMFBP : Thesaurus nummer"/>
+    <column name="itemnummer_in_thesaurus" type="INTEGER" required="true" description="MFBPITNR : Itemnummer in thesaurus"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMODU : Tekstmodule"/>
+  </table>
+  <table name="gs_mfb_attributen" description="BST686T : MFB: Attributen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="attribuutnummer" type="INTEGER" primaryKey="true" required="true" description="MFBATNR : Attribuutnummer"/>
+    <column name="attribuuttype" type="INTEGER" required="true" description="MFBATTYP : Attribuuttype (1=getal, 2=boolean)"/>
+    <column name="versienummer_1e_opname" type="INTEGER" required="true" description="MFBVNOPN : Versienummer 1e opname"/>
+    <column name="versienummer_laatste_wijziging" type="INTEGER" required="true" description="MFBVNWYZ : Versienummer laatste wijziging"/>
+    <column name="versienummer_vervallen" type="INTEGER" required="true" description="MFBVNVV : Versienummer vervallen"/>
+    <column name="attribuut_omschrijving" type="VARCHAR" size="80" required="true" description="MFBATOMS : Attribuut omschrijving"/>
+    <column name="thesaurus_nummer" type="INTEGER" required="true" description="THMFBP : Thesaurus nummer"/>
+    <column name="itemnummer_in_thesaurus" type="INTEGER" required="true" description="MFBPITNR : Itemnummer in thesaurus"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMODU : Tekstmodule"/>
+  </table>
+  <table name="gs_mfb_functie" description="BST689T : MFB: Functie">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="functienummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNNR : Functienummer"/>
+    <column name="versienummer_1e_opname" type="INTEGER" required="true" description="MFBVNOPN : Versienummer 1e opname"/>
+    <column name="versienummer_laatste_wijziging" type="INTEGER" required="true" description="MFBVNWYZ : Versienummer laatste wijziging"/>
+    <column name="versienummer_vervallen" type="INTEGER" required="true" description="MFBVNVV : Versienummer vervallen"/>
+    <column name="functie_omschrijving" type="VARCHAR" size="80" required="true" description="MFBFUOMS : Functie omschrijving"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMODU : Tekstmodule"/>
+  </table>
+  <table name="gs_mfb_protocol" description="BST690T : MFB: Protocol">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="protocolnummer" type="INTEGER" primaryKey="true" required="true" description="MFBPNR : Protocolnummer"/>
+    <column name="releasenummer_protocol" type="INTEGER" primaryKey="true" required="true" description="MFBPNRV : Releasenummer protocol"/>
+    <column name="datum_vervallen" type="DATE" required="false" description="MFBPDVV : Datum vervallen (DDMMJJJJ)"/>
+    <column name="veld_heeft_geen_betekenis" type="VARCHAR" size="4" required="true" description="*DUMMY : Veld heeft geen betekenis (meer)"/>
+    <column name="protocol_omschrijving" type="VARCHAR" size="80" required="true" description="MFBPOMS : Protocol omschrijving"/>
+    <column name="alleen_voor_testapotheken" type="BOOLEAN" required="true" description="MFBPWIN : Alleen voor testapotheken (J/N)"/>
+    <column name="thesaurus_nummer_bronvermelding" type="INTEGER" required="true" description="THMFBB : Thesaurus nummer bronvermelding"/>
+    <column name="itemnummer_bron" type="INTEGER" required="true" description="MFBBRON : Itemnummer bron"/>
+    <column name="datum_vrijgave" type="DATE" required="true" description="MFBPWIND : Datum vrijgave (DDMMJJJJ)"/>
+    <column name="knooppuntnummer" type="INTEGER" required="true" description="MFBKNR : Knooppuntnummer"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMODU : Tekstmodule"/>
+  </table>
+  <table name="gs_mfb_protocol_flow" description="BST691T : MFB: Protocol flow">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="protocolnummer" type="INTEGER" primaryKey="true" required="true" description="MFBPNR : Protocolnummer"/>
+    <column name="releasenummer_protocol" type="INTEGER" primaryKey="true" required="true" description="MFBPNRV : Releasenummer protocol"/>
+    <column name="knooppuntnummer" type="INTEGER" primaryKey="true" required="true" description="MFBKNR : Knooppuntnummer"/>
+    <column name="antwoord_ja_vervolg_knooppuntnummer" type="INTEGER" required="true" description="MFBPJK : Antwoord ja vervolg knooppuntnummer"/>
+    <column name="antwoord_ja_actienummer" type="INTEGER" required="true" description="MFBPJA : Antwoord ja actienummer"/>
+    <column name="antwoord_nee_vervolg_knooppuntnummer" type="INTEGER" required="true" description="MFBPNK : Antwoord nee vervolg knooppuntnummer"/>
+    <column name="antwoord_nee_actienummer" type="INTEGER" required="true" description="MFBPNA : Antwoord nee actienummer"/>
+    <column name="vraagnummer" type="INTEGER" required="true" description="MFBVNR : Vraagnummer"/>
+  </table>
+  <table name="gs_mfb_vragen" description="BST692T : MFB: Vragen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="vraagnummer" type="INTEGER" primaryKey="true" required="true" description="MFBVNR : Vraagnummer"/>
+    <column name="vraag_omschrijving" type="VARCHAR" size="80" required="true" description="MFBVOMS : Vraag omschrijving"/>
+    <column name="protocol_attribuut_ophalen" type="INTEGER" required="true" description="MFBFUWO : Protocol attribuut ophalen"/>
+    <column name="functienummer" type="INTEGER" required="true" description="MFBFUNNR : Functienummer"/>
+    <column name="scoreteller_bij_jaantwoord" type="INTEGER" required="true" description="MFBVSTJ : Scoreteller bij ja-antwoord"/>
+    <column name="verklarende_tekst_bij_jaantwoord" type="VARCHAR" size="80" required="true" description="MFBVSTJT : Verklarende tekst bij ja-antwoord"/>
+    <column name="scoreteller_bij_neeantwoord" type="INTEGER" required="true" description="MFBVSTN : Scoreteller bij nee-antwoord"/>
+    <column name="verklarende_tekst_bij_neeantwoord" type="VARCHAR" size="80" required="true" description="MFBVSTNT : Verklarende tekst bij nee-antwoord"/>
+    <column name="operator" type="VARCHAR" size="2" required="true" description="MFBVOPER : Operator"/>
+    <column name="waarde" type="DECIMAL" size="10" scale="2" required="true" description="MFBVW : Waarde"/>
+  </table>
+  <table name="gs_mfb_actie" description="BST693T : MFB: Actie">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="actienummer" type="INTEGER" primaryKey="true" required="true" description="MFBANR : Actienummer"/>
+    <column name="actie_omschrijving" type="VARCHAR" size="80" required="true" description="MFBAOMS : Actie omschrijving"/>
+    <column name="actie_janee" type="VARCHAR" size="1" required="true" description="MFBAJN : Actie ja/nee"/>
+    <column name="patient_blijven_monitoren_janee" type="VARCHAR" size="1" required="true" description="MFBMON : Patient blijven monitoren ja/nee"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMODU : Tekstmodule"/>
+  </table>
+  <table name="gs_mfb_actie_parameter" description="BST694T : MFB: Actie - Parameter">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="actienummer" type="INTEGER" primaryKey="true" required="true" description="MFBANR : Actienummer"/>
+    <column name="parameterattribuutnummer" type="INTEGER" primaryKey="true" required="true" description="MFBNR : Parameter/Attribuutnummer"/>
+    <column name="aansturing_van_soort" type="INTEGER" primaryKey="true" required="true" description="MFBAANST : Aansturing van soort"/>
+  </table>
+  <table name="gs_mfb_vraag_functie_parameter" description="BST695T : MFB: Vraag - Functie - Parameter">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="vraagnummer" type="INTEGER" primaryKey="true" required="true" description="MFBVNR : Vraagnummer"/>
+    <column name="functienummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNNR : Functienummer"/>
+    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNS1 : Volgnummer"/>
+    <column name="parameternummer" type="INTEGER" required="true" description="MFBPANR : Parameternummer"/>
+  </table>
+  <table name="gs_mfb_vraag_functie_waardelijst" description="BST696T : MFB: Vraag - Functie - Waardelijst">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="vraagnummer" type="INTEGER" primaryKey="true" required="true" description="MFBVNR : Vraagnummer"/>
+    <column name="functienummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNNR : Functienummer"/>
+    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNS2 : Volgnummer"/>
+    <column name="waardelijst_nummer" type="INTEGER" required="true" description="MFBWNR : Waardelijst nummer"/>
+    <column name="operator_waardelijst" type="VARCHAR" size="2" required="true" description="MFBVOPEW : Operator waardelijst"/>
+  </table>
+  <table name="gs_mfb_vraag_functie_attribuut" description="BST697T : MFB: Vraag - Functie - Attribuut">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="vraagnummer" type="INTEGER" primaryKey="true" required="true" description="MFBVNR : Vraagnummer"/>
+    <column name="functienummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNNR : Functienummer"/>
+    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true" description="MFBFUNS3 : Volgnummer"/>
+    <column name="attribuutnummer" type="INTEGER" required="true" description="MFBATNR : Attribuutnummer"/>
+    <column name="protocol_attribuut_toekennen" type="INTEGER" required="true" description="MFBFUWT : Protocol attribuut toekennen"/>
+  </table>
+  <table name="gs_mfb_protocol_label" description="BST698T : MFB: Protocol - Label">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="protocolnummer" type="INTEGER" primaryKey="true" required="true" description="MFBPNR : Protocolnummer"/>
+    <column name="releasenummer_protocol" type="INTEGER" primaryKey="true" required="true" description="MFBPNRV : Releasenummer protocol"/>
+    <column name="thesaurus_verwijzing_label" type="INTEGER" required="true" description="MFBTHLBL : Thesaurus verwijzing Label (=2005)"/>
+    <column name="itemnummer_label" type="INTEGER" primaryKey="true" required="true" description="MFBLBLNR : Itemnummer Label"/>
+  </table>
+  <table name="gs_mfb_waardelijsten_meerdere_niveaus" description="BST699T : MFB: Waardelijsten meerdere niveaus">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="waardelijst_nummer" type="INTEGER" primaryKey="true" required="true" description="MFBWNR : Waardelijst nummer"/>
+    <column name="waardelijst_omschrijving" type="VARCHAR" size="80" required="true" description="MFBWOMS : Waardelijst omschrijving"/>
+    <column name="thesaurus_verwijzing_soort_code" type="INTEGER" required="true" description="THSRTCDE : Thesaurus verwijzing soort code"/>
+    <column name="soort_code" type="INTEGER" primaryKey="true" required="true" description="SRTCODE : Soort code (item uit thesaurus 1750)"/>
+    <column name="code_van_specifiek_niveau" type="VARCHAR" size="10" primaryKey="true" required="true" description="CODENV : Code van specifiek niveau"/>
   </table>
 </database>
