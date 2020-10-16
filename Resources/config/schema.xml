@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultPhpNamingMethod="underscore" defaultIdMethod="native" namespace="PharmaIntelligence\GstandaardBundle\Model">
-  <table name="gs_rzv_aanspraak">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zinummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_rzv_verstrekking" type="INTEGER" required="true"/>
-    <column name="rzvverstrekking" type="INTEGER" required="true"/>
-    <column name="thesaurus_rzv_hulpmiddelen" type="INTEGER" required="true"/>
-    <column name="hulpmiddelen_zorg" type="INTEGER" required="false"/>
-    <column name="rzv_thesaurus_120" type="INTEGER" required="true"/>
-    <column name="rzvvoorwaarden_bijlage_2" type="INTEGER" required="false"/>
-    <column name="tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekst_verwijzing" type="INTEGER" required="true"/>
+  <table name="gs_rzv_aanspraak" description="BST014T : RZV Aanspraak">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zinummer" type="INTEGER" primaryKey="true" required="true" description="ZINR : Z-Index nummer"/>
+    <column name="thesaurus_rzv_verstrekking" type="INTEGER" required="true" description="THRZVV : Thesaurus RZV verstrekking (1510)"/>
+    <column name="rzvverstrekking" type="INTEGER" required="true" description="HPRZVV : RZV-verstrekking"/>
+    <column name="thesaurus_rzv_hulpmiddelen" type="INTEGER" required="true" description="THRZVH : Thesaurus RZV hulpmiddelen (1530)"/>
+    <column name="hulpmiddelen_zorg" type="INTEGER" required="false" description="HPRZVH : Hulpmiddelen zorg"/>
+    <column name="rzv_thesaurus_120" type="INTEGER" required="true" description="THRZV : RZV Thesaurus 120"/>
+    <column name="rzvvoorwaarden_bijlage_2" type="INTEGER" required="false" description="HPRZV : RZV-voorwaarden Bijlage 2"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMOD : Tekstmodule"/>
+    <column name="tekst_verwijzing" type="INTEGER" required="true" description="TXSRT : Tekst verwijzing"/>
     <foreign-key foreignTable="gs_artikelen">
       <reference local="zinummer" foreign="zinummer"/>
     </foreign-key>
@@ -31,58 +31,58 @@
       <reference local="rzvvoorwaarden_bijlage_2" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_aanvvoorwaarden_medbew_en_tekstblok">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesnr_bewakingssoort" type="INTEGER" required="true"/>
-    <column name="bewakingssoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="medicatiebewaking_identificerende_code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_aanvullende_voorwaarde" type="INTEGER" required="true"/>
-    <column name="medicatiebewaking_aanvullende_voorwaarde" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="codering_waarde_1_alfanumeriek" type="VARCHAR" size="1" primaryKey="true" required="true"/>
-    <column name="codering_waarde_2_numeriek" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="codering_waarde_3_numeriek" type="INTEGER" required="true"/>
+  <table name="gs_aanvvoorwaarden_medbew_en_tekstblok" description="BST601T : Aanv.voorwaarden Med.Bew. en tekstblok">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesnr_bewakingssoort" type="INTEGER" required="true" description="THCTST : Thes.nr. Bewakingssoort (=1015)"/>
+    <column name="bewakingssoort" type="INTEGER" primaryKey="true" required="true" description="CISRT : Bewakingssoort"/>
+    <column name="medicatiebewaking_identificerende_code" type="INTEGER" primaryKey="true" required="true" description="MBCODE : Medicatiebewaking identificerende code"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true" description="TXMODU : Tekstmodule"/>
+    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true" description="THTSRT : Thesaurus verwijzing tekstsoort (=104)"/>
+    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true" description="TXTSRT : Tekstsoort"/>
+    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true" description="TXBLNR : Tekstbloknummer"/>
+    <column name="thesaurusverwijzing_aanvullende_voorwaarde" type="INTEGER" required="true" description="TSVRW : Thesaurusverwijzing aanvullende voorwaarde (1701)"/>
+    <column name="medicatiebewaking_aanvullende_voorwaarde" type="INTEGER" primaryKey="true" required="true" description="MBVRW : Medicatiebewaking aanvullende voorwaarde"/>
+    <column name="codering_waarde_1_alfanumeriek" type="VARCHAR" size="1" primaryKey="true" required="true" description="MBWRD1 : Codering waarde 1 - alfanumeriek"/>
+    <column name="codering_waarde_2_numeriek" type="INTEGER" primaryKey="true" required="true" description="MBWRD2 : Codering waarde 2 - numeriek"/>
+    <column name="codering_waarde_3_numeriek" type="INTEGER" required="true" description="MBWRD3 : Codering waarde 3 - numeriek"/>
   </table>
-  <table name="gs_afgeleide_indicatieaard">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="atccode" type="VARCHAR" size="8" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_indicatie" type="INTEGER" required="true"/>
-    <column name="indicatie_aard" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_hardheid_afleiding" type="INTEGER" required="true"/>
-    <column name="hardheid_afleiding" type="INTEGER" required="true"/>
-    <column name="thesaurusverwijzing_tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" required="true"/>
-    <column name="thesaurusverwijzing_tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" required="true"/>
+  <table name="gs_afgeleide_indicatieaard" description="BST658T : Afgeleide indicatie-aard">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="atccode" type="VARCHAR" size="8" primaryKey="true" required="true" description="ATCBEG : ATC-Code"/>
+    <column name="thesaurusverwijzing_indicatie" type="INTEGER" required="true" description="TSAARD : Thesaurusverwijzing Indicatie (=40)"/>
+    <column name="indicatie_aard" type="INTEGER" primaryKey="true" required="true" description="INAARD : Indicatie aard (thes 40)"/>
+    <column name="thesaurusverwijzing_hardheid_afleiding" type="INTEGER" required="true" description="TSHAAF : Thesaurusverwijzing Hardheid afleiding (1300)"/>
+    <column name="hardheid_afleiding" type="INTEGER" required="true" description="HHAFLD : Hardheid afleiding"/>
+    <column name="thesaurusverwijzing_tekstmodule" type="INTEGER" required="true" description="TSMODU : Thesaurusverwijzing Tekstmodule (103)"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMODU : Tekstmodule"/>
+    <column name="thesaurusverwijzing_tekstsoort" type="INTEGER" required="true" description="TSSRTT : Thesaurusverwijzing Tekstsoort (104)"/>
+    <column name="tekstsoort" type="INTEGER" required="true" description="TXSRTTE : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" required="true" description="TXKODE : Tekst nivo kode"/>
   </table>
-  <table name="gs_logistieke_verpakkingsinformatie">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="gln" type="BIGINT" primaryKey="true" required="true"/>
-    <column name="gtin" type="BIGINT" primaryKey="true" required="true"/>
-    <column name="zindex_nummer" type="INTEGER" required="false"/>
-    <column name="thesaurus_soorten_verpakkingen" type="INTEGER" required="true"/>
-    <column name="thesaurusitem_soorten_verpakkingen" type="INTEGER" required="true"/>
-    <column name="naam_op_verpakking" type="VARCHAR" size="140" required="true"/>
-    <column name="onderscheidend_kenmerk" type="VARCHAR" size="50" required="true"/>
-    <column name="startdatum_beschikbaarheid_verpakking" type="date" required="true"/>
-    <column name="einddatum_beschikbaarheid_verpakking" type="date" required="false"/>
-    <column name="gtin_van_het_verpakt_item" type="BIGINT" primaryKey="true" required="true"/>
-    <column name="aantal_van_het_verpakt_item" type="INTEGER" required="true"/>
-    <column name="thesaurus_met_items_van_eenheden" type="INTEGER" required="false"/>
-    <column name="hoogte_van_verpakking" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="thesaurusitem_van_eenheid_hoogte" type="integer" required="false"/>
-    <column name="breedte_van_verpakking" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="thesaurusitem_van_eenheid_breedte" type="integer" required="true"/>
-    <column name="diepte_van_verpakking" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="thesaurusitem_van_eenheid_diepte" type="integer" required="true"/>
+  <table name="gs_logistieke_verpakkingsinformatie" description="BST007T : Logistieke verpakkingsinformatie">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="gln" type="BIGINT" primaryKey="true" required="true" description="GLN : Global Location Number"/>
+    <column name="gtin" type="BIGINT" primaryKey="true" required="true" description="GTIN : Global Trade Item Number"/>
+    <column name="zindex_nummer" type="INTEGER" required="false" description="ZINR : Z-Index nummer"/>
+    <column name="thesaurus_soorten_verpakkingen" type="INTEGER" required="true" description="THSOORT : Thesaurus van soorten verpakkingen"/>
+    <column name="thesaurusitem_soorten_verpakkingen" type="INTEGER" required="true" description="LVSOORT : Thesaurusitem van soorten verpakkingen"/>
+    <column name="naam_op_verpakking" type="VARCHAR" size="140" required="true" description="LVNAAM : Naam op verpakking"/>
+    <column name="onderscheidend_kenmerk" type="VARCHAR" size="50" required="true" description="LVONSK : Onderscheidend kenmerk"/>
+    <column name="startdatum_beschikbaarheid_verpakking" type="date" required="true" description="LVSTART : Startdatum beschikbaarheid verpakking"/>
+    <column name="einddatum_beschikbaarheid_verpakking" type="date" required="false" description="LVEIND : Einddatum beschikbaarheid verpakking"/>
+    <column name="gtin_van_het_verpakt_item" type="BIGINT" primaryKey="true" required="true" description="LVBEVAT : GTIN van het verpakt item"/>
+    <column name="aantal_van_het_verpakt_item" type="INTEGER" required="true" description="LVAANTAL : Aantal van het verpakt item"/>
+    <column name="thesaurus_met_items_van_eenheden" type="INTEGER" required="false" description="THAFM : Thesaurus met items van eenheden"/>
+    <column name="hoogte_van_verpakking" type="DECIMAL" size="8" scale="2" required="true" description="LVHOOGTE : Hoogte van verpakking"/>
+    <column name="thesaurusitem_van_eenheid_hoogte" type="integer" required="false" description="LVHOOGEH : Thesaurusitem van eenheid hoogte van verpakking"/>
+    <column name="breedte_van_verpakking" type="DECIMAL" size="8" scale="2" required="true" description="LVBREEDTE : Breedte van verpakking"/>
+    <column name="thesaurusitem_van_eenheid_breedte" type="integer" required="true" description="LVBREH : Thesaurusitem van eenheid breedte van verpakking"/>
+    <column name="diepte_van_verpakking" type="DECIMAL" size="8" scale="2" required="true" description="LVDIEPTE : Diepte van verpakking"/>
+    <column name="thesaurusitem_van_eenheid_diepte" type="integer" required="true" description="LVDIEPTEH : Thesaurusitem van eenheid diepte van verpakking"/>
     <foreign-key foreignTable="gs_thesauri_totaal" phpName="SoortenVerpakkingOmschrijving">
       <reference local="thesaurus_soorten_verpakkingen" foreign="thesaurusnummer"/>
       <reference local="thesaurusitem_soorten_verpakkingen" foreign="thesaurus_itemnummer"/>
@@ -103,61 +103,61 @@
       <reference local="zindex_nummer" foreign="zinummer"/>
     </foreign-key>
   </table>
-  <table name="gs_artikelen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zinummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" required="true"/>
-    <column name="artikelnaamnummer" type="INTEGER" required="true"/>
-    <column name="inkoophoeveelheid" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="aantal_hoofdverpakkingen" type="INTEGER" required="true"/>
-    <column name="hoofdverpakking_omschrijving_thesnr" type="INTEGER" required="true"/>
-    <column name="hoofdverpakking_omschrijving_kode" type="INTEGER" required="true"/>
-    <column name="aantal_deelverpakkingen" type="INTEGER" required="true"/>
-    <column name="deelverpakking_omschrijving_thesnr" type="INTEGER" required="true"/>
-    <column name="deelverpakking_omschrijving_kode" type="INTEGER" required="true"/>
-    <column name="hoeveelheid_per_deelverpakking" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="un_kode" type="VARCHAR" size="1" required="true"/>
-    <column name="un_datum" type="DATE" required="false"/>
-    <column name="kode_wet_op_de_geneesmiddelen" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_koelkast" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_kliniekverpakking" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_vervaldatum" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_easysteem" type="VARCHAR" size="1" required="true"/>
-    <column name="rvgnummer_1" type="INTEGER" required="true"/>
-    <column name="rvgnummer_2" type="VARCHAR" size="1" required="true"/>
-    <column name="rvgnummer_3" type="INTEGER" required="true"/>
-    <column name="datum_inschrijving_registratie" type="DATE" required="false"/>
-    <column name="aantal_ddds_per_verpakking" type="DECIMAL" size="10" scale="3" required="true"/>
-    <column name="fabrikant_artikelkodering" type="VARCHAR" size="12" required="true"/>
-    <column name="registratiehouder_kode" type="INTEGER" required="false"/>
-    <column name="importeur_kode" type="INTEGER" required="false"/>
-    <column name="leverancier_kode" type="INTEGER" required="true"/>
-    <column name="land_van_herkomst_thesaurus_nummer" type="INTEGER" required="true"/>
-    <column name="land_van_herkomst_kode" type="INTEGER" required="true"/>
-    <column name="datum_invoer_verpakking" type="DATE" required="false"/>
-    <column name="datum_afvoer_verpakking" type="DATE" required="false"/>
-    <column name="produktkoppel_kode" type="INTEGER" required="true"/>
-    <column name="wtgkode" type="INTEGER" required="true"/>
-    <column name="btwkode_voor_declaratie" type="INTEGER" required="true"/>
-    <column name="kode_inkoopkanaal" type="INTEGER" required="true"/>
-    <column name="kode_referentieprodukt_per_cluster" type="INTEGER" required="true"/>
-    <column name="verkoopprijs_exclusief_btw" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="vergoedingsprijs" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="referentieprijs" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="datum_schorsing" type="DATE" required="false"/>
-    <column name="datum_doorhaling" type="DATE" required="false"/>
-    <column name="mutatie_datum" type="DATE" required="false"/>
-    <column name="uitgavedatum" type="DATE" required="true"/>
-    <column name="gvs_cluster_kode" type="VARCHAR" size="11" required="true"/>
-    <column name="gvs_vergoedingslimiet" type="DECIMAL" size="12" scale="5" required="true"/>
-    <column name="inkoopprijs" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="europees_registratienummer" type="VARCHAR" size="20" required="true"/>
-    <column name="kortingspercentage" type="DECIMAL" size="8" scale="6" required="true"/>
-    <column name="maximumprijs_vws" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="registratie_nummer_1" type="INTEGER" required="true"/>
-    <column name="registratie_nummer_2" type="VARCHAR" size="2" required="true"/>
-    <column name="registratie_nummer_3" type="INTEGER" required="true"/>
+  <table name="gs_artikelen" description="BST004T : Artikelen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zinummer" type="INTEGER" primaryKey="true" required="true" description="ATKODE : ZI-nummer"/>
+    <column name="handelsproduktkode" type="INTEGER" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="artikelnaamnummer" type="INTEGER" required="true" description="ATNMNR : Artikelnaamnummer"/>
+    <column name="inkoophoeveelheid" type="DECIMAL" size="8" scale="2" required="true" description="VPINHV : Inkoophoeveelheid"/>
+    <column name="aantal_hoofdverpakkingen" type="INTEGER" required="true" description="VPHFAA : Aantal hoofdverpakkingen"/>
+    <column name="hoofdverpakking_omschrijving_thesnr" type="INTEGER" required="true" description="THHFOM : Hoofdverpakking omschrijving thesnr"/>
+    <column name="hoofdverpakking_omschrijving_kode" type="INTEGER" required="true" description="VPHFOM : Hoofdverpakking omschrijving kode"/>
+    <column name="aantal_deelverpakkingen" type="INTEGER" required="true" description="VPDLAA : Aantal deelverpakkingen"/>
+    <column name="deelverpakking_omschrijving_thesnr" type="INTEGER" required="true" description="THDLOM : Deelverpakking omschrijving thes.nr"/>
+    <column name="deelverpakking_omschrijving_kode" type="INTEGER" required="true" description="VPDLOM : Deelverpakking omschrijving kode"/>
+    <column name="hoeveelheid_per_deelverpakking" type="DECIMAL" size="8" scale="2" required="true" description="VPDLHV : Hoeveelheid per deelverpakking"/>
+    <column name="un_kode" type="VARCHAR" size="1" required="true" description="VPKUNV : U/N kode"/>
+    <column name="un_datum" type="DATE" required="false" description="XPKUND : U/N datum"/>
+    <column name="kode_wet_op_de_geneesmiddelen" type="VARCHAR" size="1" required="true" description="VPKWGM : Kode wet op de geneesmiddelen"/>
+    <column name="kode_koelkast" type="VARCHAR" size="1" required="true" description="VPKKLK : Kode koelkast"/>
+    <column name="kode_kliniekverpakking" type="VARCHAR" size="1" required="true" description="VPKKVP : Kode kliniekverpakking"/>
+    <column name="kode_vervaldatum" type="VARCHAR" size="1" required="true" description="VPKBWR : Kode vervaldatum"/>
+    <column name="kode_easysteem" type="VARCHAR" size="1" required="true" description="VPKEAS : Kode EA-Systeem"/>
+    <column name="rvgnummer_1" type="INTEGER" required="true" description="RVRVG1 : RVG-nummer 1"/>
+    <column name="rvgnummer_2" type="VARCHAR" size="1" required="true" description="RVRVG2 : RVG-nummer 2 (teken)"/>
+    <column name="rvgnummer_3" type="INTEGER" required="true" description="RVRVG3 : RVG-nummer 3"/>
+    <column name="datum_inschrijving_registratie" type="DATE" required="false" description="XVINSD : Datum inschrijving registratie"/>
+    <column name="aantal_ddds_per_verpakking" type="DECIMAL" size="10" scale="3" required="true" description="MNVDDD : Aantal DDD's per verpakking"/>
+    <column name="fabrikant_artikelkodering" type="VARCHAR" size="12" required="true" description="VPFBVN : Fabrikant artikelkodering"/>
+    <column name="registratiehouder_kode" type="INTEGER" required="false" description="XVREGH : Registratiehouder kode"/>
+    <column name="importeur_kode" type="INTEGER" required="false" description="XVIMP : Importeur kode"/>
+    <column name="leverancier_kode" type="INTEGER" required="true" description="VPKLEV : Leverancier kode"/>
+    <column name="land_van_herkomst_thesaurus_nummer" type="INTEGER" required="true" description="THLND : Land van herkomst thesaurus nummer"/>
+    <column name="land_van_herkomst_kode" type="INTEGER" required="true" description="XALND : Land van herkomst kode"/>
+    <column name="datum_invoer_verpakking" type="DATE" required="false" description="XPIHDD : Datum invoer verpakking"/>
+    <column name="datum_afvoer_verpakking" type="DATE" required="false" description="XPUHDD : Datum afvoer verpakking"/>
+    <column name="produktkoppel_kode" type="INTEGER" required="true" description="PKKODE : Produktkoppel kode"/>
+    <column name="wtgkode" type="INTEGER" required="true" description="WTGKOD : WTG-kode"/>
+    <column name="btwkode_voor_declaratie" type="INTEGER" required="true" description="PGBTWK : BTW-kode voor declaratie"/>
+    <column name="kode_inkoopkanaal" type="INTEGER" required="true" description="INKKAN : Kode inkoopkanaal"/>
+    <column name="kode_referentieprodukt_per_cluster" type="INTEGER" required="true" description="REFKOD : Kode referentieprodukt per cluster"/>
+    <column name="verkoopprijs_exclusief_btw" type="DECIMAL" size="12" scale="6" required="true" description="PGVKPE : Verkoopprijs exclusief BTW"/>
+    <column name="vergoedingsprijs" type="DECIMAL" size="8" scale="2" required="true" description="VEGPRS : Vergoedingsprijs"/>
+    <column name="referentieprijs" type="DECIMAL" size="8" scale="2" required="true" description="REFPRS : Referentieprijs"/>
+    <column name="datum_schorsing" type="DATE" required="false" description="XPINDD : Datum schorsing"/>
+    <column name="datum_doorhaling" type="DATE" required="false" description="XPDODD : Datum doorhaling"/>
+    <column name="mutatie_datum" type="DATE" required="false" description="XNB4DD : Mutatie datum - Niet meer gevuld"/>
+    <column name="uitgavedatum" type="DATE" required="true" description="XNUIDD : Uitgavedatum"/>
+    <column name="gvs_cluster_kode" type="VARCHAR" size="11" required="true" description="GVSKOD : GVS cluster kode"/>
+    <column name="gvs_vergoedingslimiet" type="DECIMAL" size="12" scale="5" required="true" description="GVSVGL : GVS vergoedingslimiet"/>
+    <column name="inkoopprijs" type="DECIMAL" size="8" scale="2" required="true" description="PGIKPR : Inkoopprijs"/>
+    <column name="europees_registratienummer" type="VARCHAR" size="20" required="true" description="EUNUM : Europees Registratienummer"/>
+    <column name="kortingspercentage" type="DECIMAL" size="8" scale="6" required="true" description="VPPERC : Kortingspercentage"/>
+    <column name="maximumprijs_vws" type="DECIMAL" size="12" scale="6" required="true" description="VPMAXP : Maximumprijs VWS"/>
+    <column name="registratie_nummer_1" type="INTEGER" required="true" description="RVREGNR1 : Registratie nummer 1"/>
+    <column name="registratie_nummer_2" type="VARCHAR" size="2" required="true" description="RVREGNR2 : Registratie nummer 2"/>
+    <column name="registratie_nummer_3" type="INTEGER" required="true" description="RVREGNR3 : Registratie nummer 3"/>
     <foreign-key foreignTable="gs_handelsproducten">
       <reference local="handelsproduktkode" foreign="handelsproduktkode"/>
     </foreign-key>
@@ -193,80 +193,80 @@
       <parameter name="permanent" value="false"/>
     </behavior>
   </table>
-  <table name="gs_atabel">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="unieknummer_per_eenheid_gebruiksadvies" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memocode_eenheid_gebruiksadvies" type="VARCHAR" size="2" required="true"/>
-    <column name="omschrijving_eenheid_gebruiksadvies_enkelvoud" type="VARCHAR" size="30" required="true"/>
-    <column name="omschrijving_eenheid_gebruiksadvies_meervoud" type="VARCHAR" size="30" required="true"/>
-    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true"/>
-    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true"/>
-    <column name="basiseenheid_product_thesaurusnr" type="INTEGER" required="true"/>
-    <column name="hoeveelheid_overeenkomstige_eenheid" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="basiseenheid_product_kode" type="INTEGER" required="true"/>
+  <table name="gs_atabel" description="BST361T : a-tabel (eenheid gebruiksadvies)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="unieknummer_per_eenheid_gebruiksadvies" type="INTEGER" primaryKey="true" required="true" description="AAEHNR : Unieknummer per eenheid gebruiksadvies"/>
+    <column name="memocode_eenheid_gebruiksadvies" type="VARCHAR" size="2" required="true" description="AAEHMK : Memocode eenheid gebruiksadvies"/>
+    <column name="omschrijving_eenheid_gebruiksadvies_enkelvoud" type="VARCHAR" size="30" required="true" description="AAEHOE : Omschrijving eenheid gebruiksadvies enkelvoud"/>
+    <column name="omschrijving_eenheid_gebruiksadvies_meervoud" type="VARCHAR" size="30" required="true" description="AAEHOM : Omschrijving eenheid gebruiksadvies meervoud"/>
+    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true" description="TTDATE : Registratiedatum G-Standaard"/>
+    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true" description="VNOPN : Versienummer WCIA tabellen eerste opname"/>
+    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true" description="VNWYZ : Versienummer WCIA tabellen laatste wijziging"/>
+    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true" description="VNVERV : Versienummer WCIA tabellen vervallen"/>
+    <column name="basiseenheid_product_thesaurusnr" type="INTEGER" required="true" description="THEHHV : Basiseenheid product thesaurusnr"/>
+    <column name="hoeveelheid_overeenkomstige_eenheid" type="DECIMAL" size="12" scale="6" required="true" description="AAHOEV : Hoeveelheid overeenkomstige eenheid"/>
+    <column name="basiseenheid_product_kode" type="INTEGER" required="true" description="XPEHHV : Basiseenheid product kode"/>
   </table>
-  <table name="gs_atc_codes">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="atccode" type="VARCHAR" size="8" primaryKey="true" required="true"/>
-    <column name="atcnederlandse_omschrijving" type="VARCHAR" size="80" required="true"/>
-    <column name="atcengelse_omschrijving" type="VARCHAR" size="80" required="true"/>
-    <column name="atcindicator" type="VARCHAR" size="1" required="true"/>
+  <table name="gs_atc_codes" description="BST801T : ATC codes">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="atccode" type="VARCHAR" size="8" primaryKey="true" required="true" description="ATCODE : ATC-code"/>
+    <column name="atcnederlandse_omschrijving" type="VARCHAR" size="80" required="true" description="ATOMS : ATC-Nederlandse omschrijving"/>
+    <column name="atcengelse_omschrijving" type="VARCHAR" size="80" required="true" description="ATOMSE : ATC-Engelse omschrijving"/>
+    <column name="atcindicator" type="VARCHAR" size="1" required="true" description="ATKIND : ATC-indicator"/>
   </table>
-  <table name="gs_bestanden">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="naam_van_het_bestand" type="VARCHAR" size="20" primaryKey="true" required="true"/>
-    <column name="bestandomschrijving" type="VARCHAR" size="50" required="true"/>
-    <column name="bestandscode" type="INTEGER" required="true"/>
-    <column name="recordlengte" type="INTEGER" required="true"/>
-    <column name="ingangsdatum" type="DATE" required="true"/>
-    <column name="eindedatum_uitlevering" type="DATE" required="false"/>
-    <column name="uitgavedatum" type="DATE" required="true"/>
-    <column name="status" type="VARCHAR" size="1" required="true"/>
-    <column name="aantal_ongewijzigde_records" type="INTEGER" required="true"/>
-    <column name="aantal_vervallen_records" type="INTEGER" required="true"/>
-    <column name="aantal_gewijzigde_records" type="INTEGER" required="true"/>
-    <column name="aantal_nieuwe_records" type="INTEGER" required="true"/>
-    <column name="totaal_aantal_records" type="INTEGER" required="true"/>
+  <table name="gs_bestanden" description="BST000T : Bestanden">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="naam_van_het_bestand" type="VARCHAR" size="20" primaryKey="true" required="true" description="MDBST : Naam van het Bestand"/>
+    <column name="bestandomschrijving" type="VARCHAR" size="50" required="true" description="MDOBST : Bestand-omschrijving"/>
+    <column name="bestandscode" type="INTEGER" required="true" description="MDBCOD : BestandsCode"/>
+    <column name="recordlengte" type="INTEGER" required="true" description="MDRECL : Recordlengte"/>
+    <column name="ingangsdatum" type="DATE" required="true" description="MDDATI : Ingangsdatum"/>
+    <column name="eindedatum_uitlevering" type="DATE" required="false" description="MDDATW : Eindedatum uitlevering"/>
+    <column name="uitgavedatum" type="DATE" required="true" description="MDDATU : Uitgavedatum"/>
+    <column name="status" type="VARCHAR" size="1" required="true" description="MDSTAT : Status (in voorbereiding, test, productie)"/>
+    <column name="aantal_ongewijzigde_records" type="INTEGER" required="true" description="MDANM0 : Aantal ongewijzigde records"/>
+    <column name="aantal_vervallen_records" type="INTEGER" required="true" description="MDANM1 : Aantal vervallen records"/>
+    <column name="aantal_gewijzigde_records" type="INTEGER" required="true" description="MDANM2 : Aantal gewijzigde records"/>
+    <column name="aantal_nieuwe_records" type="INTEGER" required="true" description="MDANM3 : Aantal nieuwe records"/>
+    <column name="totaal_aantal_records" type="INTEGER" required="true" description="MDANTL : Totaal aantal records"/>
   </table>
-  <table name="gs_bewakingen_kenmerken">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="bewakingscode_ci" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="omschrijving_cibewaking" type="VARCHAR" size="50" required="true"/>
-    <column name="thesnr_bewakingssoort" type="INTEGER" required="true"/>
-    <column name="bewakingssoort" type="INTEGER" required="true"/>
-    <column name="thesnr_folder" type="INTEGER" required="true"/>
-    <column name="folder" type="INTEGER" required="true"/>
-    <column name="volgens_deskundigen_jn" type="BOOLEAN" required="true"/>
-    <column name="actie_nodig_jn" type="BOOLEAN" required="true"/>
-    <column name="datum_vastlegging_winap" type="DATE" required="false"/>
-    <column name="datum_opvoer_gstandaard" type="DATE" required="true"/>
-    <column name="datum_mutatie_gstandaard" type="DATE" required="false"/>
-    <column name="creatinine_klaring" type="INTEGER" required="true"/>
-    <column name="bewaking_te_volgen_door_monitoren" type="BOOLEAN" required="true"/>
+  <table name="gs_bewakingen_kenmerken" description="BST656T : Bewakingen: Kenmerken">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="bewakingscode_ci" type="INTEGER" primaryKey="true" required="true" description="CICODE : Bewakingscode CI"/>
+    <column name="omschrijving_cibewaking" type="VARCHAR" size="50" required="true" description="CIOMS : Omschrijving CI/Bewaking"/>
+    <column name="thesnr_bewakingssoort" type="INTEGER" required="true" description="THCTST : Thes.nr. Bewakingssoort (=1015)"/>
+    <column name="bewakingssoort" type="INTEGER" required="true" description="CISRT : Bewakingssoort"/>
+    <column name="thesnr_folder" type="INTEGER" required="true" description="THCIF : Thes.nr. Folder (=136)"/>
+    <column name="folder" type="INTEGER" required="true" description="CIFOL : Folder"/>
+    <column name="volgens_deskundigen_jn" type="BOOLEAN" required="true" description="CIWGC : Volgens deskundigen J/N"/>
+    <column name="actie_nodig_jn" type="BOOLEAN" required="true" description="CIWGA : Actie nodig J/N"/>
+    <column name="datum_vastlegging_winap" type="DATE" required="false" description="CIDWIN : Datum vastlegging WINAp"/>
+    <column name="datum_opvoer_gstandaard" type="DATE" required="true" description="CIGSDO : Datum opvoer G-Standaard"/>
+    <column name="datum_mutatie_gstandaard" type="DATE" required="false" description="CIGSDM : Datum mutatie G-Standaard"/>
+    <column name="creatinine_klaring" type="INTEGER" required="true" description="CICRKL : Creatinine klaring"/>
+    <column name="bewaking_te_volgen_door_monitoren" type="BOOLEAN" required="true" description="CIMONI : Bewaking te volgen door monitoren (J/N)"/>
   </table>
-  <table name="gs_bewakingen_te_controleren_indicaties">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesnr_contra_indicatie" type="INTEGER" required="true"/>
-    <column name="indicatie_aard" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="bewakingscode_ci" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_bewakingen_te_controleren_indicaties" description="BST655T : Bewakingen: te controleren indicaties">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="thesnr_contra_indicatie" type="INTEGER" required="true" description="THCOIN : Thes.nr. contra indicatie"/>
+    <column name="indicatie_aard" type="INTEGER" primaryKey="true" required="true" description="INAARD : Indicatie aard (thes 40)"/>
+    <column name="bewakingscode_ci" type="INTEGER" primaryKey="true" required="true" description="CICODE : Bewakingscode CI"/>
   </table>
-  <table name="gs_bijzondere_kenmerken">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prkcode_key" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" required="false"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesnr_bijzondere_kenmerken" type="INTEGER" required="true"/>
-    <column name="bijzondere_kenmerk" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_bijzondere_kenmerken" description="BST401T : Bijzondere kenmerken (ook op PRK)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode_key" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="prkcode" type="INTEGER" required="false" description="PRKODE : PRK-code"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="thesnr_bijzondere_kenmerken" type="INTEGER" required="true" description="THBYZK : Thes.nr. Bijzondere Kenmerken"/>
+    <column name="bijzondere_kenmerk" type="INTEGER" primaryKey="true" required="true" description="BYZKEN : Bijzondere Kenmerk"/>
     <foreign-key foreignTable="gs_thesauri_totaal" phpName="KenmerkOmschrijving">
       <reference local="thesnr_bijzondere_kenmerken" foreign="thesaurusnummer"/>
       <reference local="bijzondere_kenmerk" foreign="thesaurus_itemnummer"/>
@@ -278,109 +278,109 @@
       <reference local="prkcode" foreign="prkcode"/>
     </foreign-key>
   </table>
-  <table name="gs_bpercategorie_tabel">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="uniek_nummer_per_tekstcategorie" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="uniek_nummer_aanvullende_tekst" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_bpercategorie_tabel" description="BST371T : b-per-categorie tabel">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="uniek_nummer_per_tekstcategorie" type="INTEGER" primaryKey="true" required="true" description="BBTCNR : Uniek nummer per tekstcategorie"/>
+    <column name="uniek_nummer_aanvullende_tekst" type="INTEGER" primaryKey="true" required="true" description="BBETNR : Uniek nummer aanvullende tekst"/>
   </table>
-  <table name="gs_btabel">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="uniek_nummer_aanvullende_tekst" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memocode_aanvullende_tekst" type="VARCHAR" size="5" required="true"/>
-    <column name="omschrijving_aanvullende_tekst" type="VARCHAR" size="41" required="true"/>
-    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true"/>
-    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true"/>
-    <column name="laagste_frequentie_dosering" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="hoogste_frequentie_dosering" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="laagste_keerdosering" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="hoogste_keerdosering" type="DECIMAL" size="12" scale="6" required="true"/>
-    <column name="omrekenfactor_theoretische_duur" type="INTEGER" required="true"/>
+  <table name="gs_btabel" description="BST362T : b-tabel (etiket teksten)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="uniek_nummer_aanvullende_tekst" type="INTEGER" primaryKey="true" required="true" description="BBETNR : Uniek nummer aanvullende tekst"/>
+    <column name="memocode_aanvullende_tekst" type="VARCHAR" size="5" required="true" description="BBETMK : Memocode aanvullende tekst"/>
+    <column name="omschrijving_aanvullende_tekst" type="VARCHAR" size="41" required="true" description="BBETOM : Omschrijving aanvullende tekst"/>
+    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true" description="TTDATE : Registratiedatum G-Standaard"/>
+    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true" description="VNOPN : Versienummer WCIA tabellen eerste opname"/>
+    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true" description="VNWYZ : Versienummer WCIA tabellen laatste wijziging"/>
+    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true" description="VNVERV : Versienummer WCIA tabellen vervallen"/>
+    <column name="laagste_frequentie_dosering" type="DECIMAL" size="12" scale="6" required="true" description="BBLFDO : Laagste frequentie dosering"/>
+    <column name="hoogste_frequentie_dosering" type="DECIMAL" size="12" scale="6" required="true" description="BBHFDO : Hoogste frequentie dosering"/>
+    <column name="laagste_keerdosering" type="DECIMAL" size="12" scale="6" required="true" description="BBLKDO : Laagste keerdosering"/>
+    <column name="hoogste_keerdosering" type="DECIMAL" size="12" scale="6" required="true" description="BBHKDO : Hoogste keerdosering"/>
+    <column name="omrekenfactor_theoretische_duur" type="INTEGER" required="true" description="BBDBER : Omrekenfactor theoretische duur"/>
   </table>
-  <table name="gs_categorieen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="dosiscategorienummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="identificerend_recordnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="leeftijd_in_maanden_vanaf" type="DECIMAL" size="6" scale="2" required="true"/>
-    <column name="leeftijd_in_maanden_tot" type="DECIMAL" size="6" scale="2" required="true"/>
-    <column name="gewicht_in_kg_vanaf" type="DECIMAL" size="6" scale="3" required="true"/>
-    <column name="gewicht_in_kg_tot" type="DECIMAL" size="6" scale="3" required="true"/>
-    <column name="lichaamsoppervlakte_in_m2_vanaf" type="DECIMAL" size="6" scale="3" required="true"/>
-    <column name="lichaamsoppervlakte_in_m2_tot" type="DECIMAL" size="6" scale="3" required="true"/>
-    <column name="frequentie_aantal" type="DECIMAL" size="4" scale="2" required="true"/>
-    <column name="frequentie_tijdseenheid" type="INTEGER" required="true"/>
-    <column name="basisset_voor_denekamp_berekening" type="BOOLEAN" required="true"/>
-    <column name="dosisnummer" type="INTEGER" required="true"/>
+  <table name="gs_categorieen" description="BST643T : Categorieen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="dosiscategorienummer" type="INTEGER" primaryKey="true" required="true" description="GPDCAT : Dosis-categorienummer"/>
+    <column name="identificerend_recordnummer" type="INTEGER" primaryKey="true" required="true" description="GPDID2 : Identificerend recordnummer"/>
+    <column name="leeftijd_in_maanden_vanaf" type="DECIMAL" size="6" scale="2" required="true" description="GPDLFM : Leeftijd in maanden vanaf"/>
+    <column name="leeftijd_in_maanden_tot" type="DECIMAL" size="6" scale="2" required="true" description="GPDLFX : Leeftijd in maanden tot"/>
+    <column name="gewicht_in_kg_vanaf" type="DECIMAL" size="6" scale="3" required="true" description="GPDKGM : Gewicht in KG vanaf"/>
+    <column name="gewicht_in_kg_tot" type="DECIMAL" size="6" scale="3" required="true" description="GPDKGX : Gewicht in KG tot"/>
+    <column name="lichaamsoppervlakte_in_m2_vanaf" type="DECIMAL" size="6" scale="3" required="true" description="GPDM2M : Lichaamsoppervlakte in M2 vanaf"/>
+    <column name="lichaamsoppervlakte_in_m2_tot" type="DECIMAL" size="6" scale="3" required="true" description="GPDM2X : Lichaamsoppervlakte in M2 tot"/>
+    <column name="frequentie_aantal" type="DECIMAL" size="4" scale="2" required="true" description="GPDFAA : Frequentie  aantal"/>
+    <column name="frequentie_tijdseenheid" type="INTEGER" required="true" description="GPDFEE : Frequentie  tijdseenheid"/>
+    <column name="basisset_voor_denekamp_berekening" type="BOOLEAN" required="true" description="GPDDEN : Basisset voor Denekamp berekening (J/N)"/>
+    <column name="dosisnummer" type="INTEGER" required="true" description="GPDDNR : Dosisnummer"/>
   </table>
-  <table name="gs_codering_gedifferentieerde_tarieven">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="codering" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="volledige_omschrijving" type="VARCHAR" size="60" required="true"/>
-    <column name="verkorte_omschrijving" type="VARCHAR" size="30" required="true"/>
-    <column name="thesnr_soort_levering" type="INTEGER" required="true"/>
-    <column name="soort_levering" type="INTEGER" required="true"/>
-    <column name="thesnr_uitgifte_soort" type="INTEGER" required="true"/>
-    <column name="soort_uitgifte" type="INTEGER" required="true"/>
-    <column name="thesnr_soort_bereiding" type="INTEGER" required="true"/>
-    <column name="soort_bereiding" type="INTEGER" required="true"/>
-    <column name="thesnr_aanbiedingsmoment" type="INTEGER" required="true"/>
-    <column name="aanbiedingsmoment" type="INTEGER" required="true"/>
-    <column name="wmg_tarief" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="thesnr_toeslag_thuis" type="INTEGER" required="true"/>
-    <column name="toeslag_thuis" type="INTEGER" required="true"/>
+  <table name="gs_codering_gedifferentieerde_tarieven" description="BST950T : Codering Gedifferentieerde tarieven">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="codering" type="INTEGER" primaryKey="true" required="true" description="VSCODE : Codering"/>
+    <column name="volledige_omschrijving" type="VARCHAR" size="60" required="true" description="VSOMSL : Volledige omschrijving"/>
+    <column name="verkorte_omschrijving" type="VARCHAR" size="30" required="true" description="VSOMSK : Verkorte omschrijving"/>
+    <column name="thesnr_soort_levering" type="INTEGER" required="true" description="THSLEV : Thes.nr. Soort levering"/>
+    <column name="soort_levering" type="INTEGER" required="true" description="VSSLEV : Soort levering"/>
+    <column name="thesnr_uitgifte_soort" type="INTEGER" required="true" description="THUITG : Thes.nr. Uitgifte soort"/>
+    <column name="soort_uitgifte" type="INTEGER" required="true" description="VSUITG : Soort uitgifte"/>
+    <column name="thesnr_soort_bereiding" type="INTEGER" required="true" description="THSBRD : Thes.nr. Soort bereiding"/>
+    <column name="soort_bereiding" type="INTEGER" required="true" description="VSSBRD : Soort bereiding"/>
+    <column name="thesnr_aanbiedingsmoment" type="INTEGER" required="true" description="THAANB : Thes.nr. Aanbiedingsmoment"/>
+    <column name="aanbiedingsmoment" type="INTEGER" required="true" description="VSAANB : Aanbiedingsmoment"/>
+    <column name="wmg_tarief" type="DECIMAL" size="8" scale="2" required="true" description="VSWTG : WMG tarief"/>
+    <column name="thesnr_toeslag_thuis" type="INTEGER" required="true" description="THTHUIS : Thes.nr. Toeslag thuis"/>
+    <column name="toeslag_thuis" type="INTEGER" required="true" description="VSTHUIS : Toeslag thuis"/>
   </table>
-  <table name="gs_codestelsel_zrs">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="soort_code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memocode_bij_zr_nummer_uniek_per_aaacod" type="VARCHAR" size="8" required="true"/>
-    <column name="omschrijving_zrnr_in_70_posities_voor_keuzemenus" type="VARCHAR" size="70" required="true"/>
-    <column name="omschrijving_zrnr_in_45_posities_voor_op_etiket" type="VARCHAR" size="45" required="true"/>
-    <column name="tekstmodulethesaurus_103" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstsoortthesaurus_104" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" required="true"/>
-    <column name="datum_van_1e_opname" type="DATE" required="true"/>
-    <column name="datum_van_laatste_mutatie" type="DATE" required="false"/>
-    <column name="datum_van_inactief_maken" type="DATE" required="false"/>
-    <column name="thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="thesaurus_itemnummer" type="INTEGER" required="true"/>
+  <table name="gs_codestelsel_zrs" description="BST410T : Codestelsel ZRS (definities)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="soort_code" type="INTEGER" primaryKey="true" required="true" description="AAACOD : Soort code"/>
+    <column name="zorg_registratie_nummer" type="INTEGER" primaryKey="true" required="true" description="ZRNR : Zorg Registratie nummer"/>
+    <column name="memocode_bij_zr_nummer_uniek_per_aaacod" type="VARCHAR" size="8" required="true" description="ZRMEMO : Memocode bij ZR nummer uniek per AAACOD"/>
+    <column name="omschrijving_zrnr_in_70_posities_voor_keuzemenus" type="VARCHAR" size="70" required="true" description="ZROMSS : Omschrijving ZRNR in 70 posities voor keuzemenu's"/>
+    <column name="omschrijving_zrnr_in_45_posities_voor_op_etiket" type="VARCHAR" size="45" required="true" description="ZROMSE : Omschrijving ZRNR in 45 posities voor op etiket"/>
+    <column name="tekstmodulethesaurus_103" type="INTEGER" required="true" description="THMOD : Tekstmodule-thesaurus 103"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMOD : Tekstmodule"/>
+    <column name="tekstsoortthesaurus_104" type="INTEGER" required="true" description="THSRTT : Tekstsoort-thesaurus 104"/>
+    <column name="tekstsoort" type="INTEGER" required="true" description="TXSRTT : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" required="true" description="TXKODE : Tekst nivo kode"/>
+    <column name="datum_van_1e_opname" type="DATE" required="true" description="ZRDATO : Datum van 1e opname"/>
+    <column name="datum_van_laatste_mutatie" type="DATE" required="false" description="ZRDATM : Datum van laatste mutatie"/>
+    <column name="datum_van_inactief_maken" type="DATE" required="false" description="ZRDATV : Datum van inactief maken"/>
+    <column name="thesaurusnummer" type="INTEGER" required="true" description="THVNR : Thesaurusnummer (BST902T)"/>
+    <column name="thesaurus_itemnummer" type="INTEGER" required="true" description="THVINR : Thesaurus itemnummer (BST902T)"/>
   </table>
-  <table name="gs_codestelsel_zrs_onderling_verband">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_actie" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_actiegroep" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_actieregel" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_analyse" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_subanalyse" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_aanleiding" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_subaanleiding" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstmodulethesaurus_103" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstsoortthesaurus_104" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" required="true"/>
-    <column name="opnemen_als_favoriet_na_aanleiding_en_analyse" type="VARCHAR" size="1" required="true"/>
-    <column name="opn_als_favoriet_na_aanleiding_analyse_en_actie" type="VARCHAR" size="1" required="true"/>
+  <table name="gs_codestelsel_zrs_onderling_verband" description="BST413T : Codestelsel ZRS onderling verband">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zorg_registratie_nummer_van_de_actie" type="INTEGER" primaryKey="true" required="true" description="ZRNR30 : Zorg Registratie Nummer van de Actie"/>
+    <column name="zorg_registratie_nummer_van_de_actiegroep" type="INTEGER" primaryKey="true" required="true" description="ZRNR31 : Zorg Registratie Nummer van de Actiegroep"/>
+    <column name="zorg_registratie_nummer_van_de_actieregel" type="INTEGER" primaryKey="true" required="true" description="ZRNR32 : Zorg Registratie Nummer van de Actieregel"/>
+    <column name="zorg_registratie_nummer_van_de_analyse" type="INTEGER" primaryKey="true" required="true" description="ZRNR20 : Zorg Registratie Nummer van de Analyse"/>
+    <column name="zorg_registratie_nummer_van_de_subanalyse" type="INTEGER" primaryKey="true" required="true" description="ZRNR21 : Zorg Registratie Nummer van de Sub-Analyse"/>
+    <column name="zorg_registratie_nummer_van_de_aanleiding" type="INTEGER" primaryKey="true" required="true" description="ZRNR10 : Zorg Registratie Nummer van de Aanleiding"/>
+    <column name="zorg_registratie_nummer_van_de_subaanleiding" type="INTEGER" primaryKey="true" required="true" description="ZRNR11 : Zorg Registratie Nummer van de Sub-Aanleiding"/>
+    <column name="tekstmodulethesaurus_103" type="INTEGER" required="true" description="THMOD : Tekstmodule-thesaurus 103"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMOD : Tekstmodule"/>
+    <column name="tekstsoortthesaurus_104" type="INTEGER" required="true" description="THSRTT : Tekstsoort-thesaurus 104"/>
+    <column name="tekstsoort" type="INTEGER" required="true" description="TXSRTT : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" required="true" description="TXKODE : Tekst nivo kode"/>
+    <column name="opnemen_als_favoriet_na_aanleiding_en_analyse" type="VARCHAR" size="1" required="true" description="ZRFAV1 : Opnemen als favoriet na Aanleiding en Analyse"/>
+    <column name="opn_als_favoriet_na_aanleiding_analyse_en_actie" type="VARCHAR" size="1" required="true" description="ZRFAV2 : Opn. als favoriet na Aanleiding, Analyse en Actie"/>
   </table>
-  <table name="gs_daily_defined_dose">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="atccode" type="VARCHAR" size="8" primaryKey="true" required="true"/>
-    <column name="dddaantal" type="DECIMAL" size="10" scale="3" primaryKey="true" required="true"/>
-    <column name="dddeenheid_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="dddeenheid" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="ddd_toedieningsweg_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="dddtoedieningsweg" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="ddd_statusaanduiding" type="INTEGER" required="true"/>
+  <table name="gs_daily_defined_dose" description="BST802T : Defined Daily Dose (DDD)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="atccode" type="VARCHAR" size="8" primaryKey="true" required="true" description="ATCODE : ATC-code"/>
+    <column name="dddaantal" type="DECIMAL" size="10" scale="3" primaryKey="true" required="true" description="DDDANT : DDD-aantal"/>
+    <column name="dddeenheid_thesaurusnummer" type="INTEGER" required="true" description="TSDEENH : DDD-eenheid thesaurusnummer (29)"/>
+    <column name="dddeenheid" type="INTEGER" primaryKey="true" required="true" description="DDDEENH : DDD-eenheid"/>
+    <column name="ddd_toedieningsweg_thesaurusnummer" type="INTEGER" required="true" description="THDTDW : DDD toedieningsweg thesaurusnummer (22)"/>
+    <column name="dddtoedieningsweg" type="INTEGER" primaryKey="true" required="true" description="DDDTDW : DDD-toedieningsweg"/>
+    <column name="ddd_statusaanduiding" type="INTEGER" required="true" description="DDDSTS : DDD statusaanduiding (0=definitief, 1=voorlopig)"/>
     <foreign-key foreignTable="gs_atc_codes">
       <reference local="atccode" foreign="atccode"/>
     </foreign-key>
@@ -393,13 +393,13 @@
       <reference local="dddtoedieningsweg" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_supplementaire_producten_met_nza_maximumtarief">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="nza_maximum_tarief_inc_btw_laag" type="decimal" size="14" scale="6" required="true"/>
-    <column name="thesaurus_nummer_soort_supplementair_product" type="integer" required="true"/>
-    <column name="soort_supplementair_product" type="integer" required="true"/>
+  <table name="gs_supplementaire_producten_met_nza_maximumtarief" description="BST131T : Supplementaire producten met NZa maxtr">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true" description="ZINR : Z-Index nummer"/>
+    <column name="nza_maximum_tarief_inc_btw_laag" type="decimal" size="14" scale="6" required="true" description="NZATARIEF : NZa maximum tarief (incl. BTW-laag)"/>
+    <column name="thesaurus_nummer_soort_supplementair_product" type="integer" required="true" description="THSUPSRT : Thes.nr. Soort supplementair product (1900)"/>
+    <column name="soort_supplementair_product" type="integer" required="true" description="SUPSRT : Soort supplementair product"/>
     <foreign-key foreignTable="gs_artikelen">
       <reference local="zindex_nummer" foreign="zinummer"/>
     </foreign-key>
@@ -408,17 +408,17 @@
       <reference local="soort_supplementair_product" foreign="thesaurus_itemnummer"/>
     </foreign-key> -->
   </table>
-  <table name="gs_indicaties_bij_supplementaire_producten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="indicatie_id" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstmodule_indicatie_id" type="integer" required="true"/>
-    <column name="thesaurus_nummer_soort_indicatie" type="integer" required="true"/>
-    <column name="soort_indicatie" type="integer" required="true"/>
-    <column name="duiding_id" type="integer" required="true"/>
-    <column name="tekstmodule_duiding_id" type="integer" required="true"/>
-    <column name="aanspraak_op_geneesmiddel_bij_indicatie_volgens_zn" type="char" size="1" required="true"/>
+  <table name="gs_indicaties_bij_supplementaire_producten" description="BST132T : Indicatie bij supplementaire product">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true" description="ZINR : Z-Index nummer"/>
+    <column name="indicatie_id" type="INTEGER" primaryKey="true" required="true" description="INID : Indicatie ID"/>
+    <column name="tekstmodule_indicatie_id" type="integer" required="true" description="TXMODI : Tekstmodule indicatie"/>
+    <column name="thesaurus_nummer_soort_indicatie" type="integer" required="true" description="THINSRT : Thes.nr. soort indicatie (1901)"/>
+    <column name="soort_indicatie" type="integer" required="true" description="INSRT : Soort indicatie"/>
+    <column name="duiding_id" type="integer" required="true" description="DUIDID : Duiding ID"/>
+    <column name="tekstmodule_duiding_id" type="integer" required="true" description="TXMODD : Tekstmodule duiding"/>
+    <column name="aanspraak_op_geneesmiddel_bij_indicatie_volgens_zn" type="char" size="1" required="true" description="AAAAZN : Aanspraak op geneesmiddel bij indicatie volgens ZN"/>
     <foreign-key foreignTable="gs_artikelen">
       <reference local="zindex_nummer" foreign="zinummer"/>
     </foreign-key>
@@ -427,12 +427,12 @@
       <reference local="soort_indicatie" foreign="thesaurus_itemnummer"/>
     </foreign-key> -->
   </table>
-  <table name="gs_verkorte_addon_indicatieteksten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="indicatie_id" type="INTEGER" primaryKey="true" required="true" autoIncrement="false"/>
-    <column name="verkorte_indicatie" type="varchar" size="120" required="true"/>
-    <column name="tekstmodule_indicatie" type="integer" required="true"/>
+  <table name="gs_verkorte_addon_indicatieteksten" description="BST133T : Verkorte Add-On indicatieteksten">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="indicatie_id" type="INTEGER" primaryKey="true" required="true" autoIncrement="false" description="INID : Indicatie ID"/>
+    <column name="verkorte_indicatie" type="varchar" size="120" required="true" description="INKORT : Verkorte indicatie"/>
+    <column name="tekstmodule_indicatie" type="integer" required="true" description="TXMODI : Tekstmodule indicatie"/>
     <index>
       <index-column name="indicatie_id"/>
     </index>
@@ -440,134 +440,134 @@
       <index-column name="tekstmodule_indicatie"/>
     </index>
   </table>
-  <table name="gs_doseringen_basisalgemeen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="vrijgave_door_het_winap" type="BOOLEAN" required="true"/>
-    <column name="min_leeftijd_in_maanden_voor_verstrekking" type="INTEGER" required="true"/>
-    <column name="thesaurus_geslachtscodering" type="INTEGER" required="true"/>
-    <column name="toegestaan_voor_geslacht" type="INTEGER" required="true"/>
-    <column name="percentage_kinderdosering" type="INTEGER" required="true"/>
-    <column name="kode_hoog_risico_overdosering" type="VARCHAR" size="1" required="true"/>
+  <table name="gs_doseringen_basisalgemeen" description="BST640T : Doseringen Basis-Algemeen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="vrijgave_door_het_winap" type="BOOLEAN" required="true" description="GPDWIN : Vrijgave door het WINap (J/N)"/>
+    <column name="min_leeftijd_in_maanden_voor_verstrekking" type="INTEGER" required="true" description="GPDMLV : Min leeftijd in maanden voor verstrekking"/>
+    <column name="thesaurus_geslachtscodering" type="INTEGER" required="true" description="GPDGTH : Thesaurus geslachtscodering (1001)"/>
+    <column name="toegestaan_voor_geslacht" type="INTEGER" required="true" description="GPDGST : Toegestaan voor geslacht"/>
+    <column name="percentage_kinderdosering" type="INTEGER" required="true" description="GPKDOS : Percentage kinderdosering"/>
+    <column name="kode_hoog_risico_overdosering" type="VARCHAR" size="1" required="true" description="GPRISC : Kode hoog risico overdosering"/>
   </table>
-  <table name="gs_doseringen_basisartikelkeuze">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_soortdoseringscode" type="INTEGER" required="true"/>
-    <column name="soortdoseringscode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="dosisbasisnummer" type="INTEGER" required="true"/>
+  <table name="gs_doseringen_basisartikelkeuze" description="BST641T : Doseringen Basis-Artikelkeuze">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="thesaurus_soortdoseringscode" type="INTEGER" required="true" description="GPDCTH : Thesaurus soort-doseringscode (1004)"/>
+    <column name="soortdoseringscode" type="INTEGER" primaryKey="true" required="true" description="GPDCOD : Soort-doseringscode"/>
+    <column name="dosisbasisnummer" type="INTEGER" required="true" description="GPDBAS : Dosis-basisnummer"/>
   </table>
-  <table name="gs_doseringen_uitzonderingen_op_basis">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="dosisbasisnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="identificerend_volgnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_zorggroepcodering" type="INTEGER" required="true"/>
-    <column name="zorggroepcodering" type="INTEGER" required="true"/>
-    <column name="icpc1nummer" type="INTEGER" required="true"/>
-    <column name="thesaurus_verbijzondering" type="INTEGER" required="true"/>
-    <column name="verbijzondering" type="INTEGER" required="true"/>
-    <column name="icpc2nummer" type="INTEGER" required="true"/>
-    <column name="icd10nummer" type="INTEGER" required="true"/>
-    <column name="thesaurus_afwijkende_toedieningsweg" type="INTEGER" required="true"/>
-    <column name="toedieningsweg_code" type="INTEGER" required="true"/>
-    <column name="dosiscategorienummer" type="INTEGER" required="true"/>
+  <table name="gs_doseringen_uitzonderingen_op_basis" description="BST642T : Doseringen Uitzonderingen op Basis">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="dosisbasisnummer" type="INTEGER" primaryKey="true" required="true" description="GPDBAS : Dosis-basisnummer"/>
+    <column name="identificerend_volgnummer" type="INTEGER" primaryKey="true" required="true" description="GPDID1 : Identificerend volgnummer"/>
+    <column name="thesaurus_zorggroepcodering" type="INTEGER" required="true" description="GPDZTH : Thesaurus Zorggroep-codering (BST902T; 1002)"/>
+    <column name="zorggroepcodering" type="INTEGER" required="true" description="GPDZCO : Zorggroep-codering"/>
+    <column name="icpc1nummer" type="INTEGER" required="true" description="ICPCNR1 : ICPC1-nummer"/>
+    <column name="thesaurus_verbijzondering" type="INTEGER" required="true" description="ICPCTH : Thesaurus Verbijzondering (BST902T; 1000)"/>
+    <column name="verbijzondering" type="INTEGER" required="true" description="ICPCTO : Verbijzondering"/>
+    <column name="icpc2nummer" type="INTEGER" required="true" description="ICPCNR2 : ICPC2-nummer"/>
+    <column name="icd10nummer" type="INTEGER" required="true" description="ICDNR10 : ICD10-nummer"/>
+    <column name="thesaurus_afwijkende_toedieningsweg" type="INTEGER" required="true" description="GPKTTH : Thesaurus afwijkende toedieningsweg (7)"/>
+    <column name="toedieningsweg_code" type="INTEGER" required="true" description="GPKTWG : Toedieningsweg code"/>
+    <column name="dosiscategorienummer" type="INTEGER" required="true" description="GPDCAT : Dosis-categorienummer"/>
   </table>
-  <table name="gs_dubbelmedicatie">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prk_kode_dubbelmedicatie_a" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prk_kode_dubbelmedicatie_b" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="dubbelmedicatiecode" type="INTEGER" required="true"/>
+  <table name="gs_dubbelmedicatie" description="BST671T : Dubbelmedicatie (obv PRK)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prk_kode_dubbelmedicatie_a" type="INTEGER" primaryKey="true" required="true" description="DMPRKA : PRK kode dubbelmedicatie A"/>
+    <column name="prk_kode_dubbelmedicatie_b" type="INTEGER" primaryKey="true" required="true" description="DMPRKB : PRK kode dubbelmedicatie B"/>
+    <column name="dubbelmedicatiecode" type="INTEGER" required="true" description="DMCODE : Dubbelmedicatiecode"/>
   </table>
-  <table name="gs_dubbelmedicatie_teksten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="dubbelmedicatiecode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_dubbelmedicatie_teksten" description="BST672T : Dubbelmedicatie teksten (obv PRK)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="dubbelmedicatiecode" type="INTEGER" primaryKey="true" required="true" description="DMCODE : Dubbelmedicatiecode"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMOD : Tekstmodule"/>
+    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true" description="TXSRTT : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true" description="TXKODE : Tekst nivo kode"/>
   </table>
-  <table name="gs_eenheden">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurus_verwijzing_soort_code" type="INTEGER" required="true"/>
-    <column name="soort_code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="hoeveelheid" type="DECIMAL" size="12" scale="3" primaryKey="true" required="true"/>
-    <column name="hpkeenheid_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="eenheid" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_eenheden" description="BST730T : Eenheden">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurus_verwijzing_soort_code" type="INTEGER" required="true" description="THSRTC : Thesaurus verwijzing soort code"/>
+    <column name="soort_code" type="INTEGER" primaryKey="true" required="true" description="SRTCDE : Soort code"/>
+    <column name="code" type="INTEGER" primaryKey="true" required="true" description="CODE : Code"/>
+    <column name="hoeveelheid" type="DECIMAL" size="12" scale="3" primaryKey="true" required="true" description="CDHOEV : Hoeveelheid"/>
+    <column name="hpkeenheid_thesaurusnummer" type="INTEGER" required="true" description="TSEENH : HPK-eenheid thesaurusnummer"/>
+    <column name="eenheid" type="INTEGER" primaryKey="true" required="true" description="CDEENH : Eenheid"/>
   </table>
-  <table name="gs_enkelvoudige_toedieningswegen_hpk">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" required="true"/>
-    <column name="toedieningswegen_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="enkelvoudige_toedieningsweg_itemnr" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="toedieningsweg_geregistreerd" type="BOOLEAN" required="true"/>
-    <column name="voorkeurstoedieningsweg_indicatie_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="voorkeurstoedieningsweg_indicatie_itemnummer" type="INTEGER" required="true"/>
-    <column name="bron_toedieningsweg_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="bron_toedieningsweg_itemnummer" type="INTEGER" required="true"/>
+  <table name="gs_enkelvoudige_toedieningswegen_hpk" description="BST760T : Enkelvoudige toedieningswegen HPK">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="prkcode" type="INTEGER" required="true" description="PRKODE : PRK-code"/>
+    <column name="toedieningswegen_thesaurusnummer" type="INTEGER" required="true" description="THETDW : Toedieningswegen thesaurusnummer"/>
+    <column name="enkelvoudige_toedieningsweg_itemnr" type="INTEGER" primaryKey="true" required="true" description="ENKTDW : Enkelvoudige toedieningsweg itemnr"/>
+    <column name="toedieningsweg_geregistreerd" type="BOOLEAN" required="true" description="RGTDWJN : Toedieningsweg geregistreerd (J/N)"/>
+    <column name="voorkeurstoedieningsweg_indicatie_thesaurusnummer" type="INTEGER" required="true" description="TSVKTDW : Voorkeurstoedieningsweg indicatie thesaurusnummer"/>
+    <column name="voorkeurstoedieningsweg_indicatie_itemnummer" type="INTEGER" required="true" description="ITVKTDW : Voorkeurstoedieningsweg indicatie itemnummer"/>
+    <column name="bron_toedieningsweg_thesaurusnummer" type="INTEGER" required="true" description="THBRON : Bron toedieningsweg thesaurusnummer"/>
+    <column name="bron_toedieningsweg_itemnummer" type="INTEGER" required="true" description="BRONTDW : Bron toedieningsweg itemnummer"/>
   </table>
-  <table name="gs_gekoppelde_teksten_uit_wcia_tabel_25">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="uniek_nummer_aanvullende_tekst" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_gekoppelde_teksten_uit_wcia_tabel_25" description="BST351T : Gekoppelde teksten uit WCIA tabel 25">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="uniek_nummer_aanvullende_tekst" type="INTEGER" primaryKey="true" required="true" description="BBETNR : Uniek nummer aanvullende tekst"/>
   </table>
-  <table name="gs_generieke_namen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="generiekenaamkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="generieke_naam" type="VARCHAR" size="50" required="true"/>
-    <column name="stamnaamcode" type="INTEGER" required="true"/>
-    <column name="volledige_generieke_naam_kode" type="INTEGER" required="true"/>
-    <column name="kode_stamnaam_toegestaan" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_werkzaam_bestanddeelhulpstof" type="VARCHAR" size="1" required="true"/>
-    <column name="informatorium_stof_kode" type="INTEGER" required="true"/>
-    <column name="cas_nummer" type="INTEGER" required="true"/>
-    <column name="bruto_formule" type="VARCHAR" size="35" required="true"/>
-    <column name="molekuulgewicht" type="DECIMAL" size="12" scale="4" required="true"/>
-    <column name="molekuulgewicht_indicator" type="VARCHAR" size="1" required="true"/>
-    <column name="molekuulgewicht_voor_samenstelling" type="DECIMAL" size="12" scale="4" required="true"/>
-    <column name="soortelijk_gewicht" type="DECIMAL" size="7" scale="5" required="true"/>
-    <column name="voorkeurseenheid" type="VARCHAR" size="2" required="true"/>
-    <column name="kode_rijvaardigheid" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_vergift" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_opiumwet" type="VARCHAR" size="1" required="true"/>
-    <column name="cas_nummer_lengte_10" type="INTEGER" required="true"/>
+  <table name="gs_generieke_namen" description="BST750T : Generieke namen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="generiekenaamkode" type="INTEGER" primaryKey="true" required="true" description="GNGNK : GeneriekeNaamKode (GNK)"/>
+    <column name="generieke_naam" type="VARCHAR" size="50" required="true" description="GNGNAM : Generieke naam"/>
+    <column name="stamnaamcode" type="INTEGER" required="true" description="GNSTAM : Stamnaamcode (SNK)"/>
+    <column name="volledige_generieke_naam_kode" type="INTEGER" required="true" description="GNNKPK : Volledige generieke naam kode"/>
+    <column name="kode_stamnaam_toegestaan" type="VARCHAR" size="1" required="true" description="GNSTNT : Kode stamnaam toegestaan"/>
+    <column name="kode_werkzaam_bestanddeelhulpstof" type="VARCHAR" size="1" required="true" description="GNWZHS : Kode werkzaam bestanddeel/hulpstof"/>
+    <column name="informatorium_stof_kode" type="INTEGER" required="true" description="GNSTKD : Informatorium stof kode"/>
+    <column name="cas_nummer" type="INTEGER" required="true" description="GNCAS : CAS nummer"/>
+    <column name="bruto_formule" type="VARCHAR" size="35" required="true" description="GNFORM : Bruto formule"/>
+    <column name="molekuulgewicht" type="DECIMAL" size="12" scale="4" required="true" description="GNMOLE : Molekuulgewicht (echt)"/>
+    <column name="molekuulgewicht_indicator" type="VARCHAR" size="1" required="true" description="GNMOLI : Molekuulgewicht indicator"/>
+    <column name="molekuulgewicht_voor_samenstelling" type="DECIMAL" size="12" scale="4" required="true" description="GNMOLS : Molekuulgewicht voor samenstelling"/>
+    <column name="soortelijk_gewicht" type="DECIMAL" size="7" scale="5" required="true" description="GNSGEW : Soortelijk gewicht"/>
+    <column name="voorkeurseenheid" type="VARCHAR" size="2" required="true" description="GNVOOR : Voorkeurseenheid"/>
+    <column name="kode_rijvaardigheid" type="VARCHAR" size="1" required="true" description="GNRIJV : Kode rijvaardigheid"/>
+    <column name="kode_vergift" type="VARCHAR" size="1" required="true" description="GNVERG : Kode vergift"/>
+    <column name="kode_opiumwet" type="VARCHAR" size="1" required="true" description="GNKOPW : Kode opiumwet"/>
+    <column name="cas_nummer_lengte_10" type="INTEGER" required="true" description="GNCAST : CAS nummer lengte 10"/>
   </table>
-  <table name="gs_generieke_producten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="gskcode" type="INTEGER" required="true"/>
-    <column name="farmaceutische_vorm_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="farmaceutische_vorm_code" type="INTEGER" required="true"/>
-    <column name="toedieningsweg_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="toedieningsweg_code" type="INTEGER" required="true"/>
-    <column name="naamnummer_volledige_gpknaam" type="INTEGER" required="true"/>
-    <column name="naamnummer_gpkstofnaam" type="INTEGER" required="true"/>
-    <column name="ingegeven_sterkte_stofnamen" type="VARCHAR" size="25" required="true"/>
-    <column name="min_leeftijd_als_contraindicatie" type="INTEGER" required="true"/>
-    <column name="minleeftijd_als_ci_tekstnummer" type="INTEGER" required="true"/>
-    <column name="aantal_dagen_voorschrijfperiode" type="INTEGER" required="true"/>
-    <column name="tekstcode_voorschrijfperiode" type="INTEGER" required="true"/>
-    <column name="tnnr_waarschuwing_substitutie_voorschrijven_prk" type="INTEGER" required="true"/>
-    <column name="waarschuwing_substitutie_en_voorschrijven_prk" type="INTEGER" required="true"/>
-    <column name="superproduktkode" type="INTEGER" required="true"/>
-    <column name="stamtoedieningsweg_thesaurus_58" type="INTEGER" required="true"/>
-    <column name="stamtoedieningsweg_code" type="INTEGER" required="true"/>
-    <column name="atccode" type="VARCHAR" size="8" required="true"/>
-    <column name="basiseenheid_product_thesaurusnr" type="INTEGER" required="true"/>
-    <column name="basiseenheid_product_kode" type="INTEGER" required="true"/>
+  <table name="gs_generieke_producten" description="BST711T : Generieke producten">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="gskcode" type="INTEGER" required="true" description="GSKODE : GSK-code"/>
+    <column name="farmaceutische_vorm_thesaurusnummer" type="INTEGER" required="true" description="THKTVR : Farmaceutische vorm thesaurusnummer"/>
+    <column name="farmaceutische_vorm_code" type="INTEGER" required="true" description="GPKTVR : Farmaceutische vorm code"/>
+    <column name="toedieningsweg_thesaurusnummer" type="INTEGER" required="true" description="THKTWG : Toedieningsweg thesaurusnummer"/>
+    <column name="toedieningsweg_code" type="INTEGER" required="true" description="GPKTWG : Toedieningsweg code"/>
+    <column name="naamnummer_volledige_gpknaam" type="INTEGER" required="true" description="GPNMNR : Naamnummer volledige GPK-naam"/>
+    <column name="naamnummer_gpkstofnaam" type="INTEGER" required="true" description="GPSTNR : Naamnummer GPK-stofnaam"/>
+    <column name="ingegeven_sterkte_stofnamen" type="VARCHAR" size="25" required="true" description="GPINST : Ingegeven sterkte stofnamen"/>
+    <column name="min_leeftijd_als_contraindicatie" type="INTEGER" required="true" description="GPMLCI : Min. leeftijd als contra-indicatie"/>
+    <column name="minleeftijd_als_ci_tekstnummer" type="INTEGER" required="true" description="GPMLCT : Min.leeftijd als CI tekstnummer"/>
+    <column name="aantal_dagen_voorschrijfperiode" type="INTEGER" required="true" description="GPADVP : Aantal dagen voorschrijfperiode"/>
+    <column name="tekstcode_voorschrijfperiode" type="INTEGER" required="true" description="GPTCVP : Tekst-code voorschrijfperiode"/>
+    <column name="tnnr_waarschuwing_substitutie_voorschrijven_prk" type="INTEGER" required="true" description="THKHVS : Tnnr. waarschuwing substitutie voorschrijven PRK"/>
+    <column name="waarschuwing_substitutie_en_voorschrijven_prk" type="INTEGER" required="true" description="GPKHVS : Waarschuwing substitutie en voorschrijven PRK"/>
+    <column name="superproduktkode" type="INTEGER" required="true" description="SPKODE : SuperProduktKode (SPK)"/>
+    <column name="stamtoedieningsweg_thesaurus_58" type="INTEGER" required="true" description="THSTWG : Stamtoedieningsweg - thesaurus 58"/>
+    <column name="stamtoedieningsweg_code" type="INTEGER" required="true" description="SSKTWG : Stamtoedieningsweg code"/>
+    <column name="atccode" type="VARCHAR" size="8" required="true" description="ATCODE : ATC-code"/>
+    <column name="basiseenheid_product_thesaurusnr" type="INTEGER" required="true" description="THEHHV : Basiseenheid product thesaurusnr"/>
+    <column name="basiseenheid_product_kode" type="INTEGER" required="true" description="XPEHHV : Basiseenheid product kode"/>
     <foreign-key foreignTable="gs_atc_codes">
       <reference local="atccode" foreign="atccode"/>
     </foreign-key>
@@ -586,108 +586,108 @@
       <reference local="toedieningsweg_code" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_generieke_samenstellingen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="aanduiding_werkzaamhulpstof" type="VARCHAR" size="1" primaryKey="true" required="true"/>
-    <column name="gskcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="volledige_generieke_naam_kode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="omgerekende_hoeveelheid" type="DECIMAL" size="12" scale="3" required="true"/>
-    <column name="eenh_omgerekende_hoeveelheid_kode" type="INTEGER" required="true"/>
-    <column name="basiseenheid_product_kode" type="INTEGER" required="true"/>
+  <table name="gs_generieke_samenstellingen" description="BST715T : Generieke samenstellingen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="aanduiding_werkzaamhulpstof" type="VARCHAR" size="1" primaryKey="true" required="true" description="GNMWHS : Aanduiding werkzaam/hulpstof (W/H)"/>
+    <column name="gskcode" type="INTEGER" primaryKey="true" required="true" description="GSKODE : GSK-code"/>
+    <column name="volledige_generieke_naam_kode" type="INTEGER" primaryKey="true" required="true" description="GNNKPK : Volledige generieke naam kode"/>
+    <column name="omgerekende_hoeveelheid" type="DECIMAL" size="12" scale="3" required="true" description="GNMOMH : Omgerekende hoeveelheid"/>
+    <column name="eenh_omgerekende_hoeveelheid_kode" type="INTEGER" required="true" description="XNMOME : Eenh omgerekende hoeveelheid kode"/>
+    <column name="basiseenheid_product_kode" type="INTEGER" required="true" description="XPEHHV : Basiseenheid product kode"/>
   </table>
-  <table name="gs_gpkprkhpk_wijzigingen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="datum_wijzigingopsplitsing_op_ddmmjjjj" type="DATE" primaryKey="true" required="true"/>
-    <column name="thesaurus_reden_wijziging" type="INTEGER" required="true"/>
-    <column name="reden_van_wijziging_itemnummer" type="INTEGER" required="true"/>
-    <column name="generiekeproductcode_nieuw" type="INTEGER" required="true"/>
-    <column name="prescriptiecode_nieuw" type="INTEGER" required="true"/>
+  <table name="gs_gpkprkhpk_wijzigingen" description="BST713T : GPK-PRK-HPK wijzigingen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="datum_wijzigingopsplitsing_op_ddmmjjjj" type="DATE" primaryKey="true" required="true" description="GPDATW : Datum wijziging/opsplitsing op ddmmjjjj"/>
+    <column name="thesaurus_reden_wijziging" type="INTEGER" required="true" description="THRWYZ : Thesaurus Reden wijziging (1070)"/>
+    <column name="reden_van_wijziging_itemnummer" type="INTEGER" required="true" description="GPRWYZ : Reden van wijziging itemnummer"/>
+    <column name="generiekeproductcode_nieuw" type="INTEGER" required="true" description="GPKNEW : Generiekeproductcode nieuw"/>
+    <column name="prescriptiecode_nieuw" type="INTEGER" required="true" description="PRKNEW : Prescriptiecode nieuw"/>
   </table>
-  <table name="gs_handelsproducten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" required="false"/>
-    <column name="medisch_hulpmiddelkode" type="INTEGER" required="true"/>
-    <column name="handelsproduktnaamnummer" type="INTEGER" required="true"/>
-    <column name="merkstamnaam" type="VARCHAR" size="50" required="true"/>
-    <column name="firmastamnaam" type="VARCHAR" size="50" required="true"/>
-    <column name="produktgroep_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="produktgroep_kode" type="INTEGER" required="true"/>
-    <column name="soortelijk_gewicht" type="DECIMAL" size="7" scale="5" required="true"/>
-    <column name="aantal_ddds_per_basiseenh_produkt" type="DECIMAL" size="10" scale="3" required="true"/>
-    <column name="aantal_druppels_per_ml" type="DECIMAL" size="5" scale="2" required="true"/>
-    <column name="pifnummer_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="pifnummer" type="INTEGER" required="true"/>
-    <column name="fabrikant_produktkodering" type="VARCHAR" size="12" required="true"/>
-    <column name="reden_niet_clusteren_thesaurusnr" type="INTEGER" required="true"/>
-    <column name="reden_niet_clusteren_kode" type="INTEGER" required="true"/>
-    <column name="ftk_1" type="INTEGER" required="true"/>
-    <column name="ftk_2" type="INTEGER" required="true"/>
-    <column name="ftk_3" type="INTEGER" required="true"/>
-    <column name="ftk_4" type="INTEGER" required="true"/>
-    <column name="ftk_5" type="INTEGER" required="true"/>
-    <column name="informatoriumproductcode" type="INTEGER" required="true"/>
-    <column name="kode_combinatiepreparaat" type="INTEGER" required="true"/>
-    <column name="kode_vergift" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_rijvaardigheid" type="VARCHAR" size="1" required="true"/>
-    <column name="kode_brandgevaarlijk" type="VARCHAR" size="1" required="true"/>
-    <column name="gesteriliseerd_voor_geneesmiddelen" type="VARCHAR" size="1" required="true"/>
-    <column name="hpkeenheid_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="hpkeenheid_kode" type="INTEGER" required="true"/>
-    <column name="oplosmiddel_hoeveelheid_1" type="DECIMAL" size="4" scale="1" required="true"/>
-    <column name="oplosmiddel_aantal_1" type="INTEGER" required="true"/>
-    <column name="oplosmiddel_hoeveelheid_2" type="DECIMAL" size="4" scale="1" required="true"/>
-    <column name="oplosmiddel_aantal_2" type="INTEGER" required="true"/>
-    <column name="farmaceutische_kwaliteit" type="VARCHAR" size="1" required="true"/>
-    <column name="halffabrikaat_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="halffabrikaat_code" type="INTEGER" required="true"/>
-    <column name="deelbaarheid_aantal" type="INTEGER" required="true"/>
-    <column name="emballagemateriaal_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="emballagemateriaal_kode" type="INTEGER" required="true"/>
-    <column name="emballagesluiting_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="emballagesluiting_kode" type="INTEGER" required="true"/>
-    <column name="emballagedoseerinr_thesaurusnr" type="INTEGER" required="true"/>
-    <column name="emballagedoseerinrichting_kode" type="INTEGER" required="true"/>
-    <column name="hulpstoffen_identificerend" type="VARCHAR" size="1" required="true"/>
-    <column name="kleur_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="kleur_kode" type="INTEGER" required="true"/>
-    <column name="smaak_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="smaak_kode" type="INTEGER" required="true"/>
-    <column name="bereidingsvoorschr_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="bereidingsvoorschrift_kode" type="INTEGER" required="true"/>
-    <column name="fysische_eigenschap_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="fysische_eigenschap_kode" type="INTEGER" required="true"/>
-    <column name="grondstofvorm_thesaurusnummer" type="INTEGER" required="true"/>
-    <column name="grondstofvorm_kode" type="INTEGER" required="true"/>
-    <column name="los_verkrijgbaar" type="VARCHAR" size="1" required="true"/>
-    <column name="bioequivalente_groep" type="INTEGER" required="true"/>
-    <column name="kode_radioactieve_stof" type="VARCHAR" size="1" required="true"/>
-    <column name="soort_hulpmiddel" type="INTEGER" required="true"/>
-    <column name="rzv_thesaurus_120" type="INTEGER" required="true"/>
-    <column name="rzvvoorwaarden_bijlage_2" type="INTEGER" required="false"/>
-    <column name="tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekst_verwijzing" type="INTEGER" required="true"/>
-    <column name="hulpmiddel_volgens_awbz" type="VARCHAR" size="1" required="true"/>
-    <column name="eenheid_inkoophoeveelheid_thesnr" type="INTEGER" required="true"/>
-    <column name="eenheid_inkoophoeveelheid" type="INTEGER" required="true"/>
-    <column name="basiseenheid_verpakking_thesnr" type="INTEGER" required="true"/>
-    <column name="basiseenheid_verpakking" type="INTEGER" required="true"/>
-    <column name="richtlijn_gebruik_ondergrens" type="DECIMAL" size="7" scale="4" required="true"/>
-    <column name="richtlijn_gebruik_bovengrens" type="DECIMAL" size="7" scale="4" required="true"/>
-    <column name="thesaurus_rzv_verstrekking" type="INTEGER" required="true"/>
-    <column name="rzvverstrekking" type="INTEGER" required="true"/>
-    <column name="thesaurus_rzv_rationaliteit" type="INTEGER" required="true"/>
-    <column name="beoordeling_rationaliteit" type="INTEGER" required="true"/>
-    <column name="thesaurus_rzv_beoordeling" type="INTEGER" required="true"/>
-    <column name="achtergrond_rationaliteit" type="INTEGER" required="true"/>
-    <column name="thesaurus_rzv_hulpmiddelen" type="INTEGER" required="true"/>
-    <column name="hulpmiddelen_zorg" type="INTEGER" required="true"/>
+  <table name="gs_handelsproducten" description="BST031T : Handelsproducten">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="prkcode" type="INTEGER" required="false" description="PRKODE : PRK-code"/>
+    <column name="medisch_hulpmiddelkode" type="INTEGER" required="true" description="MHKODE : Medisch HulpmiddelKode (MHK)"/>
+    <column name="handelsproduktnaamnummer" type="INTEGER" required="true" description="HPNAMN : Handelsproduktnaamnummer"/>
+    <column name="merkstamnaam" type="VARCHAR" size="50" required="true" description="MSNAAM : Merkstamnaam"/>
+    <column name="firmastamnaam" type="VARCHAR" size="50" required="true" description="FSNAAM : Firmastamnaam"/>
+    <column name="produktgroep_thesaurusnummer" type="INTEGER" required="true" description="TSPRGR : Produktgroep thesaurusnummer"/>
+    <column name="produktgroep_kode" type="INTEGER" required="true" description="XSPRGR : Produktgroep kode"/>
+    <column name="soortelijk_gewicht" type="DECIMAL" size="7" scale="5" required="true" description="HPSGEW : Soortelijk gewicht"/>
+    <column name="aantal_ddds_per_basiseenh_produkt" type="DECIMAL" size="10" scale="3" required="true" description="HPDDD : Aantal DDD's per basiseenh. produkt"/>
+    <column name="aantal_druppels_per_ml" type="DECIMAL" size="5" scale="2" required="true" description="HPDRML : Aantal druppels per ML"/>
+    <column name="pifnummer_thesaurusnummer" type="INTEGER" required="true" description="TSKPIF : PIF-nummer thesaurusnummer"/>
+    <column name="pifnummer" type="INTEGER" required="true" description="XSKPIF : PIF-nummer"/>
+    <column name="fabrikant_produktkodering" type="VARCHAR" size="12" required="true" description="HPKATN : Fabrikant produktkodering"/>
+    <column name="reden_niet_clusteren_thesaurusnr" type="INTEGER" required="true" description="TSRNCL : Reden niet clusteren thesaurusnr"/>
+    <column name="reden_niet_clusteren_kode" type="INTEGER" required="true" description="XSRNCL : Reden niet clusteren kode"/>
+    <column name="ftk_1" type="INTEGER" required="true" description="GRP001 : FTK 1"/>
+    <column name="ftk_2" type="INTEGER" required="true" description="GRP002 : FTK 2"/>
+    <column name="ftk_3" type="INTEGER" required="true" description="GRP003 : FTK 3"/>
+    <column name="ftk_4" type="INTEGER" required="true" description="GRP004 : FTK 4"/>
+    <column name="ftk_5" type="INTEGER" required="true" description="GRP005 : FTK 5"/>
+    <column name="informatoriumproductcode" type="INTEGER" required="true" description="HPOKNR : Informatoriumproductcode (IPK)"/>
+    <column name="kode_combinatiepreparaat" type="INTEGER" required="true" description="HPKCPR : Kode combinatiepreparaat"/>
+    <column name="kode_vergift" type="VARCHAR" size="1" required="true" description="HPKGIF : Kode vergift"/>
+    <column name="kode_rijvaardigheid" type="VARCHAR" size="1" required="true" description="HPKRYV : Kode rijvaardigheid"/>
+    <column name="kode_brandgevaarlijk" type="VARCHAR" size="1" required="true" description="HPKBRG : Kode brandgevaarlijk"/>
+    <column name="gesteriliseerd_voor_geneesmiddelen" type="VARCHAR" size="1" required="true" description="HPSTGN : Gesteriliseerd voor geneesmiddelen"/>
+    <column name="hpkeenheid_thesaurusnummer" type="INTEGER" required="true" description="TSEENH : HPK-eenheid thesaurusnummer"/>
+    <column name="hpkeenheid_kode" type="INTEGER" required="true" description="XSEENH : HPK-eenheid kode"/>
+    <column name="oplosmiddel_hoeveelheid_1" type="DECIMAL" size="4" scale="1" required="true" description="HPOMH1 : Oplosmiddel hoeveelheid 1"/>
+    <column name="oplosmiddel_aantal_1" type="INTEGER" required="true" description="HPOMA1 : Oplosmiddel aantal 1"/>
+    <column name="oplosmiddel_hoeveelheid_2" type="DECIMAL" size="4" scale="1" required="true" description="HPOMH2 : Oplosmiddel hoeveelheid 2"/>
+    <column name="oplosmiddel_aantal_2" type="INTEGER" required="true" description="HPOMA2 : Oplosmiddel aantal 2"/>
+    <column name="farmaceutische_kwaliteit" type="VARCHAR" size="1" required="true" description="HPFKWA : Farmaceutische kwaliteit"/>
+    <column name="halffabrikaat_thesaurusnummer" type="INTEGER" required="true" description="TSHFAB : Halffabrikaat thesaurusnummer"/>
+    <column name="halffabrikaat_code" type="INTEGER" required="true" description="XSHFAB : Halffabrikaat code"/>
+    <column name="deelbaarheid_aantal" type="INTEGER" required="true" description="HPDEEL : Deelbaarheid aantal"/>
+    <column name="emballagemateriaal_thesaurusnummer" type="INTEGER" required="true" description="TSEMBM : Emballagemateriaal thesaurusnummer"/>
+    <column name="emballagemateriaal_kode" type="INTEGER" required="true" description="XSEMBM : Emballagemateriaal kode"/>
+    <column name="emballagesluiting_thesaurusnummer" type="INTEGER" required="true" description="TSEMBS : Emballagesluiting thesaurusnummer"/>
+    <column name="emballagesluiting_kode" type="INTEGER" required="true" description="XSEMBS : Emballagesluiting kode"/>
+    <column name="emballagedoseerinr_thesaurusnr" type="INTEGER" required="true" description="TSEMBD : Emballage-doseerinr. thesaurusnr"/>
+    <column name="emballagedoseerinrichting_kode" type="INTEGER" required="true" description="XSEMBD : Emballage-doseerinrichting kode"/>
+    <column name="hulpstoffen_identificerend" type="VARCHAR" size="1" required="true" description="HPHULP : Hulpstoffen identificerend"/>
+    <column name="kleur_thesaurusnummer" type="INTEGER" required="true" description="TSKLEU : Kleur thesaurusnummer"/>
+    <column name="kleur_kode" type="INTEGER" required="true" description="XSKLEU : Kleur kode"/>
+    <column name="smaak_thesaurusnummer" type="INTEGER" required="true" description="TSSMAA : Smaak thesaurusnummer"/>
+    <column name="smaak_kode" type="INTEGER" required="true" description="XSSMAA : Smaak kode"/>
+    <column name="bereidingsvoorschr_thesaurusnummer" type="INTEGER" required="true" description="TSBERV : Bereidingsvoorschr. thesaurusnummer"/>
+    <column name="bereidingsvoorschrift_kode" type="INTEGER" required="true" description="XSBERV : Bereidingsvoorschrift kode"/>
+    <column name="fysische_eigenschap_thesaurusnummer" type="INTEGER" required="true" description="TSFYSG : Fysische eigenschap thesaurusnummer"/>
+    <column name="fysische_eigenschap_kode" type="INTEGER" required="true" description="XSFYSG : Fysische eigenschap kode"/>
+    <column name="grondstofvorm_thesaurusnummer" type="INTEGER" required="true" description="TSGSTV : Grondstofvorm thesaurusnummer"/>
+    <column name="grondstofvorm_kode" type="INTEGER" required="true" description="XSGSTV : Grondstofvorm kode"/>
+    <column name="los_verkrijgbaar" type="VARCHAR" size="1" required="true" description="HPLOS : Los verkrijgbaar"/>
+    <column name="bioequivalente_groep" type="INTEGER" required="true" description="HPBIOG : Bioequivalente groep"/>
+    <column name="kode_radioactieve_stof" type="VARCHAR" size="1" required="true" description="HPKRAC : Kode radio-actieve stof"/>
+    <column name="soort_hulpmiddel" type="INTEGER" required="true" description="HPKSHM : Soort hulpmiddel"/>
+    <column name="rzv_thesaurus_120" type="INTEGER" required="true" description="THRZV : RZV Thesaurus 120"/>
+    <column name="rzvvoorwaarden_bijlage_2" type="INTEGER" required="false" description="HPRZV : RZV-voorwaarden Bijlage 2"/>
+    <column name="tekstmodule" type="INTEGER" required="true" description="TXMOD : Tekstmodule"/>
+    <column name="tekst_verwijzing" type="INTEGER" required="true" description="TXSRT : Tekst verwijzing"/>
+    <column name="hulpmiddel_volgens_awbz" type="VARCHAR" size="1" required="true" description="HPHLP : Hulpmiddel volgens AWBZ"/>
+    <column name="eenheid_inkoophoeveelheid_thesnr" type="INTEGER" required="true" description="TSINEH : Eenheid inkoophoeveelheid thes.nr"/>
+    <column name="eenheid_inkoophoeveelheid" type="INTEGER" required="true" description="XSINEH : Eenheid inkoophoeveelheid"/>
+    <column name="basiseenheid_verpakking_thesnr" type="INTEGER" required="true" description="TSDLEH : Basiseenheid verpakking thes.nr"/>
+    <column name="basiseenheid_verpakking" type="INTEGER" required="true" description="XSDLEH : Basiseenheid verpakking"/>
+    <column name="richtlijn_gebruik_ondergrens" type="DECIMAL" size="7" scale="4" required="true" description="HRONDG : Richtlijn gebruik ondergrens"/>
+    <column name="richtlijn_gebruik_bovengrens" type="DECIMAL" size="7" scale="4" required="true" description="HRBOVG : Richtlijn gebruik bovengrens"/>
+    <column name="thesaurus_rzv_verstrekking" type="INTEGER" required="true" description="THRZVV : Thesaurus RZV verstrekking (1510)"/>
+    <column name="rzvverstrekking" type="INTEGER" required="true" description="HPRZVV : RZV-verstrekking"/>
+    <column name="thesaurus_rzv_rationaliteit" type="INTEGER" required="true" description="THRZVR : Thesaurus RZV rationaliteit (1520)"/>
+    <column name="beoordeling_rationaliteit" type="INTEGER" required="true" description="HPRZVR : Beoordeling rationaliteit"/>
+    <column name="thesaurus_rzv_beoordeling" type="INTEGER" required="true" description="THRZVB : Thesaurus RZV beoordeling (1525)"/>
+    <column name="achtergrond_rationaliteit" type="INTEGER" required="true" description="HPRZVB : Achtergrond rationaliteit"/>
+    <column name="thesaurus_rzv_hulpmiddelen" type="INTEGER" required="true" description="THRZVH : Thesaurus RZV hulpmiddelen (1530)"/>
+    <column name="hulpmiddelen_zorg" type="INTEGER" required="true" description="HPRZVH : Hulpmiddelen zorg"/>
     <foreign-key foreignTable="gs_voorschrijfpr_geneesmiddel_identific">
       <reference local="prkcode" foreign="prkcode"/>
     </foreign-key>
@@ -739,45 +739,45 @@
       <reference local="rzvvoorwaarden_bijlage_2" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_header_relatie_bestand">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="relatie_soort_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="relatieomschrijving" type="VARCHAR" size="50" required="true"/>
-    <column name="verwijzing_relatie_bestand_1" type="VARCHAR" size="20" required="true"/>
-    <column name="verwijzing_relatie_thesauri_1" type="INTEGER" required="true"/>
-    <column name="verwijzing_identificierende_rubriek_1" type="VARCHAR" size="10" required="true"/>
-    <column name="verwijzing_relatie_bestand_2" type="VARCHAR" size="20" required="true"/>
-    <column name="verwijzing_relatie_thesauri_2" type="INTEGER" required="true"/>
-    <column name="verwijzing_identificierende_rubriek_2" type="VARCHAR" size="10" required="true"/>
+  <table name="gs_header_relatie_bestand" description="BST911T : Header relatie bestand">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="relatie_soort_nummer" type="INTEGER" primaryKey="true" required="true" description="RLSRT : Relatie soort nummer"/>
+    <column name="relatieomschrijving" type="VARCHAR" size="50" required="true" description="RLOMS : Relatieomschrijving"/>
+    <column name="verwijzing_relatie_bestand_1" type="VARCHAR" size="20" required="true" description="RLBST1 : Verwijzing relatie bestand 1"/>
+    <column name="verwijzing_relatie_thesauri_1" type="INTEGER" required="true" description="RLTHE1 : Verwijzing relatie thesauri 1"/>
+    <column name="verwijzing_identificierende_rubriek_1" type="VARCHAR" size="10" required="true" description="RLID1 : Verwijzing Identificierende rubriek 1"/>
+    <column name="verwijzing_relatie_bestand_2" type="VARCHAR" size="20" required="true" description="RLBST2 : Verwijzing relatie bestand 2"/>
+    <column name="verwijzing_relatie_thesauri_2" type="INTEGER" required="true" description="RLTHE2 : Verwijzing relatie thesauri 2"/>
+    <column name="verwijzing_identificierende_rubriek_2" type="VARCHAR" size="10" required="true" description="RLID2 : Verwijzing Identificierende rubriek 2"/>
   </table>
-  <table name="gs_icpc_1_2000">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="icpc1nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="icpccode" type="VARCHAR" size="8" required="true"/>
-    <column name="icpcomschrijvingen" type="VARCHAR" size="60" required="true"/>
+  <table name="gs_icpc_1_2000" description="BST380T : ICPC - 1">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="icpc1nummer" type="INTEGER" primaryKey="true" required="true" description="ICPCNR1 : ICPC1-nummer"/>
+    <column name="icpccode" type="VARCHAR" size="8" required="true" description="ICPC1 : ICPC-code"/>
+    <column name="icpcomschrijvingen" type="VARCHAR" size="60" required="true" description="ICPCTXT : ICPC-omschrijvingen"/>
   </table>
-  <table name="gs_informatorium_groepen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="groepkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="groepnaam" type="VARCHAR" size="50" required="true"/>
-    <column name="groepvolgorde_kode" type="VARCHAR" size="11" required="true"/>
+  <table name="gs_informatorium_groepen" description="BST500T : Informatorium groepen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="groepkode" type="INTEGER" primaryKey="true" required="true" description="GRPINP : Groepkode"/>
+    <column name="groepnaam" type="VARCHAR" size="50" required="true" description="GRPNAM : Groepnaam"/>
+    <column name="groepvolgorde_kode" type="VARCHAR" size="11" required="true" description="XRPO1 : Groepvolgorde kode"/>
   </table>
-  <table name="gs_ingegeven_samenstellingen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="aanduiding_werkzaamhulpstof" type="VARCHAR" size="1" required="true"/>
-    <column name="generiekenaamkode" type="INTEGER" required="true"/>
-    <column name="hoeveelheid_werkzame_stof" type="DECIMAL" size="12" scale="3" required="true"/>
-    <column name="eenh_hvh_werkzstof_thesaurus_1" type="INTEGER" required="true"/>
-    <column name="eenhhoeveelheid_werkzame_stof_kode" type="INTEGER" required="true"/>
-    <column name="stamnaamcode" type="INTEGER" required="true"/>
-    <column name="stamtoedieningsweg_thesaurus_58" type="INTEGER" required="true"/>
-    <column name="stamtoedieningsweg_code" type="INTEGER" required="true"/>
+  <table name="gs_ingegeven_samenstellingen" description="BST701T : Ingegeven samenstellingen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true" description="GNVOLG : Volgnummer"/>
+    <column name="aanduiding_werkzaamhulpstof" type="VARCHAR" size="1" required="true" description="GNMWHS : Aanduiding werkzaam/hulpstof (W/H)"/>
+    <column name="generiekenaamkode" type="INTEGER" required="true" description="GNGNK : GeneriekeNaamKode (GNK)"/>
+    <column name="hoeveelheid_werkzame_stof" type="DECIMAL" size="12" scale="3" required="true" description="GNMINH : Hoeveelheid werkzame stof"/>
+    <column name="eenh_hvh_werkzstof_thesaurus_1" type="INTEGER" required="true" description="THMINE : Eenh. hvh werkz.stof - thesaurus 1"/>
+    <column name="eenhhoeveelheid_werkzame_stof_kode" type="INTEGER" required="true" description="XNMINE : Eenh.hoeveelheid werkzame stof kode"/>
+    <column name="stamnaamcode" type="INTEGER" required="true" description="GNSTAM : Stamnaamcode (SNK)"/>
+    <column name="stamtoedieningsweg_thesaurus_58" type="INTEGER" required="true" description="THSTWG : Stamtoedieningsweg - thesaurus 58"/>
+    <column name="stamtoedieningsweg_code" type="INTEGER" required="true" description="SSKTWG : Stamtoedieningsweg code"/>
     <foreign-key foreignTable="gs_handelsproducten">
       <reference local="handelsproduktkode" foreign="handelsproduktkode"/>
     </foreign-key>
@@ -793,75 +793,75 @@
       <reference local="stamtoedieningsweg_code" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_koppeling_zrs_met_externe_codes">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="type_externe_zrs_code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="externe_code_van_het_type_exttyp" type="VARCHAR" size="10" primaryKey="true" required="true"/>
-    <column name="soort_code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_binnen_aaa" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_binnen_aaa1" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="zorg_registratie_nummer_van_de_actieregel" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_koppeling_zrs_met_externe_codes" description="BST411T : Koppeling ZRS met externe codes">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="type_externe_zrs_code" type="INTEGER" primaryKey="true" required="true" description="EXTTYP : Type externe ZRS code"/>
+    <column name="externe_code_van_het_type_exttyp" type="VARCHAR" size="10" primaryKey="true" required="true" description="EXTCOD : Externe code van het type EXTTYP"/>
+    <column name="soort_code" type="INTEGER" primaryKey="true" required="true" description="AAA : Soort code (10, 20 of 30)"/>
+    <column name="zorg_registratie_binnen_aaa" type="INTEGER" primaryKey="true" required="true" description="ZRNRA : Zorg Registratie binnen AAA"/>
+    <column name="zorg_registratie_binnen_aaa1" type="INTEGER" primaryKey="true" required="true" description="ZRNRS : Zorg Registratie binnen AAA+1"/>
+    <column name="zorg_registratie_nummer_van_de_actieregel" type="INTEGER" primaryKey="true" required="true" description="ZRNR32 : Zorg Registratie Nummer van de Actieregel"/>
   </table>
-  <table name="gs_medicatie_bewaking_koppelen_met_zrs">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="aanleiding" type="INTEGER" required="true"/>
-    <column name="subaanleiding" type="INTEGER" required="true"/>
-    <column name="analyse" type="INTEGER" required="true"/>
-    <column name="subanalyse" type="INTEGER" required="true"/>
-    <column name="actie" type="INTEGER" required="true"/>
-    <column name="actiegroep" type="INTEGER" required="true"/>
-    <column name="actieregel" type="INTEGER" required="true"/>
-    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_medicatie_bewaking_koppelen_met_zrs" description="BST415T : Medicatie Bewaking koppelen met ZRS">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true" description="TXMODU : Tekstmodule"/>
+    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true" description="THTSRT : Thesaurus verwijzing tekstsoort (=104)"/>
+    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true" description="TXTSRT : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true" description="TXKODE : Tekst nivo kode"/>
+    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true" description="TXBLNR : Tekstbloknummer"/>
+    <column name="aanleiding" type="INTEGER" required="true" description="ZRA10 : Aanleiding (A10 uit ZRS)"/>
+    <column name="subaanleiding" type="INTEGER" required="true" description="ZRA11 : Subaanleiding (A11 uit ZRS)"/>
+    <column name="analyse" type="INTEGER" required="true" description="ZRA20 : Analyse (A20 uit ZRS)"/>
+    <column name="subanalyse" type="INTEGER" required="true" description="ZRA21 : Subanalyse (A21 uit ZRS)"/>
+    <column name="actie" type="INTEGER" required="true" description="ZRA30 : Actie (A30 uit ZRS)"/>
+    <column name="actiegroep" type="INTEGER" required="true" description="ZRA31 : Actiegroep (A31 uit ZRS)"/>
+    <column name="actieregel" type="INTEGER" required="true" description="ZRA32 : Actieregel (A32 uit ZRS)"/>
+    <column name="volgnummer" type="INTEGER" primaryKey="true" required="true" description="VLGNR : Volgnummer"/>
   </table>
-  <table name="gs_meervoudige_produkten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="component_hpk_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="component_hpk_aantal" type="INTEGER" required="true"/>
+  <table name="gs_meervoudige_produkten" description="BST060T : Meervoudige produkten">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="component_hpk_nummer" type="INTEGER" primaryKey="true" required="true" description="MPCHPK : Component HPK nummer"/>
+    <column name="component_hpk_aantal" type="INTEGER" required="true" description="MPAANT : Component HPK aantal"/>
   </table>
-  <table name="gs_namen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="naamnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memokode" type="VARCHAR" size="6" required="true"/>
-    <column name="etiketnaam" type="VARCHAR" size="27" required="true"/>
-    <column name="korte_handelsnaam" type="VARCHAR" size="40" required="true"/>
-    <column name="naam_volledig" type="VARCHAR" size="50" required="true"/>
+  <table name="gs_namen" description="BST020T : Namen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="naamnummer" type="INTEGER" primaryKey="true" required="true" description="NMNR : Naamnummer"/>
+    <column name="memokode" type="VARCHAR" size="6" required="true" description="NMMEMO : Memokode"/>
+    <column name="etiketnaam" type="VARCHAR" size="27" required="true" description="NMETIK : Etiketnaam"/>
+    <column name="korte_handelsnaam" type="VARCHAR" size="40" required="true" description="NMNM40 : Korte handelsnaam"/>
+    <column name="naam_volledig" type="VARCHAR" size="50" required="true" description="NMNAAM : Naam volledig"/>
   </table>
-  <table name="gs_naw_gegevens_gstandaard">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurusnummer_soort_naw" type="INTEGER" required="true"/>
-    <column name="naw_soort" type="INTEGER" required="true"/>
-    <column name="naw_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memocode_onderneming_3_posities_alfanumeriek" type="VARCHAR" size="3" required="true"/>
-    <column name="memocode_onderneming_2_posities_numeriek" type="INTEGER" required="true"/>
-    <column name="naam" type="VARCHAR" size="50" required="true"/>
-    <column name="adres" type="VARCHAR" size="30" required="true"/>
-    <column name="postcode" type="VARCHAR" size="10" required="true"/>
-    <column name="woonplaats" type="VARCHAR" size="30" required="true"/>
-    <column name="land" type="VARCHAR" size="30" required="true"/>
-    <column name="postbusnummer" type="VARCHAR" size="10" required="true"/>
-    <column name="postcode_postbus" type="VARCHAR" size="10" required="true"/>
-    <column name="telefoonnummer_ondernemer" type="VARCHAR" size="15" required="true"/>
-    <column name="faxnummer" type="VARCHAR" size="15" required="true"/>
-    <column name="zoeknaam" type="VARCHAR" size="15" required="true"/>
-    <column name="land_memocode" type="VARCHAR" size="2" required="true"/>
-    <column name="lic_nummer" type="VARCHAR" size="4" required="true"/>
-    <column name="gln_code" type="bigint" required="true"/>
-    <column name="uzovi_code" type="INTEGER" required="true"/>
-    <column name="agb_code" type="INTEGER" required="true"/>
-    <column name="reservenummer_1" type="BIGINT" required="true"/>
-    <column name="reservenummer_2" type="BIGINT" required="true"/>
+  <table name="gs_naw_gegevens_gstandaard" description="BST301T : NAW gegevens G-Standaard">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurusnummer_soort_naw" type="INTEGER" required="true" description="TSNASRT : Thesaurusnummer soort NAW"/>
+    <column name="naw_soort" type="INTEGER" required="true" description="NASRT : NAW soort"/>
+    <column name="naw_nummer" type="INTEGER" primaryKey="true" required="true" description="NAWNR : NAW nummer"/>
+    <column name="memocode_onderneming_3_posities_alfanumeriek" type="VARCHAR" size="3" required="true" description="NAMEMO3 : Memocode onderneming 3 posities alfanumeriek"/>
+    <column name="memocode_onderneming_2_posities_numeriek" type="INTEGER" required="true" description="NAMEMO2 : Memocode onderneming 2 posities numeriek"/>
+    <column name="naam" type="VARCHAR" size="50" required="true" description="NANAAM : Naam"/>
+    <column name="adres" type="VARCHAR" size="30" required="true" description="NAADR : Adres"/>
+    <column name="postcode" type="VARCHAR" size="10" required="true" description="NAPC : Postcode"/>
+    <column name="woonplaats" type="VARCHAR" size="30" required="true" description="NAWPL : Woonplaats"/>
+    <column name="land" type="VARCHAR" size="30" required="true" description="NALAND : Land"/>
+    <column name="postbusnummer" type="VARCHAR" size="10" required="true" description="NAPB : Postbusnummer"/>
+    <column name="postcode_postbus" type="VARCHAR" size="10" required="true" description="NAPCPB : Postcode postbus"/>
+    <column name="telefoonnummer_ondernemer" type="VARCHAR" size="15" required="true" description="NATEL : Telefoonnummer ondernemer"/>
+    <column name="faxnummer" type="VARCHAR" size="15" required="true" description="NAFAX : Faxnummer"/>
+    <column name="zoeknaam" type="VARCHAR" size="15" required="true" description="NAAFK : Zoeknaam"/>
+    <column name="land_memocode" type="VARCHAR" size="2" required="true" description="NALNDM : Land memocode"/>
+    <column name="lic_nummer" type="VARCHAR" size="4" required="true" description="NALICN : LIC nummer"/>
+    <column name="gln_code" type="bigint" required="true" description="NAGLN : GLN code"/>
+    <column name="uzovi_code" type="INTEGER" required="true" description="NAUZOVI : UZOVI code"/>
+    <column name="agb_code" type="INTEGER" required="true" description="NAAGB : AGB code"/>
+    <column name="reservenummer_1" type="BIGINT" required="true" description="NARES1 : Reservenummer 1"/>
+    <column name="reservenummer_2" type="BIGINT" required="true" description="NARES2 : Reservenummer 2"/>
     <index name="naw_nummer">
       <index-column name="naw_nummer"/>
     </index>
@@ -886,40 +886,40 @@
       <parameter name="permanent" value="false"/>
     </behavior>
   </table>
-  <table name="gs_niet_eerste_uitgifte_cluster">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="clusternummer_niet_eerste_uitgifte" type="INTEGER" required="true"/>
+  <table name="gs_niet_eerste_uitgifte_cluster" description="BST780T : Niet Eerste Uitgifte Cluster">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="generiekeproductcode" type="INTEGER" primaryKey="true" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="clusternummer_niet_eerste_uitgifte" type="INTEGER" required="true" description="GPCLUS : Clusternummer Niet Eerste Uitgifte"/>
   </table>
-  <table name="gs_onderling_verband_hpkprkgpk">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="prkcode" type="INTEGER" required="true"/>
-    <column name="aantal_eenheden_prk_in_hpk" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" required="true"/>
-    <column name="aantal_eenheden_gpk_in_prk" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="aantal_eenheden_gpk_in_hpk" type="DECIMAL" size="8" scale="2" required="true"/>
+  <table name="gs_onderling_verband_hpkprkgpk" description="BST070T : Onderling verband HPK-PRK-GPK">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="prkcode" type="INTEGER" required="true" description="PRKODE : PRK-code"/>
+    <column name="aantal_eenheden_prk_in_hpk" type="DECIMAL" size="8" scale="2" required="true" description="HPANPR : Aantal eenheden PRK in HPK"/>
+    <column name="generiekeproductcode" type="INTEGER" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="aantal_eenheden_gpk_in_prk" type="DECIMAL" size="8" scale="2" required="true" description="PRANGP : Aantal eenheden GPK in PRK"/>
+    <column name="aantal_eenheden_gpk_in_hpk" type="DECIMAL" size="8" scale="2" required="true" description="HPANGP : Aantal eenheden GPK in HPK"/>
   </table>
-  <table name="gs_ongewenste_groepen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesnr_ongewenste_groepen" type="INTEGER" required="true"/>
-    <column name="nummer_van_ongewenste_groep" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_ongewenste_groepen" description="BST632T : Ongewenste groepen (ook op PRK-Niveau)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="thesnr_ongewenste_groepen" type="INTEGER" required="true" description="THOGRP : Thes.nr. Ongewenste Groepen"/>
+    <column name="nummer_van_ongewenste_groep" type="INTEGER" primaryKey="true" required="true" description="NROGRP : Nummer van Ongewenste Groep"/>
   </table>
-  <table name="gs_preferentie_beleid">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="uzovi_code_zorgverzekeraar" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_preferentie_status" type="INTEGER" required="true"/>
-    <column name="preferentie_status" type="INTEGER" required="true"/>
-    <column name="preferentie_cluster_code" type="INTEGER" required="true"/>
-    <column name="prkcode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" required="true"/>
+  <table name="gs_preferentie_beleid" description="BST161T : Preferentie beleid per 1-1-2016">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zindex_nummer" type="INTEGER" primaryKey="true" required="true" description="ZINR : Z-Index nummer"/>
+    <column name="uzovi_code_zorgverzekeraar" type="INTEGER" primaryKey="true" required="true" description="ZRUZOVI : UZOVI code Zorgverzekeraar"/>
+    <column name="thesaurusverwijzing_preferentie_status" type="INTEGER" required="true" description="THPRFSTS : Thesaurusverwijzing Preferentie status (1570)"/>
+    <column name="preferentie_status" type="INTEGER" required="true" description="ZRPRFSTS : Preferentie status"/>
+    <column name="preferentie_cluster_code" type="INTEGER" required="true" description="PRFCLUS : Preferentie cluster code"/>
+    <column name="prkcode" type="INTEGER" required="true" description="PRKODE : PRK-code"/>
+    <column name="handelsproduktkode" type="INTEGER" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
     <foreign-key foreignTable="gs_thesauri_totaal" phpName="PreferentieStatusOmschrijving">
       <reference local="thesaurusverwijzing_preferentie_status" foreign="thesaurusnummer"/>
       <reference local="preferentie_status" foreign="thesaurus_itemnummer"/>
@@ -928,21 +928,21 @@
       <reference local="zindex_nummer" foreign="zinummer"/>
     </foreign-key>
   </table>
-  <table name="gs_prijs_tarief_tabel">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurusverwijzing_soort_codering" type="INTEGER" required="true"/>
-    <column name="soort_codering" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="unieke_id_van_codering" type="VARCHAR" size="15" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_srt_tariefprijsbedrag" type="INTEGER" required="true"/>
-    <column name="soort_tariefprijsbedrag" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzing_soort_bron" type="INTEGER" required="true"/>
-    <column name="soort_bron" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="unieke_id_van_bron" type="VARCHAR" size="7" primaryKey="true" required="true"/>
-    <column name="aanvullende_contract_informatie" type="VARCHAR" size="10" primaryKey="true" required="true"/>
-    <column name="tarief_prijs_bedrag" type="DECIMAL" size="16" scale="6" required="true"/>
-    <column name="startdatum_van_tariefprijsbedrag" type="DATE" required="true"/>
-    <column name="einddatum_van_tariefprijsbedrag" type="DATE" required="false"/>
+  <table name="gs_prijs_tarief_tabel" description="BST180T : Prijs / tarief tabel">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurusverwijzing_soort_codering" type="INTEGER" required="true" description="THIDSRT : Thesaurusverwijzing soort codering (3001)"/>
+    <column name="soort_codering" type="INTEGER" primaryKey="true" required="true" description="IDSRT : Soort codering (bij ZI nummer codering)"/>
+    <column name="unieke_id_van_codering" type="VARCHAR" size="15" primaryKey="true" required="true" description="IDCODE : Unieke ID van codering (bijv. ZI nummer)"/>
+    <column name="thesaurusverwijzing_srt_tariefprijsbedrag" type="INTEGER" required="true" description="THSTPB : Thesaurusverwijzing srt tarief/prijs/bedrag (3002)"/>
+    <column name="soort_tariefprijsbedrag" type="INTEGER" primaryKey="true" required="true" description="SRTTPB : Soort tarief/prijs/bedrag"/>
+    <column name="thesaurusverwijzing_soort_bron" type="INTEGER" required="true" description="THSBRN : Thesaurusverwijzing soort bron (3003)"/>
+    <column name="soort_bron" type="INTEGER" primaryKey="true" required="true" description="SRTBRN : Soort bron (bijv NAW bestand 301)"/>
+    <column name="unieke_id_van_bron" type="VARCHAR" size="7" primaryKey="true" required="true" description="IDBRON : Unieke ID van bron"/>
+    <column name="aanvullende_contract_informatie" type="VARCHAR" size="10" primaryKey="true" required="true" description="AANINF : Aanvullende contract informatie"/>
+    <column name="tarief_prijs_bedrag" type="DECIMAL" size="16" scale="6" required="true" description="TRPRBD : Tarief / Prijs / Bedrag"/>
+    <column name="startdatum_van_tariefprijsbedrag" type="DATE" required="true" description="STRDAT : Startdatum (jjjjmmdd) van tarief/prijs/bedrag"/>
+    <column name="einddatum_van_tariefprijsbedrag" type="DATE" required="false" description="ENDDAT : Einddatum (jjjjmmdd) van tarief/prijs/bedrag"/>
     <foreign-key foreignTable="gs_thesauri_totaal" phpName="SoortCoderingOmschrijving">
       <reference local="thesaurusverwijzing_soort_codering" foreign="thesaurusnummer"/>
       <reference local="soort_codering" foreign="thesaurus_itemnummer"/>
@@ -956,33 +956,33 @@
       <reference local="soort_bron" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_relatie_bestand">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="relatie_soort_nummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="verwijzing_identificatie_1_numeriek" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="verwijzing_identificatie_1_alfanumeriek" type="VARCHAR" size="20" primaryKey="true" required="true"/>
-    <column name="verwijzing_identificatie_2_numeriek" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="verwijzing_identificatie_2_alfanumeriek" type="VARCHAR" size="20" primaryKey="true" required="true"/>
+  <table name="gs_relatie_bestand" description="BST912T : Relatie bestand">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="relatie_soort_nummer" type="INTEGER" primaryKey="true" required="true" description="RLSRT : Relatie soort nummer"/>
+    <column name="verwijzing_identificatie_1_numeriek" type="INTEGER" primaryKey="true" required="true" description="RLNR1 : Verwijzing Identificatie 1 numeriek"/>
+    <column name="verwijzing_identificatie_1_alfanumeriek" type="VARCHAR" size="20" primaryKey="true" required="true" description="RLCDE1 : Verwijzing Identificatie 1 alfanumeriek"/>
+    <column name="verwijzing_identificatie_2_numeriek" type="INTEGER" primaryKey="true" required="true" description="RLNR2 : Verwijzing Identificatie 2 numeriek"/>
+    <column name="verwijzing_identificatie_2_alfanumeriek" type="VARCHAR" size="20" primaryKey="true" required="true" description="RLCDE2 : Verwijzing Identificatie 2 alfanumeriek"/>
   </table>
-  <table name="gs_relatie_ongewenste_groepensnk">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="stamnaamcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="ongewenste_groepen_thesaurus_122" type="INTEGER" required="true"/>
-    <column name="ongewenste_groepsnummer" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_relatie_ongewenste_groepensnk" description="BST936T : Relatie ongewenste groepen-SNK">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="stamnaamcode" type="INTEGER" primaryKey="true" required="true" description="GNSTAM : Stamnaamcode (SNK)"/>
+    <column name="ongewenste_groepen_thesaurus_122" type="INTEGER" required="true" description="THGRP : Ongewenste groepen - thesaurus 122"/>
+    <column name="ongewenste_groepsnummer" type="INTEGER" primaryKey="true" required="true" description="OGGRP : Ongewenste groepsnummer"/>
     <foreign-key foreignTable="gs_thesauri_totaal" phpName="OngewensteGroepenOmschrijving">
       <reference local="ongewenste_groepen_thesaurus_122" foreign="thesaurusnummer"/>
       <reference local="ongewenste_groepsnummer" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_relatie_tussen_zinummer_hibc">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="zinummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="hibcbarcode" type="VARCHAR" size="16" primaryKey="true" required="true"/>
-    <column name="handelsproduktkode" type="VARCHAR" size="4" required="true"/>
-    <column name="identificatie_nummer" type="VARCHAR" size="3" required="true"/>
+  <table name="gs_relatie_tussen_zinummer_hibc" description="BST200T : Relatie tussen ZI-nummer / HIBC">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="zinummer" type="INTEGER" primaryKey="true" required="true" description="ATKODE : ZI-nummer"/>
+    <column name="hibcbarcode" type="VARCHAR" size="16" primaryKey="true" required="true" description="BARCOD : HIBC-barcode"/>
+    <column name="handelsproduktkode" type="VARCHAR" size="4" required="true" description="HPKODA : Handelsproduktkode (36-tallig)"/>
+    <column name="identificatie_nummer" type="VARCHAR" size="3" required="true" description="VPKODA : Identificatie nummer (36-tallig)"/>
     <foreign-key foreignTable="gs_artikelen">
       <reference local="zinummer" foreign="zinummer"/>
     </foreign-key>
@@ -993,169 +993,169 @@
       <index-column name="handelsproduktkode"/>
     </index>
   </table>
-  <table name="gs_relaties_tussen_hpk_nivo">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="nivo_aanduiding" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="nivo_kode" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_relaties_tussen_hpk_nivo" description="BST705T : Relaties tussen HPK - nivo">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="handelsproduktkode" type="INTEGER" primaryKey="true" required="true" description="HPKODE : Handels Product Kenmerken (HPK) code"/>
+    <column name="nivo_aanduiding" type="INTEGER" primaryKey="true" required="true" description="NIVSRL : Nivo aanduiding"/>
+    <column name="nivo_kode" type="INTEGER" primaryKey="true" required="true" description="NIVUIT : Nivo kode"/>
   </table>
-  <table name="gs_relaties_tussen_namen">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="relatie_soort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="naamnummer_ingang" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="naamnummer_uitgang" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_relaties_tussen_namen" description="BST025T : Relaties tussen namen">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="relatie_soort" type="INTEGER" primaryKey="true" required="true" description="NMRNR : Relatie soort"/>
+    <column name="naamnummer_ingang" type="INTEGER" primaryKey="true" required="true" description="NMNRIN : Naamnummer ingang"/>
+    <column name="naamnummer_uitgang" type="INTEGER" primaryKey="true" required="true" description="NMNRUI : Naamnummer uitgang"/>
   </table>
-  <table name="gs_rubrieken">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="naam_van_het_bestand" type="VARCHAR" size="20" primaryKey="true" required="true"/>
-    <column name="volgnummer" type="INTEGER" required="true"/>
-    <column name="naam_van_de_rubriek" type="VARCHAR" size="10" primaryKey="true" required="true"/>
-    <column name="omschrijving_van_de_rubriek" type="VARCHAR" size="50" required="true"/>
-    <column name="rubriekscode" type="INTEGER" required="true"/>
-    <column name="sleutelkode_van_de_rubriek" type="VARCHAR" size="2" required="true"/>
-    <column name="type_van_de_rubriek" type="VARCHAR" size="1" required="true"/>
-    <column name="lengte_van_de_rubriek" type="INTEGER" required="true"/>
-    <column name="aantal_decimalen" type="INTEGER" required="true"/>
-    <column name="opmaak" type="VARCHAR" size="6" required="true"/>
-    <column name="gebruik_van_veld" type="char" size="1" required="true"/>
-    <column name="datum_gebruik" type="date" required="false"/>
+  <table name="gs_rubrieken" description="BST001T : Rubrieken">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="naam_van_het_bestand" type="VARCHAR" size="20" primaryKey="true" required="true" description="MDBST : Naam van het Bestand"/>
+    <column name="volgnummer" type="INTEGER" required="true" description="MDVNR : Volgnummer"/>
+    <column name="naam_van_de_rubriek" type="VARCHAR" size="10" primaryKey="true" required="true" description="MDRNAM : Naam van de rubriek"/>
+    <column name="omschrijving_van_de_rubriek" type="VARCHAR" size="50" required="true" description="MDROMS : Omschrijving van de rubriek"/>
+    <column name="rubriekscode" type="INTEGER" required="true" description="MDRCOD : RubrieksCode"/>
+    <column name="sleutelkode_van_de_rubriek" type="VARCHAR" size="2" required="true" description="MDRSLE : Sleutelkode van de rubriek"/>
+    <column name="type_van_de_rubriek" type="VARCHAR" size="1" required="true" description="MDRTYP : Type van de rubriek"/>
+    <column name="lengte_van_de_rubriek" type="INTEGER" required="true" description="MDRLEN : Lengte van de rubriek"/>
+    <column name="aantal_decimalen" type="INTEGER" required="true" description="MDRDEC : Aantal decimalen"/>
+    <column name="opmaak" type="VARCHAR" size="6" required="true" description="MDROPM : Opmaak"/>
+    <column name="gebruik_van_veld" type="char" size="1" required="true" description="MDRUSE : Gebruik van veld (A/U/V)"/>
+    <column name="datum_gebruik" type="date" required="false" description="MDRDAT : Datum gebruik"/>
   </table>
-  <table name="gs_samenstelling">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurus_verwijzing_soort_code" type="INTEGER" required="true"/>
-    <column name="soort_code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="code" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="generiekenaamkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="hoeveelheid_generiek_naam" type="DECIMAL" size="12" scale="3" primaryKey="true" required="true"/>
-    <column name="thesaurusverwijzig_eenh_hoeveelh_generiek_naam" type="INTEGER" required="true"/>
-    <column name="eenheid_hoeveelheid_generieke_naam" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="stamnaamcode" type="INTEGER" required="true"/>
-    <column name="hoeveelheid_stamnaam" type="DECIMAL" size="12" scale="3" required="true"/>
-    <column name="thesaurusverwijzig_eenh_hoeveelh_stamnaam" type="INTEGER" required="true"/>
-    <column name="eenheid_hoeveelheid_stamnaam" type="INTEGER" required="true"/>
-    <column name="sterktes_mogen_worden_opgeteld_jn" type="BOOLEAN" required="true"/>
+  <table name="gs_samenstelling" description="BST731T : Samenstelling">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurus_verwijzing_soort_code" type="INTEGER" required="true" description="THSRTC : Thesaurus verwijzing soort code"/>
+    <column name="soort_code" type="INTEGER" primaryKey="true" required="true" description="SRTCDE : Soort code"/>
+    <column name="code" type="INTEGER" primaryKey="true" required="true" description="CODE : Code"/>
+    <column name="generiekenaamkode" type="INTEGER" primaryKey="true" required="true" description="GNGNK : GeneriekeNaamKode (GNK)"/>
+    <column name="hoeveelheid_generiek_naam" type="DECIMAL" size="12" scale="3" primaryKey="true" required="true" description="GNHOEV : Hoeveelheid generiek naam"/>
+    <column name="thesaurusverwijzig_eenh_hoeveelh_generiek_naam" type="INTEGER" required="true" description="TSGNEH : Thesaurusverwijzig eenh. hoeveelh. generiek naam"/>
+    <column name="eenheid_hoeveelheid_generieke_naam" type="INTEGER" primaryKey="true" required="true" description="GNEENH : Eenheid hoeveelheid generieke naam"/>
+    <column name="stamnaamcode" type="INTEGER" required="true" description="GNSTAM : Stamnaamcode (SNK)"/>
+    <column name="hoeveelheid_stamnaam" type="DECIMAL" size="12" scale="3" required="true" description="STHOEV : Hoeveelheid stamnaam"/>
+    <column name="thesaurusverwijzig_eenh_hoeveelh_stamnaam" type="INTEGER" required="true" description="TSSTEH : Thesaurusverwijzig eenh. hoeveelh. stamnaam"/>
+    <column name="eenheid_hoeveelheid_stamnaam" type="INTEGER" required="true" description="STEENH : Eenheid hoeveelheid stamnaam"/>
+    <column name="sterktes_mogen_worden_opgeteld_jn" type="BOOLEAN" required="true" description="STADD : Sterktes mogen worden opgeteld J/N"/>
   </table>
-  <table name="gs_stamnaam_stamtoedieningsweg">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="sskkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="stamnaamcode" type="INTEGER" required="true"/>
-    <column name="stamtoedieningsweg_code" type="INTEGER" required="true"/>
+  <table name="gs_stamnaam_stamtoedieningsweg" description="BST725T : Stamnaam + stamtoedieningsweg">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="sskkode" type="INTEGER" primaryKey="true" required="true" description="SSKODE : SSK-kode"/>
+    <column name="stamnaamcode" type="INTEGER" required="true" description="GNSTAM : Stamnaamcode (SNK)"/>
+    <column name="stamtoedieningsweg_code" type="INTEGER" required="true" description="SSKTWG : Stamtoedieningsweg code"/>
   </table>
-  <table name="gs_superprodukten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="superproduktkode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="sskkode" type="INTEGER" primaryKey="true" required="true"/>
+  <table name="gs_superprodukten" description="BST720T : Superprodukten">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="superproduktkode" type="INTEGER" primaryKey="true" required="true" description="SPKODE : SuperProduktKode (SPK)"/>
+    <column name="sskkode" type="INTEGER" primaryKey="true" required="true" description="SSKODE : SSK-kode"/>
   </table>
-  <table name="gs_tekstblokken_ascii">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstregelnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst" type="VARCHAR" size="132" required="true"/>
+  <table name="gs_tekstblokken_ascii" description="BST921T : Tekstblokken ASCII (vervangt 920)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true" description="TXMODU : Tekstmodule"/>
+    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true" description="THTSRT : Thesaurus verwijzing tekstsoort (=104)"/>
+    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true" description="TXTSRT : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true" description="TXKODE : Tekst nivo kode"/>
+    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true" description="TXBLNR : Tekstbloknummer"/>
+    <column name="tekstregelnummer" type="INTEGER" primaryKey="true" required="true" description="TXRGLN : Tekstregelnummer"/>
+    <column name="tekst" type="VARCHAR" size="132" required="true" description="TXTEXT : Tekst"/>
   </table>
-  <table name="gs_tekstblokken_html">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true"/>
-    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true"/>
-    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekstregelnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="tekst" type="VARCHAR" size="132" required="true"/>
+  <table name="gs_tekstblokken_html" description="BST922T : Tekstblokken HTML (vervangt 920)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurus_verwijzing_tekstmodule" type="INTEGER" required="true" description="THMODU : Thesaurus verwijzing tekstmodule (=103)"/>
+    <column name="tekstmodule" type="INTEGER" primaryKey="true" required="true" description="TXMODU : Tekstmodule"/>
+    <column name="thesaurus_verwijzing_tekstsoort" type="INTEGER" required="true" description="THTSRT : Thesaurus verwijzing tekstsoort (=104)"/>
+    <column name="tekstsoort" type="INTEGER" primaryKey="true" required="true" description="TXTSRT : Tekstsoort"/>
+    <column name="tekst_nivo_kode" type="INTEGER" primaryKey="true" required="true" description="TXKODE : Tekst nivo kode"/>
+    <column name="tekstbloknummer" type="INTEGER" primaryKey="true" required="true" description="TXBLNR : Tekstbloknummer"/>
+    <column name="tekstregelnummer" type="INTEGER" primaryKey="true" required="true" description="TXRGLN : Tekstregelnummer"/>
+    <column name="tekst" type="VARCHAR" size="132" required="true" description="TXTEXT : Tekst"/>
   </table>
-  <table name="gs_tekstcategorie_tabel">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="uniek_nummer_per_tekstcategorie" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memocode_tekstcategorie" type="VARCHAR" size="2" required="true"/>
-    <column name="omschrijving_tekstcategorie" type="VARCHAR" size="30" required="true"/>
-    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true"/>
-    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true"/>
+  <table name="gs_tekstcategorie_tabel" description="BST370T : Tekstcategorie tabel (tekstcategorie)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="uniek_nummer_per_tekstcategorie" type="INTEGER" primaryKey="true" required="true" description="BBTCNR : Uniek nummer per tekstcategorie"/>
+    <column name="memocode_tekstcategorie" type="VARCHAR" size="2" required="true" description="BBTCMK : Memocode tekstcategorie"/>
+    <column name="omschrijving_tekstcategorie" type="VARCHAR" size="30" required="true" description="BBTCOM : Omschrijving tekstcategorie"/>
+    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true" description="TTDATE : Registratiedatum G-Standaard"/>
+    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true" description="VNOPN : Versienummer WCIA tabellen eerste opname"/>
+    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true" description="VNWYZ : Versienummer WCIA tabellen laatste wijziging"/>
+    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true" description="VNVERV : Versienummer WCIA tabellen vervallen"/>
   </table>
-  <table name="gs_thesauri_totaal">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="thesaurusnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="thesaurus_itemnummer" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memokode_item" type="VARCHAR" size="2" required="true"/>
-    <column name="naam_item_4_posities" type="VARCHAR" size="4" required="true"/>
-    <column name="naam_item_15_posities" type="VARCHAR" size="15" required="true"/>
-    <column name="naam_item_25_posities" type="VARCHAR" size="25" required="true"/>
-    <column name="naam_item_50_posities" type="VARCHAR" size="50" required="true"/>
-    <column name="aanvullende_kode_1" type="VARCHAR" size="1" required="true"/>
-    <column name="aanvullende_kode_2" type="VARCHAR" size="1" required="true"/>
-    <column name="aanvullende_kode_3" type="VARCHAR" size="1" required="true"/>
-    <column name="aanvullende_kode_4" type="VARCHAR" size="1" required="true"/>
-    <column name="aanvullende_kode_5" type="VARCHAR" size="1" required="true"/>
-    <column name="aanvullende_kode_6" type="VARCHAR" size="1" required="true"/>
+  <table name="gs_thesauri_totaal" description="BST902T : Thesauri totaal">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="thesaurusnummer" type="INTEGER" primaryKey="true" required="true" description="TSNR : Thesaurusnummer (in nieuwe thesauri)"/>
+    <column name="thesaurus_itemnummer" type="INTEGER" primaryKey="true" required="true" description="TSITNR : Thesaurus itemnummer (in nieuwe thesauri)"/>
+    <column name="memokode_item" type="VARCHAR" size="2" required="true" description="THITMK : Memokode item"/>
+    <column name="naam_item_4_posities" type="VARCHAR" size="4" required="true" description="THNM4 : Naam item  4 posities"/>
+    <column name="naam_item_15_posities" type="VARCHAR" size="15" required="true" description="THNM15 : Naam item 15 posities"/>
+    <column name="naam_item_25_posities" type="VARCHAR" size="25" required="true" description="THNM25 : Naam item 25 posities"/>
+    <column name="naam_item_50_posities" type="VARCHAR" size="50" required="true" description="THNM50 : Naam item 50 posities"/>
+    <column name="aanvullende_kode_1" type="VARCHAR" size="1" required="true" description="THAKD1 : Aanvullende kode 1"/>
+    <column name="aanvullende_kode_2" type="VARCHAR" size="1" required="true" description="THAKD2 : Aanvullende kode 2"/>
+    <column name="aanvullende_kode_3" type="VARCHAR" size="1" required="true" description="THAKD3 : Aanvullende kode 3"/>
+    <column name="aanvullende_kode_4" type="VARCHAR" size="1" required="true" description="THAKD4 : Aanvullende kode 4"/>
+    <column name="aanvullende_kode_5" type="VARCHAR" size="1" required="true" description="THAKD5 : Aanvullende kode 5"/>
+    <column name="aanvullende_kode_6" type="VARCHAR" size="1" required="true" description="THAKD6 : Aanvullende kode 6"/>
   </table>
-  <table name="gs_ttabel">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="uniek_nummer_per_tijdseenheid" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="memocode_tijdseenheid" type="VARCHAR" size="2" required="true"/>
-    <column name="omschrijving_tijdseenheid" type="VARCHAR" size="30" required="true"/>
-    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true"/>
-    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true"/>
-    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true"/>
-    <column name="omrekeningsfactor_naar_aantal_dagen" type="DECIMAL" size="12" scale="6" required="true"/>
+  <table name="gs_ttabel" description="BST360T : t-tabel (tijdseenheid)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="uniek_nummer_per_tijdseenheid" type="INTEGER" primaryKey="true" required="true" description="TTEHNR : Uniek nummer per tijdseenheid"/>
+    <column name="memocode_tijdseenheid" type="VARCHAR" size="2" required="true" description="TTEHMK : Memocode tijdseenheid"/>
+    <column name="omschrijving_tijdseenheid" type="VARCHAR" size="30" required="true" description="TTEHOM : Omschrijving tijdseenheid"/>
+    <column name="registratiedatum_gstandaard" type="VARCHAR" size="8" required="true" description="TTDATE : Registratiedatum G-Standaard"/>
+    <column name="versienummer_wcia_tabellen_eerste_opname" type="INTEGER" required="true" description="VNOPN : Versienummer WCIA tabellen eerste opname"/>
+    <column name="versienummer_wcia_tabellen_laatste_wijziging" type="INTEGER" required="true" description="VNWYZ : Versienummer WCIA tabellen laatste wijziging"/>
+    <column name="versienummer_wcia_tabellen_vervallen" type="INTEGER" required="true" description="VNVERV : Versienummer WCIA tabellen vervallen"/>
+    <column name="omrekeningsfactor_naar_aantal_dagen" type="DECIMAL" size="12" scale="6" required="true" description="TTEHAD : Omrekeningsfactor naar aantal dagen"/>
   </table>
-  <table name="gs_verpakkingsthesaurus">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="identificatie_nummer_10tallig" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="identificatie_nummer_36tallig" type="VARCHAR" size="3" required="true"/>
-    <column name="aantal_hoofdverpakkingen" type="INTEGER" required="true"/>
-    <column name="hoofdverpakking_omschrijving_kode" type="INTEGER" required="true"/>
-    <column name="aantal_deelverpakkingen" type="INTEGER" required="true"/>
-    <column name="deelverpakking_omschrijving_kode" type="INTEGER" required="true"/>
-    <column name="hoeveelheid_per_deelverpakking" type="DECIMAL" size="8" scale="2" required="true"/>
-    <column name="basiseenheid_verpakking" type="VARCHAR" size="2" required="true"/>
+  <table name="gs_verpakkingsthesaurus" description="BST210T : Verpakkingsthesaurus">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="identificatie_nummer_10tallig" type="INTEGER" primaryKey="true" required="true" description="VPIDNR : Identificatie nummer (10-tallig)"/>
+    <column name="identificatie_nummer_36tallig" type="VARCHAR" size="3" required="true" description="VPKODA : Identificatie nummer (36-tallig)"/>
+    <column name="aantal_hoofdverpakkingen" type="INTEGER" required="true" description="VPHFAA : Aantal hoofdverpakkingen"/>
+    <column name="hoofdverpakking_omschrijving_kode" type="INTEGER" required="true" description="VPHFOM : Hoofdverpakking omschrijving kode"/>
+    <column name="aantal_deelverpakkingen" type="INTEGER" required="true" description="VPDLAA : Aantal deelverpakkingen"/>
+    <column name="deelverpakking_omschrijving_kode" type="INTEGER" required="true" description="VPDLOM : Deelverpakking omschrijving kode"/>
+    <column name="hoeveelheid_per_deelverpakking" type="DECIMAL" size="8" scale="2" required="true" description="VPDLHV : Hoeveelheid per deelverpakking"/>
+    <column name="basiseenheid_verpakking" type="VARCHAR" size="2" required="true" description="VPDLEH : Basiseenheid verpakking"/>
   </table>
-  <table name="gs_versienummer_tabel_wcia">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="versienummer_van_de_wcia_tabellen" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="datum_officiele_uitgifte" type="DATE" required="true"/>
-    <column name="omschrijving_versienummer" type="VARCHAR" size="80" required="true"/>
+  <table name="gs_versienummer_tabel_wcia" description="BST372T : Versienummer tabel WCIA">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="versienummer_van_de_wcia_tabellen" type="INTEGER" primaryKey="true" required="true" description="VNVERS : Versienummer van de WCIA tabellen"/>
+    <column name="datum_officiele_uitgifte" type="DATE" required="true" description="VNDATE : Datum officiele uitgifte (ddmmjjjj)"/>
+    <column name="omschrijving_versienummer" type="VARCHAR" size="80" required="true" description="VNOMS : Omschrijving versienummer"/>
   </table>
-  <table name="gs_prescriptie_product">
-    <column name="bestandnummer" type="integer" required="true"/>
-    <column name="mutatiekode" type="integer" required="true"/>
-    <column name="prkcode" type="integer" primaryKey="true" required="true"/>
-    <column name="naamnummer_prescriptie_product" type="integer" required="true"/>
-    <column name="generiekeproductcode" type="integer" required="true"/>
-    <column name="thesnr_reden_voorschrijven_hpk_niveau" type="integer" required="true"/>
-    <column name="reden_voorschrijven_hpk_niveau" type="integer" required="false"/>
-    <column name="thesnr_emballagetype" type="integer" required="true"/>
-    <column name="emballagetype" type="integer" required="true"/>
-    <column name="thesnr_basiseenheid_product" type="integer" required="true"/>
-    <column name="basiseenheid_product" type="integer" required="true"/>
-    <column name="productgrootte_algemeen" type="decimal" size="9" scale="2" required="true"/>
-    <column name="thesnr_hulpmiddel_aard" type="integer" required="true"/>
-    <column name="hulpmiddel_aard" type="integer" required="true"/>
-    <column name="hulpmiddel_aard_hoeveelheid" type="integer" required="true"/>
-    <column name="meervoudig_product_jn" type="BOOLEAN" required="true"/>
-    <column name="thesnr_reden_hulpstof_identificerend" type="integer" required="true"/>
-    <column name="reden_hulpstof_identificerend" type="integer" required="false"/>
-    <column name="thesnr_verwijzing_extra_kenmerk" type="integer" required="true"/>
-    <column name="verwijzing_extra_kenmerk" type="integer" required="false"/>
+  <table name="gs_prescriptie_product" description="BST052T : Voorschrijfproducten">
+    <column name="bestandnummer" type="integer" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="integer" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode" type="integer" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="naamnummer_prescriptie_product" type="integer" required="true" description="PRNMNR : Naamnummer prescriptie product"/>
+    <column name="generiekeproductcode" type="integer" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="thesnr_reden_voorschrijven_hpk_niveau" type="integer" required="true" description="THRVHS : Thesaurusverwijzing reden voorschrijven op HPK niv"/>
+    <column name="reden_voorschrijven_hpk_niveau" type="integer" required="false" description="PRRVHS : Reden voorschrijven op HPK niveau"/>
+    <column name="thesnr_emballagetype" type="integer" required="true" description="THEMBT : Thesaurusverwijzing emballagetype"/>
+    <column name="emballagetype" type="integer" required="true" description="PREMBT : Emballagetype"/>
+    <column name="thesnr_basiseenheid_product" type="integer" required="true" description="THPREH : Thesaurusverwijzing basiseenheid product"/>
+    <column name="basiseenheid_product" type="integer" required="true" description="PREENH : Basiseenheid product"/>
+    <column name="productgrootte_algemeen" type="decimal" size="9" scale="2" required="true" description="PRGALG : Productgrootte algemeen"/>
+    <column name="thesnr_hulpmiddel_aard" type="integer" required="true" description="THHMA : Thesaurusverwijzing hulpmiddel aard"/>
+    <column name="hulpmiddel_aard" type="integer" required="true" description="PRHMA : Hulpmiddel aard"/>
+    <column name="hulpmiddel_aard_hoeveelheid" type="integer" required="true" description="PRHMAH : Hulpmiddel aard hoeveelheid"/>
+    <column name="meervoudig_product_jn" type="BOOLEAN" required="true" description="PRMPJN : Meervoudig product J/N"/>
+    <column name="thesnr_reden_hulpstof_identificerend" type="integer" required="true" description="THHULI : Thesaurusverwijzing reden hulpstof identificerend"/>
+    <column name="reden_hulpstof_identificerend" type="integer" required="false" description="PRHULI : Reden hulpstof identificerend"/>
+    <column name="thesnr_verwijzing_extra_kenmerk" type="integer" required="true" description="THEXKM : Thesaurusverwijzing extra kenmerk"/>
+    <column name="verwijzing_extra_kenmerk" type="integer" required="false" description="PREXKM : Extra kenmerk"/>
     <foreign-key foreignTable="gs_generieke_producten">
       <reference local="generiekeproductcode" foreign="generiekeproductcode"/>
     </foreign-key>
@@ -1187,45 +1187,45 @@
       <reference local="verwijzing_extra_kenmerk" foreign="thesaurus_itemnummer"/>
     </foreign-key>
   </table>
-  <table name="gs_voorschrijfpr_geneesmiddel_identific">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="naamstoevoeging" type="VARCHAR" size="13" required="true"/>
-    <column name="generiekeproductcode" type="INTEGER" required="true"/>
-    <column name="emballagetype_kode" type="INTEGER" required="true"/>
-    <column name="basiseenheid_product_kode" type="INTEGER" required="true"/>
-    <column name="hpkgrootte_algemeen" type="DECIMAL" size="7" scale="2" required="true"/>
-    <column name="hulpmiddel_aard_1_kode" type="INTEGER" required="true"/>
-    <column name="hulpmiddel_hoeveelheid_1" type="INTEGER" required="true"/>
-    <column name="hulpmiddel_aard_2_kode" type="INTEGER" required="true"/>
-    <column name="hulpmiddel_hoeveelheid_2" type="INTEGER" required="true"/>
-    <column name="kode_meervoudigprodukt" type="VARCHAR" size="1" required="true"/>
-    <column name="hpkgrootte_verbandlengte" type="DECIMAL" size="7" scale="2" required="true"/>
-    <column name="hpkgrootte_verbandbreedte" type="DECIMAL" size="7" scale="2" required="true"/>
-    <column name="hpkgrootte_iud" type="VARCHAR" size="1" required="true"/>
-    <column name="reden_hulpstof_identificerend" type="INTEGER" required="true"/>
-    <column name="instant" type="VARCHAR" size="1" required="true"/>
-    <column name="extra_kenmerk_tbv_voorschrijven" type="INTEGER" required="true"/>
+  <table name="gs_voorschrijfpr_geneesmiddel_identific" description="BST051T : Voorschrijfpr. geneesmiddel identific.">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="naamstoevoeging" type="VARCHAR" size="13" required="true" description="PRNTOE : Naamstoevoeging"/>
+    <column name="generiekeproductcode" type="INTEGER" required="true" description="GPKODE : Generiekeproductcode (GPK)"/>
+    <column name="emballagetype_kode" type="INTEGER" required="true" description="HPEMBT : Emballagetype kode"/>
+    <column name="basiseenheid_product_kode" type="INTEGER" required="true" description="XPEHHV : Basiseenheid product kode"/>
+    <column name="hpkgrootte_algemeen" type="DECIMAL" size="7" scale="2" required="true" description="HPGALG : HPK-grootte algemeen"/>
+    <column name="hulpmiddel_aard_1_kode" type="INTEGER" required="true" description="HPHMA1 : Hulpmiddel aard 1 kode"/>
+    <column name="hulpmiddel_hoeveelheid_1" type="INTEGER" required="true" description="HPHMH1 : Hulpmiddel hoeveelheid 1"/>
+    <column name="hulpmiddel_aard_2_kode" type="INTEGER" required="true" description="HPHMA2 : Hulpmiddel aard 2 kode"/>
+    <column name="hulpmiddel_hoeveelheid_2" type="INTEGER" required="true" description="HPHMH2 : Hulpmiddel hoeveelheid 2"/>
+    <column name="kode_meervoudigprodukt" type="VARCHAR" size="1" required="true" description="HPMPJN : Kode meervoudigprodukt"/>
+    <column name="hpkgrootte_verbandlengte" type="DECIMAL" size="7" scale="2" required="true" description="HPGVBL : HPK-grootte verbandlengte"/>
+    <column name="hpkgrootte_verbandbreedte" type="DECIMAL" size="7" scale="2" required="true" description="HPGVBB : HPK-grootte verbandbreedte"/>
+    <column name="hpkgrootte_iud" type="VARCHAR" size="1" required="true" description="HPGIUD : HPK-grootte IUD"/>
+    <column name="reden_hulpstof_identificerend" type="INTEGER" required="true" description="PRHULI : Reden hulpstof identificerend"/>
+    <column name="instant" type="VARCHAR" size="1" required="true" description="HPINST : Instant"/>
+    <column name="extra_kenmerk_tbv_voorschrijven" type="INTEGER" required="true" description="PRKEXT : Extra kenmerk tbv voorschrijven"/>
     <foreign-key foreignTable="gs_generieke_producten">
       <reference local="generiekeproductcode" foreign="generiekeproductcode"/>
     </foreign-key>
   </table>
-  <table name="gs_voorschrijfpr_identificerende_velden">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="identificerend_kenmerk" type="VARCHAR" size="10" primaryKey="true" required="true"/>
+  <table name="gs_voorschrijfpr_identificerende_velden" description="BST059T : Voorschrijfpr. Identificerende velden">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="identificerend_kenmerk" type="VARCHAR" size="10" primaryKey="true" required="true" description="PRNMIK : Identificerend Kenmerk"/>
     <foreign-key foreignTable="gs_voorschrijfpr_geneesmiddel_identific">
       <reference local="prkcode" foreign="prkcode"/>
     </foreign-key>
   </table>
-  <table name="gs_voorschrijfproducten">
-    <column name="bestandnummer" type="INTEGER" required="true"/>
-    <column name="mutatiekode" type="INTEGER" required="true"/>
-    <column name="prkcode" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="naamnummer_prescriptie_product" type="INTEGER" required="true"/>
-    <column name="verwijzing_naar_kenmerken_bestand" type="VARCHAR" size="10" required="true"/>
+  <table name="gs_voorschrijfproducten" description="BST050T : Voorschrijfproducten (PRK)">
+    <column name="bestandnummer" type="INTEGER" required="true" description="BSTNUM : Bestand-nummer"/>
+    <column name="mutatiekode" type="INTEGER" required="true" description="MUTKOD : Mutatiecode"/>
+    <column name="prkcode" type="INTEGER" primaryKey="true" required="true" description="PRKODE : PRK-code"/>
+    <column name="naamnummer_prescriptie_product" type="INTEGER" required="true" description="PRNMNR : Naamnummer prescriptie product"/>
+    <column name="verwijzing_naar_kenmerken_bestand" type="VARCHAR" size="10" required="true" description="PRKBST : Verwijzing naar kenmerken bestand"/>
     <foreign-key foreignTable="gs_voorschrijfpr_geneesmiddel_identific">
       <reference local="prkcode" foreign="prkcode"/>
     </foreign-key>
