@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsKoppelingZrsMetExterneCodesQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsKoppelingZrsMetExterneCodesQuery as BaseGsKoppelingZrsMetExterneCodesQuery;
 
 class GsKoppelingZrsMetExterneCodesQuery extends BaseGsKoppelingZrsMetExterneCodesQuery
 {

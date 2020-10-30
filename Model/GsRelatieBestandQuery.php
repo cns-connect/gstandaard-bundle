@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsRelatieBestandQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsRelatieBestandQuery as BaseGsRelatieBestandQuery;
 
 class GsRelatieBestandQuery extends BaseGsRelatieBestandQuery
 {

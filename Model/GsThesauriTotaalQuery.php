@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsThesauriTotaalQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsThesauriTotaalQuery as BaseGsThesauriTotaalQuery;
 
 class GsThesauriTotaalQuery extends BaseGsThesauriTotaalQuery
 {

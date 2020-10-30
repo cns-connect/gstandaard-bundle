@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsVoorschrijfprIdentificerendeVeldenQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsVoorschrijfprIdentificerendeVeldenQuery as BaseGsVoorschrijfprIdentificerendeVeldenQuery;
 
 class GsVoorschrijfprIdentificerendeVeldenQuery extends BaseGsVoorschrijfprIdentificerendeVeldenQuery
 {

@@ -1,9 +1,0 @@
-<?php
-
-namespace PharmaIntelligence\GstandaardBundle\Model;
-
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsSupplementaireProductenMetNzaMaximumtariefPeer;
-
-class GsSupplementaireProductenMetNzaMaximumtariefPeer extends BaseGsSupplementaireProductenMetNzaMaximumtariefPeer
-{
-}

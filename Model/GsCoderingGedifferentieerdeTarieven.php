@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsCoderingGedifferentieerdeTarieven;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsCoderingGedifferentieerdeTarieven as BaseGsCoderingGedifferentieerdeTarieven;
 
 class GsCoderingGedifferentieerdeTarieven extends BaseGsCoderingGedifferentieerdeTarieven
 {

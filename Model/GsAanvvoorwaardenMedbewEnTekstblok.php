@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsAanvvoorwaardenMedbewEnTekstblok;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsAanvvoorwaardenMedbewEnTekstblok as BaseGsAanvvoorwaardenMedbewEnTekstblok;
 
 class GsAanvvoorwaardenMedbewEnTekstblok extends BaseGsAanvvoorwaardenMedbewEnTekstblok
 {

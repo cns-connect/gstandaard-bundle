@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsGeneriekeProducten;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsGeneriekeProducten as BaseGsGeneriekeProducten;
 
 class GsGeneriekeProducten extends BaseGsGeneriekeProducten
 {

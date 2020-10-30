@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsGekoppeldeTekstenUitWciaTabel25Query;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsGekoppeldeTekstenUitWciaTabel25Query as BaseGsGekoppeldeTekstenUitWciaTabel25Query;
 
 class GsGekoppeldeTekstenUitWciaTabel25Query extends BaseGsGekoppeldeTekstenUitWciaTabel25Query
 {

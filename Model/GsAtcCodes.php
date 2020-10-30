@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsAtcCodes;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsAtcCodes as BaseGsAtcCodes;
 
 class GsAtcCodes extends BaseGsAtcCodes
 {

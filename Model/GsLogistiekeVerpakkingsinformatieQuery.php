@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsLogistiekeVerpakkingsinformatieQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsLogistiekeVerpakkingsinformatieQuery as BaseGsLogistiekeVerpakkingsinformatieQuery;
 
 class GsLogistiekeVerpakkingsinformatieQuery extends BaseGsLogistiekeVerpakkingsinformatieQuery
 {

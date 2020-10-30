@@ -8,13 +8,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use PharmaIntelligence\GstandaardBundle\Model\GsBestandenPeer;
+use PharmaIntelligence\GstandaardBundle\Model\GsBestandenQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsNawGegevensGstandaardQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Console\Input\InputArgument;
 
-use Propel;
+use Propel\Runtime\Propel;
 
 class ImportGStandaardCommand extends ContainerAwareCommand
 {
@@ -110,7 +110,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	
 	public function updateAddOnHistorie(InputInterface $input, OutputInterface $output) {
 	    $output->writeln(date('[H:i:s]').' Add-ons wegschrijven in historie-bestand');
-	    $datumAddOn = GsBestandenPeer::retrieveByPK('BST131T')->getUitgavedatum('Y-m-d');
+	    $datumAddOn = GsBestandenQuery::create()->requirePk('BST131T')->getUitgavedatum('Y-m-d');
 	    $statement = Propel::getConnection()->prepare("
 	       DELETE FROM gs_supplementaire_producten_historie WHERE datum_product = ?
 	    ");
@@ -169,7 +169,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	}
 
 	protected function updateCacheTables(InputInterface $input, OutputInterface $output) {
-		$string_agg = (Propel::getDB() instanceof \DBMySQL) ? 'GROUP_CONCAT' : 'STRING_AGG';
+		$string_agg = (Propel::getAdapter() instanceof \Propel\Runtime\Adapter\Pdo\MysqlAdapter) ? 'GROUP_CONCAT' : 'STRING_AGG';
 		$output->writeln('<info>Cache tabellen bijwerken</info>');
 		$output->writeln('Truncating gs_artikel_eigenschappen');
 		Propel::getConnection()->query('TRUNCATE TABLE gs_artikel_eigenschappen');
@@ -408,7 +408,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			$start = time();
 			$importData = $this->zindexConfig[$fileName];
 			$this->output->writeln('<info>Importing '.$importData['table'].' ('.$fileName.')</info>');
-			$omClass = 'PharmaIntelligence\\GstandaardBundle\\Model\\'.$importData['modelClass'];
+			$omClass = 'PharmaIntelligence\\GstandaardBundle\\Model\\Map\\'.$importData['modelClass'].'TableMap';
 
 			$progress = new ProgressBar($this->output, $this->recordMap[$fileName]['totaal']);
 			$progress->setFormat('debug');
@@ -419,12 +419,12 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			 $progress->setRedrawFrequency($recordsPerStap);
 
 			// Vorige maand gewijzigde rijen op code geen wijzigingen zetten.
-			$sql = 'UPDATE '.constant($omClass.'Peer::TABLE_NAME').' SET mutatiekode = 0 WHERE mutatiekode = '.self::MUTATIE_WIJZIGEN;
+			$sql = 'UPDATE '.$omClass::TABLE_NAME.' SET mutatiekode = 0 WHERE mutatiekode = '.self::MUTATIE_WIJZIGEN;
 			Propel::getConnection()->query($sql);
 
 			// Prepare statement
-			$adapter = Propel::getDB();
-			$table = constant($omClass . 'Peer::TABLE_NAME');
+			$adapter = Propel::getAdapter();
+			$table = $omClass::TABLE_NAME;
 			$quotedFields = array_map(array($adapter, 'quoteIdentifier'), array_keys($importData['fields']));
 			$sql = sprintf(
 				'INSERT INTO %s (%s) VALUES (%s)',
@@ -432,13 +432,13 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 				implode(', ', $quotedFields),
 				implode(', ', array_fill(0, count($quotedFields), '?'))
 			);
-			if ($values_twice = $adapter instanceof \DBMySQL) {
+			if ($values_twice = $adapter instanceof \Propel\Runtime\Adapter\Pdo\MysqlAdapter) {
 				$sql .= sprintf(
 					' ON DUPLICATE KEY UPDATE %s',
 					implode(', ', array_map(function($s) { return $s . ' = ?'; }, $quotedFields))
 				);
 			}
-			elseif ($values_twice = $adapter instanceof \DBPostgres) {
+			elseif ($values_twice = $adapter instanceof \Propel\Runtime\Adapter\Pdo\PgsqlAdapter) {
 				$sql .= sprintf(
 					' ON CONFLICT ON CONSTRAINT %s DO UPDATE SET %s',
 					$adapter->quoteIdentifier($table . '_pkey'),
@@ -573,7 +573,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		};
 		foreach($importConfig as $fileName => &$import) {
 			$deps = array();
-			$class = sprintf('PharmaIntelligence\\GstandaardBundle\\Model\\%sPeer', $import['modelClass']);
+			$class = sprintf('PharmaIntelligence\\GstandaardBundle\\Model\\Map\\%sTableMap', $import['modelClass']);
 			$fAddDeps($deps,$class::getTableMap());
 			$import['filename'] = $fileName;
 			$import['deps'] = $deps;

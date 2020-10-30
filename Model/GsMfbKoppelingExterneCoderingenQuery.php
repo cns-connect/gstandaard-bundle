@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbKoppelingExterneCoderingenQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbKoppelingExterneCoderingenQuery as BaseGsMfbKoppelingExterneCoderingenQuery;
 
 class GsMfbKoppelingExterneCoderingenQuery extends BaseGsMfbKoppelingExterneCoderingenQuery
 {

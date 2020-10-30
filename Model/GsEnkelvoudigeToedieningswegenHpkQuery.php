@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsEnkelvoudigeToedieningswegenHpkQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsEnkelvoudigeToedieningswegenHpkQuery as BaseGsEnkelvoudigeToedieningswegenHpkQuery;
 
 class GsEnkelvoudigeToedieningswegenHpkQuery extends BaseGsEnkelvoudigeToedieningswegenHpkQuery
 {

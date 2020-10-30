@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsSupplementaireProductenMetNzaMaximumtarief;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsSupplementaireProductenMetNzaMaximumtarief as BaseGsSupplementaireProductenMetNzaMaximumtarief;
 
 class GsSupplementaireProductenMetNzaMaximumtarief extends BaseGsSupplementaireProductenMetNzaMaximumtarief
 {

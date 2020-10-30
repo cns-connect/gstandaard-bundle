@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsBtabel;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsBtabel as BaseGsBtabel;
 
 class GsBtabel extends BaseGsBtabel
 {

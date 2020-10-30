@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsBijzondereKenmerken;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsBijzondereKenmerken as BaseGsBijzondereKenmerken;
 
 class GsBijzondereKenmerken extends BaseGsBijzondereKenmerken
 {

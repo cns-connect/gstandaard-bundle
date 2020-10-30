@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsVoorschrijfprIdentificerendeVelden;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsVoorschrijfprIdentificerendeVelden as BaseGsVoorschrijfprIdentificerendeVelden;
 
 class GsVoorschrijfprIdentificerendeVelden extends BaseGsVoorschrijfprIdentificerendeVelden
 {

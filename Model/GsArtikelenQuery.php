@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsArtikelenQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsArtikelenQuery as BaseGsArtikelenQuery;
 
 class GsArtikelenQuery extends BaseGsArtikelenQuery
 {

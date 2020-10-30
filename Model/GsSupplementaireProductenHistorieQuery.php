@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsSupplementaireProductenHistorieQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsSupplementaireProductenHistorieQuery as BaseGsSupplementaireProductenHistorieQuery;
 
 class GsSupplementaireProductenHistorieQuery extends BaseGsSupplementaireProductenHistorieQuery
 {

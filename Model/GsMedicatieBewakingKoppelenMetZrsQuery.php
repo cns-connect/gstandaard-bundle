@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMedicatieBewakingKoppelenMetZrsQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMedicatieBewakingKoppelenMetZrsQuery as BaseGsMedicatieBewakingKoppelenMetZrsQuery;
 
 class GsMedicatieBewakingKoppelenMetZrsQuery extends BaseGsMedicatieBewakingKoppelenMetZrsQuery
 {

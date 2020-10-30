@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbVraagFunctieWaardelijstQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbVraagFunctieWaardelijstQuery as BaseGsMfbVraagFunctieWaardelijstQuery;
 
 class GsMfbVraagFunctieWaardelijstQuery extends BaseGsMfbVraagFunctieWaardelijstQuery
 {

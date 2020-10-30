@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsNawGegevensGstandaard;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsNawGegevensGstandaard as BaseGsNawGegevensGstandaard;
 
 class GsNawGegevensGstandaard extends BaseGsNawGegevensGstandaard
 {	

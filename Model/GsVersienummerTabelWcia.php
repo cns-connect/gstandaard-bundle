@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsVersienummerTabelWcia;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsVersienummerTabelWcia as BaseGsVersienummerTabelWcia;
 
 class GsVersienummerTabelWcia extends BaseGsVersienummerTabelWcia
 {

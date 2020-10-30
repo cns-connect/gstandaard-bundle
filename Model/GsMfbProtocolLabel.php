@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbProtocolLabel;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbProtocolLabel as BaseGsMfbProtocolLabel;
 
 class GsMfbProtocolLabel extends BaseGsMfbProtocolLabel
 {

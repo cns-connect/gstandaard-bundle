@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsRelatieOngewensteGroepensnkQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsRelatieOngewensteGroepensnkQuery as BaseGsRelatieOngewensteGroepensnkQuery;
 
 class GsRelatieOngewensteGroepensnkQuery extends BaseGsRelatieOngewensteGroepensnkQuery
 {

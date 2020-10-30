@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbVervangingMedicatiebewakingQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbVervangingMedicatiebewakingQuery as BaseGsMfbVervangingMedicatiebewakingQuery;
 
 class GsMfbVervangingMedicatiebewakingQuery extends BaseGsMfbVervangingMedicatiebewakingQuery
 {

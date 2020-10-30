@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsDoseringenUitzonderingenOpBasis;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsDoseringenUitzonderingenOpBasis as BaseGsDoseringenUitzonderingenOpBasis;
 
 class GsDoseringenUitzonderingenOpBasis extends BaseGsDoseringenUitzonderingenOpBasis
 {

@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsSamenstellingQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsSamenstellingQuery as BaseGsSamenstellingQuery;
 
 class GsSamenstellingQuery extends BaseGsSamenstellingQuery
 {

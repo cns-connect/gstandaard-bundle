@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbProtocolQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbProtocolQuery as BaseGsMfbProtocolQuery;
 
 class GsMfbProtocolQuery extends BaseGsMfbProtocolQuery
 {

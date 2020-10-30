@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsArtikelEigenschappen;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsArtikelEigenschappen as BaseGsArtikelEigenschappen;
 
 class GsArtikelEigenschappen extends BaseGsArtikelEigenschappen
 {

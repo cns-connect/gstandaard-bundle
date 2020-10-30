@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsCodestelselZrsQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsCodestelselZrsQuery as BaseGsCodestelselZrsQuery;
 
 class GsCodestelselZrsQuery extends BaseGsCodestelselZrsQuery
 {

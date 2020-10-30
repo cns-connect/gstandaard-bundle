@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsVerkorteAddonIndicatietekstenQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsVerkorteAddonIndicatietekstenQuery as BaseGsVerkorteAddonIndicatietekstenQuery;
 
 class GsVerkorteAddonIndicatietekstenQuery extends BaseGsVerkorteAddonIndicatietekstenQuery
 {

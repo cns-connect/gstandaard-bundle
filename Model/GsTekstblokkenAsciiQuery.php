@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsTekstblokkenAsciiQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsTekstblokkenAsciiQuery as BaseGsTekstblokkenAsciiQuery;
 
 class GsTekstblokkenAsciiQuery extends BaseGsTekstblokkenAsciiQuery
 {

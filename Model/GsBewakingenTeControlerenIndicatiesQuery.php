@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsBewakingenTeControlerenIndicatiesQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsBewakingenTeControlerenIndicatiesQuery as BaseGsBewakingenTeControlerenIndicatiesQuery;
 
 class GsBewakingenTeControlerenIndicatiesQuery extends BaseGsBewakingenTeControlerenIndicatiesQuery
 {

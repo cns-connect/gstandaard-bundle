@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsStamnaamStamtoedieningswegQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsStamnaamStamtoedieningswegQuery as BaseGsStamnaamStamtoedieningswegQuery;
 
 class GsStamnaamStamtoedieningswegQuery extends BaseGsStamnaamStamtoedieningswegQuery
 {

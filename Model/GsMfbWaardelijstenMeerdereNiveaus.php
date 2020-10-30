@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbWaardelijstenMeerdereNiveaus;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbWaardelijstenMeerdereNiveaus as BaseGsMfbWaardelijstenMeerdereNiveaus;
 
 class GsMfbWaardelijstenMeerdereNiveaus extends BaseGsMfbWaardelijstenMeerdereNiveaus
 {

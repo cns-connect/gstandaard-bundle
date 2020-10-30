@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsNietEersteUitgifteCluster;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsNietEersteUitgifteCluster as BaseGsNietEersteUitgifteCluster;
 
 class GsNietEersteUitgifteCluster extends BaseGsNietEersteUitgifteCluster
 {

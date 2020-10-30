@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsTekstblokkenHtmlQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsTekstblokkenHtmlQuery as BaseGsTekstblokkenHtmlQuery;
 
 class GsTekstblokkenHtmlQuery extends BaseGsTekstblokkenHtmlQuery
 {

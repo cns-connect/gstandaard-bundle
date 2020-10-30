@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsHeaderRelatieBestand;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsHeaderRelatieBestand as BaseGsHeaderRelatieBestand;
 
 class GsHeaderRelatieBestand extends BaseGsHeaderRelatieBestand
 {

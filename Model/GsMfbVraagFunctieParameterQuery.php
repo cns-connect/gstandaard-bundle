@@ -2,7 +2,7 @@
 
 namespace PharmaIntelligence\GstandaardBundle\Model;
 
-use PharmaIntelligence\GstandaardBundle\Model\om\BaseGsMfbVraagFunctieParameterQuery;
+use PharmaIntelligence\GstandaardBundle\Model\Base\GsMfbVraagFunctieParameterQuery as BaseGsMfbVraagFunctieParameterQuery;
 
 class GsMfbVraagFunctieParameterQuery extends BaseGsMfbVraagFunctieParameterQuery
 {
