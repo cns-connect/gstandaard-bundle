@@ -60,6 +60,11 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 				null,
 				InputOption::VALUE_NONE,
 				'Hervat import van resterende bestanden na een afgebroken import')
+			->addOption(
+				'checkModel',
+				null,
+				InputOption::VALUE_NONE,
+				'Verifieer het database model alvorens te importeren')
             ->addArgument('bestand', InputArgument::OPTIONAL, 'bestand om te importeren', self::ALLE_BESTANDEN)
 		;
 	}
@@ -81,6 +86,10 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		}
 
 		$this->zindexConfig = $this->getZindexConfig();
+		if ($input->getOption('checkModel')) {
+			$this->checkModelAgainst($this->extractModelFromGFiles());
+			$output->writeln('<info>Model verified</info>');
+		}
 
 		if(!$input->getOption('skipHistorie')) {
 		  $this->updateAddOnHistorie($input, $output);
@@ -582,6 +591,14 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		});
 	}
 
+	protected static function nameify($str) {
+		return preg_replace(
+			['/\([^)]*\)$/', '/^([^a-z])/', '/\s+/', '/\W+/', '/_{2,}/', '/_$/'],
+			['', '_$1', '_', '', '_', ''],
+			strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $str))
+		);
+	}
+
 	protected static function camelizeName($str) {
 		// Resembles Propel's PhpNameGenerator::underscoreMethod()
 		return str_replace('_', '', ucwords($str, '_'));
@@ -629,5 +646,181 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		}
 
 		return $files;
+	}
+
+	/**
+	 * Extracts model information from BST000T and BST001 files into an array for use with {@link checkModelAgainst}.
+	 *
+	 * @return array
+	 * @throws \Exception when the files are inaccessible
+	 */
+	protected function extractModelFromGFiles()
+	{
+		// Extract files from BST000T
+		$files = [];
+		foreach ($this->iterateGFile('BST000T') as $row) {
+			preg_match('/^\w*?\s+\d+\s+(\w.+)\s*$/i', $row['bestandomschrijving'], $name);
+			$files[$row['naam_van_het_bestand']] = [
+				'name' => @$name[1],
+				'status' => $row['status'],
+				'length' => 0,
+				'fields' => [],
+			];
+		}
+
+		// Extract fields from BST001
+		$fieldsinfo = [];
+		foreach (self::iterateGFile('BST001T') as $row) {
+			$filename = $row['naam_van_het_bestand'];
+			$fieldsinfo[$ident = $row['naam_van_de_rubriek']][$filename] = true;
+			$files[$filename]['length'] += $length = (int) $row['lengte_van_de_rubriek'];
+			$files[$filename]['fields'][(int) $row['volgnummer']] = [
+				'ident' => $ident,
+				'name' => $row['omschrijving_van_de_rubriek'],
+				'length' => $length,
+				'type' => $row['type_van_de_rubriek'],
+				'scale' => (int) $row['aantal_decimalen'],
+				'key' => $row['sleutelkode_van_de_rubriek'] ?: null,
+				'format' => $row['opmaak'],
+			];
+		}
+
+		// Sort fields of each file by volgnummer, while computing start offsets
+		foreach($files as &$file) {
+			ksort($file['fields']);
+			$start = 0;
+			foreach($file['fields'] as &$field) {
+				$field['start'] = $start;
+				$start += $field['length'];
+			}
+		}
+		unset($file, $field);
+
+		return $files;
+	}
+
+	/**
+	 * Validates the Propel schema against the given model information returned from {@link extractModelFromGFiles}.
+	 * When differences are found an updated schema file is generated and proposed for migration through a thrown \DomainException.
+	 *
+	 * @param array $config
+	 * @throws \DomainException
+	 */
+	protected function checkModelAgainst(array $config)
+	{
+		$TYPEMAP = ['A' => 'varchar', 'N' => 'integer'];
+		$BST_OBSOLETE = array_fill_keys(['BST625T', 'BST626T', 'BST627T'], true);  // Obsoleted (but still provisioned)
+
+		// Assemble Propel schema
+		$xml_pathname = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/config/schema.xml');
+		$doc = new \DOMDocument();
+		$doc->preserveWhiteSpace = false;
+		$doc->formatOutput = true;
+		$doc->load(realpath($xml_pathname), \LIBXML_NONET);
+		$current_xml = $doc->saveXML();
+		$xpath = new \DOMXPath($doc);
+		$root = $doc->documentElement;
+		$known_tables = [];
+		foreach($config as $filename => $file) {
+			if (isset($BST_OBSOLETE[$filename])) {
+				continue;  // Skip obsoleted files
+			}
+
+			// Append/update table
+			$name = 'gs_' . self::nameify($file['name']);
+			$table = $xpath->query(sprintf('table[@name="%s" or starts-with(@description, "%s%s")]', $name, $filename, self::SCHEMA_ID_SEP), $root)->item(0)
+					 ?: $root->appendChild($doc->createElement('table'));
+			if ($table->hasAttribute('name')) {
+				$name = $table->getAttribute('name');
+			}
+			else {
+				$table->setAttribute('name', $name);
+			}
+			$known_tables[$name] = true;
+			$table->setAttribute('description', $filename . self::SCHEMA_ID_SEP . $file['name']);
+
+			// Complement columns
+			$before = $xpath->query('(*[not(self::column)])[1]', $table)->item(0);
+			foreach($file['fields'] as $name => $field) {
+				$name = $dup_name = self::nameify($field['name']);
+
+				// Skip empty/dummy fields
+				if (preg_match('/leeg_veld|dummy/', $name)) {
+					continue;
+				}
+
+				// Determine column type settings
+				$type = $gtype = $TYPEMAP[$field['type']];
+				$length = $size = $field['length'];
+				$scale = $field['scale'];
+				if (($length == 1) && ($type != 'integer') && preg_match('~j/n~i', $field['name'])) {
+					$type = $gtype = 'boolean';
+					unset($size);
+				}
+				elseif ($scale) {
+					$type = $gtype = 'decimal';
+				}
+				elseif ($type == 'integer') {
+					if (strpos($name, 'datum') !== false) {
+						$type = 'date';
+						$gtype = preg_match('/[jy]md|(?:jj|yy)\W*mm\W*dd/iu', $field['format'] . ' ' . $field['name']) ? 'dateus' : 'date';
+					}
+					elseif ($length >= 13 /*9*/) {
+						$type = 'bigint';
+					}
+					unset($size);
+				}
+
+				// Insert/update column
+				if (!($column = $xpath->query(sprintf('column[starts-with(@description, "%s%s")]', $field['ident'], self::SCHEMA_ID_SEP), $table)->item(0))) {
+					$column = $doc->createElement('column');
+					$before ? $table->insertBefore($column, $before) : $table->appendChild($column);
+				}
+				$before = $column->nextSibling;
+				if (!$column->hasAttribute('name')) {
+					$column->setAttribute('name', $name);
+				}
+				if (!$column->hasAttribute('type')) {
+					$column->setAttribute('type', strtoupper($type));
+				}
+				if (isset($field['key']) && !$column->hasAttribute('primaryKey')) {
+					$column->setAttribute('primaryKey', 'true');
+				}
+				if (isset($size) && !$column->hasAttribute('size')) {
+					$column->setAttribute('size', $size);
+				}
+				if ($scale && !$column->hasAttribute('scale')) {
+					$column->setAttribute('scale', $scale);
+				}
+				if (!$column->hasAttribute('required')) {
+					$column->setAttribute('required', 'true');
+				}
+				$column->setAttribute('G', sprintf('%d:%d:%s',
+					$field['start'], $length,
+					@explode(':', $column->getAttribute('G'), 3)[2] ?: $gtype
+				));
+				if (!$column->hasAttribute('description')) {
+					$column->setAttribute('description', $field['ident'] . self::SCHEMA_ID_SEP . $field['name']);
+				}
+			}
+		}
+
+		// Remove untraversed tables from the schema
+		foreach($xpath->query('table', $root) as $table) {
+			if (!isset($known_tables[$table->getAttribute('name')])) {
+				$root->removeChild($table);
+			}
+		}
+
+		// Generate updated schema for review
+		$new_xml = $doc->saveXML();
+		if ($new_xml !== $current_xml) {
+			file_put_contents($xml_pathname . '.new', $new_xml);
+			throw new \DomainException(sprintf(
+				"Schema outdated, please review and merge changes using:\n".
+				"diff -w -B %1\$s %1\$s.new\n",
+				$xml_pathname
+			));
+		}
 	}
 }

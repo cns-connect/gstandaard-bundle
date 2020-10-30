@@ -10,6 +10,7 @@
 		"symfony/event-dispatcher" : "^2.6|^3.4",
 		"propel/propel-bundle" : "~1.5|1.6.x-dev",
 		"php": ">=5.5",
+		"ext-iconv": "*",
 		"ext-dom": "*",
 		"ext-libxml": "*",
 		"ext-curl" : "*"
