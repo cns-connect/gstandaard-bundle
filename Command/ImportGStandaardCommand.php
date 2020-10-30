@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use PharmaIntelligence\GstandaardBundle\Model\GsBestandenPeer;
 use PharmaIntelligence\GstandaardBundle\Model\GsNawGegevensGstandaardQuery;
 use PharmaIntelligence\GstandaardBundle\Model\GsArtikelenQuery;
 use Symfony\Component\EventDispatcher\Event;
@@ -97,9 +98,13 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	
 	public function updateAddOnHistorie(InputInterface $input, OutputInterface $output) {
 	    $output->writeln(date('[H:i:s]').' Add-ons wegschrijven in historie-bestand');
-	    $datumAddOn = date('Y-m-01');
+	    $datumAddOn = GsBestandenPeer::retrieveByPK('BST131T')->getUitgavedatum('Y-m-d');
 	    $statement = Propel::getConnection()->prepare("
-	        REPLACE INTO gs_supplementaire_producten_historie
+	       DELETE FROM gs_supplementaire_producten_historie WHERE datum_product = ?
+	    ");
+	    $statement->execute(array($datumAddOn));
+	    $statement = Propel::getConnection()->prepare("
+	        INSERT INTO gs_supplementaire_producten_historie
 	        SELECT ?, zindex_nummer, nza_maximum_tarief_inc_btw_laag, thesaurus_nummer_soort_supplementair_product, soort_supplementair_product
 	        FROM gs_supplementaire_producten_met_nza_maximumtarief
 	    ");
@@ -152,12 +157,13 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	}
 
 	protected function updateCacheTables(InputInterface $input, OutputInterface $output) {
+		$string_agg = (Propel::getDB() instanceof \DBMySQL) ? 'GROUP_CONCAT' : 'STRING_AGG';
 		$output->writeln('<info>Cache tabellen bijwerken</info>');
 		$output->writeln('Truncating gs_artikel_eigenschappen');
-		Propel::getConnection()->query('TRUNCATE TABLE gs_artikel_eigenschappen;');
+		Propel::getConnection()->query('TRUNCATE TABLE gs_artikel_eigenschappen');
 		$output->writeln('Filling gs_artikel_eigenschappen');
-		Propel::getConnection()->query('
-				REPLACE INTO gs_artikel_eigenschappen (
+		Propel::getConnection()->query("
+				INSERT INTO gs_artikel_eigenschappen (
                     zindex_nummer
                 ,   verpakkings_hoeveelheid
                 ,   hoofdverpakking_omschrijving
@@ -192,72 +198,88 @@ class ImportGStandaardCommand extends ContainerAwareCommand
                 ,   emballage_naam
                 )
                 SELECT
-					a.`zinummer`
-				,	IF(t3.`naam_item_50_posities` != "STUK", a.`aantal_hoofdverpakkingen`*a.`aantal_deelverpakkingen`, a.`aantal_deelverpakkingen`*a.`aantal_hoofdverpakkingen`*a.`hoeveelheid_per_deelverpakking`) as verpakkings_hoeveelheid
-				,	t1.`naam_item_50_posities`
-				,	t2.`naam_item_50_posities`
-				,	t3.`naam_item_50_posities`
-				,	t4.`naam_item_50_posities` as x
-                ,	IF(t3.`naam_item_50_posities` != "STUK", t2.naam_item_50_posities, t3.naam_item_50_posities) as verpakkings_hoeveelheid_omschrijving
-				,	a.`handelsproduktkode`
-				,	hpk.`prkcode`
-				,	pri.`generiekeproductcode`
-				,	gpk.`atccode`
-				,	n1.`naam_volledig`
-				,	hpk.`merkstamnaam`
-				,	n2.`naam_volledig`
-				,	n3.`naam_volledig`
-				,	n4.`naam_volledig`
-				,	n5.`naam_volledig`
-				,	atc.`atcnederlandse_omschrijving`
-				,	l.`naw_nummer`
-				,	l.`naam`
-				,	IF(COUNT(bijz.`mutatiekode`) > 0, 1, 0) as is_zvz
-				,	IF(COUNT(dwg.`mutatiekode`) > 0, 1, 0) as is_dwg
-				,	a.`fabrikant_artikelkodering`
-				,	t5.`naam_item_50_posities`
-                ,   GROUP_CONCAT(DISTINCT t10.naam_item_50_posities)
-				,	t6.`naam_item_50_posities`
-				,	t7.`naam_item_50_posities`
+					a.zinummer
+				,	CASE WHEN t3.naam_item_50_posities != 'STUK' THEN a.aantal_hoofdverpakkingen * a.aantal_deelverpakkingen ELSE a.aantal_deelverpakkingen * a.aantal_hoofdverpakkingen * a.hoeveelheid_per_deelverpakking END
+				,	t1.naam_item_50_posities
+				,	t2.naam_item_50_posities
+				,	t3.naam_item_50_posities
+				,	t4.naam_item_50_posities
+                ,	CASE WHEN t3.naam_item_50_posities != 'STUK' THEN t2.naam_item_50_posities ELSE t3.naam_item_50_posities END
+				,	a.handelsproduktkode
+				,	hpk.prkcode
+				,	pri.generiekeproductcode
+				,	gpk.atccode
+				,	n1.naam_volledig
+				,	hpk.merkstamnaam
+				,	n2.naam_volledig
+				,	n3.naam_volledig
+				,	n4.naam_volledig
+				,	n5.naam_volledig
+				,	atc.atcnederlandse_omschrijving
+				,	l.naw_nummer
+				,	l.naam
+				,	COUNT(bijz.mutatiekode) > 0
+				,	COUNT(dwg.mutatiekode) > 0
+				,	a.fabrikant_artikelkodering
+				,	t5.naam_item_50_posities
+                ,   ${string_agg}(DISTINCT t10.naam_item_50_posities, ', ')
+				,	t6.naam_item_50_posities
+				,	t7.naam_item_50_posities
 				,	nam.generieke_naam
-				,	t8.`naam_item_4_posities`
-				,	IF(t3.`naam_item_50_posities` = "MILLILITER", sam.hoeveelheid_werkzame_stof*a.`hoeveelheid_per_deelverpakking`, sam.hoeveelheid_werkzame_stof)
-				,	a.`inkoopprijs`
+				,	t8.naam_item_4_posities
+				,	CASE WHEN t3.naam_item_50_posities = 'MILLILITER' THEN sam.hoeveelheid_werkzame_stof * a.hoeveelheid_per_deelverpakking ELSE sam.hoeveelheid_werkzame_stof END
+				,	a.inkoopprijs
                 ,   t9.naam_item_50_posities
-				FROM `gs_artikelen` as a
-				LEFT JOIN `gs_naw_gegevens_gstandaard` as l ON a.`leverancier_kode` = l.`naw_nummer`
-				LEFT JOIN `gs_handelsproducten` as hpk ON a.`handelsproduktkode` = hpk.`handelsproduktkode`
-				LEFT JOIN `gs_voorschrijfpr_geneesmiddel_identific` as pri ON hpk.`prkcode` = pri.`prkcode`
-				LEFT JOIN `gs_voorschrijfproducten` as prk ON pri.`prkcode` = prk.`prkcode`
-				LEFT JOIN `gs_generieke_producten` as gpk ON pri.`generiekeproductcode` = gpk.`generiekeproductcode`
-				LEFT JOIN `gs_atc_codes` as atc ON gpk.`atccode` = atc.`atccode`
-				LEFT JOIN `gs_bijzondere_kenmerken` as bijz ON (hpk.`handelsproduktkode` = bijz.`handelsproduktkode` AND bijz.`bijzondere_kenmerk` = 106)
+				FROM gs_artikelen as a
+				LEFT JOIN gs_naw_gegevens_gstandaard as l ON a.leverancier_kode = l.naw_nummer
+				LEFT JOIN gs_handelsproducten as hpk ON a.handelsproduktkode = hpk.handelsproduktkode
+				LEFT JOIN gs_voorschrijfpr_geneesmiddel_identific as pri ON hpk.prkcode = pri.prkcode
+				LEFT JOIN gs_voorschrijfproducten as prk ON pri.prkcode = prk.prkcode
+				LEFT JOIN gs_generieke_producten as gpk ON pri.generiekeproductcode = gpk.generiekeproductcode
+				LEFT JOIN gs_atc_codes as atc ON gpk.atccode = atc.atccode
+				LEFT JOIN gs_bijzondere_kenmerken as bijz ON (hpk.handelsproduktkode = bijz.handelsproduktkode AND bijz.bijzondere_kenmerk = 106)
                 LEFT JOIN gs_supplementaire_producten_met_nza_maximumtarief as dwg ON dwg.zindex_nummer = a.zinummer AND dwg.mutatiekode <> 1
 		    
-				LEFT JOIN gs_namen as n1 ON a.`artikelnaamnummer` = n1.`naamnummer`
-				LEFT JOIN gs_namen as n2 ON hpk.`handelsproduktnaamnummer` = n2.`naamnummer`
-				LEFT JOIN gs_namen as n3 ON prk.`naamnummer_prescriptie_product` = n3.`naamnummer`
-				LEFT JOIN gs_namen as n4 ON gpk.`naamnummer_volledige_gpknaam` = n4.`naamnummer`
-				LEFT JOIN gs_namen as n5 ON gpk.`naamnummer_gpkstofnaam` = n5.`naamnummer`
-				LEFT JOIN `gs_thesauri_totaal` as t1 ON a.`hoofdverpakking_omschrijving_kode` = t1.`thesaurus_itemnummer` AND a.`hoofdverpakking_omschrijving_thesnr` = t1.`thesaurusnummer`
-				LEFT JOIN `gs_thesauri_totaal` as t2 ON a.`deelverpakking_omschrijving_kode` = t2.`thesaurus_itemnummer` AND a.`deelverpakking_omschrijving_thesnr` = t2.`thesaurusnummer`
-				LEFT JOIN `gs_thesauri_totaal` as t3 ON hpk.`basiseenheid_verpakking` = t3.`thesaurus_itemnummer` AND hpk.`basiseenheid_verpakking_thesnr` = t3.`thesaurusnummer`
-				LEFT JOIN `gs_thesauri_totaal` as t4 ON hpk.`eenheid_inkoophoeveelheid`= t4.`thesaurus_itemnummer` AND hpk.`eenheid_inkoophoeveelheid_thesnr` = t4.`thesaurusnummer`
-				LEFT JOIN `gs_thesauri_totaal` as t5 ON t5.thesaurusnummer = 7 AND t5.thesaurus_itemnummer = gpk.`toedieningsweg_code`
-				LEFT JOIN `gs_thesauri_totaal` as t6 ON t6.thesaurusnummer = 6 AND t6.thesaurus_itemnummer = gpk.`farmaceutische_vorm_code`
-				LEFT JOIN `gs_thesauri_totaal` as t7 ON t7.thesaurusnummer = 20 AND t7.thesaurus_itemnummer = hpk.`produktgroep_kode`
-				LEFT JOIN `gs_ingegeven_samenstellingen` as sam ON sam.`aanduiding_werkzaamhulpstof` = "W" AND sam.`volgnummer` = 1 AND sam.`handelsproduktkode` = hpk.`handelsproduktkode`
-				LEFT JOIN `gs_eenheden` as eenh ON eenh.`code` = sam.`handelsproduktkode` AND eenh.soort_code = 1 AND eenh.eenheid = sam.`eenhhoeveelheid_werkzame_stof_kode` AND eenh.hoeveelheid > 0
-				LEFT JOIN `gs_thesauri_totaal` as t8 ON t8.thesaurusnummer = 1 AND t8.thesaurus_itemnummer = sam.`eenhhoeveelheid_werkzame_stof_kode`
-				LEFT JOIN `gs_generieke_namen` as nam ON sam.`generiekenaamkode` = nam.`generiekenaamkode`
-                LEFT JOIN `gs_thesauri_totaal` as t9 ON t9.thesaurusnummer = 73 AND t9.thesaurus_itemnummer = pri.emballagetype_kode
-                LEFT JOIN gs_enkelvoudige_toedieningswegen_hpk as thpk ON hpk.`handelsproduktkode` = thpk.handelsproduktkode
-                LEFT JOIN `gs_thesauri_totaal` as t10 ON t10.thesaurusnummer = 7 AND t10.thesaurus_itemnummer = thpk.enkelvoudige_toedieningsweg_itemnr
-				WHERE zinummer > 0
-				GROUP BY a.`zinummer`');
-		$output->writeln('Filling ATC extended table');
+				LEFT JOIN gs_namen as n1 ON a.artikelnaamnummer = n1.naamnummer
+				LEFT JOIN gs_namen as n2 ON hpk.handelsproduktnaamnummer = n2.naamnummer
+				LEFT JOIN gs_namen as n3 ON prk.naamnummer_prescriptie_product = n3.naamnummer
+				LEFT JOIN gs_namen as n4 ON gpk.naamnummer_volledige_gpknaam = n4.naamnummer
+				LEFT JOIN gs_namen as n5 ON gpk.naamnummer_gpkstofnaam = n5.naamnummer
+				LEFT JOIN gs_thesauri_totaal as t1 ON a.hoofdverpakking_omschrijving_kode = t1.thesaurus_itemnummer AND a.hoofdverpakking_omschrijving_thesnr = t1.thesaurusnummer
+				LEFT JOIN gs_thesauri_totaal as t2 ON a.deelverpakking_omschrijving_kode = t2.thesaurus_itemnummer AND a.deelverpakking_omschrijving_thesnr = t2.thesaurusnummer
+				LEFT JOIN gs_thesauri_totaal as t3 ON hpk.basiseenheid_verpakking = t3.thesaurus_itemnummer AND hpk.basiseenheid_verpakking_thesnr = t3.thesaurusnummer
+				LEFT JOIN gs_thesauri_totaal as t4 ON hpk.eenheid_inkoophoeveelheid= t4.thesaurus_itemnummer AND hpk.eenheid_inkoophoeveelheid_thesnr = t4.thesaurusnummer
+				LEFT JOIN gs_thesauri_totaal as t5 ON t5.thesaurusnummer = 7 AND t5.thesaurus_itemnummer = gpk.toedieningsweg_code
+				LEFT JOIN gs_thesauri_totaal as t6 ON t6.thesaurusnummer = 6 AND t6.thesaurus_itemnummer = gpk.farmaceutische_vorm_code
+				LEFT JOIN gs_thesauri_totaal as t7 ON t7.thesaurusnummer = 20 AND t7.thesaurus_itemnummer = hpk.produktgroep_kode
+				LEFT JOIN gs_ingegeven_samenstellingen as sam ON sam.aanduiding_werkzaamhulpstof = 'W' AND sam.volgnummer = 1 AND sam.handelsproduktkode = hpk.handelsproduktkode
+				LEFT JOIN gs_eenheden as eenh ON eenh.code = sam.handelsproduktkode AND eenh.soort_code = 1 AND eenh.eenheid = sam.eenhhoeveelheid_werkzame_stof_kode AND eenh.hoeveelheid > 0
+				LEFT JOIN gs_thesauri_totaal as t8 ON t8.thesaurusnummer = 1 AND t8.thesaurus_itemnummer = sam.eenhhoeveelheid_werkzame_stof_kode
+				LEFT JOIN gs_generieke_namen as nam ON sam.generiekenaamkode = nam.generiekenaamkode
+                LEFT JOIN gs_thesauri_totaal as t9 ON t9.thesaurusnummer = 73 AND t9.thesaurus_itemnummer = pri.emballagetype_kode
+                LEFT JOIN gs_enkelvoudige_toedieningswegen_hpk as thpk ON hpk.handelsproduktkode = thpk.handelsproduktkode
+                LEFT JOIN gs_thesauri_totaal as t10 ON t10.thesaurusnummer = 7 AND t10.thesaurus_itemnummer = thpk.enkelvoudige_toedieningsweg_itemnr
+				GROUP BY a.zinummer, l.naw_nummer, hpk.handelsproduktkode, pri.prkcode, prk.prkcode, gpk.generiekeproductcode, atc.atccode,
+				         n1.naamnummer, n2.naamnummer, n3.naamnummer, n4.naamnummer, n5.naamnummer,
+				         t1.thesaurusnummer, t1.thesaurus_itemnummer,
+				         t2.thesaurusnummer, t2.thesaurus_itemnummer,
+				         t3.thesaurusnummer, t3.thesaurus_itemnummer,
+				         t4.thesaurusnummer, t4.thesaurus_itemnummer,
+				         t5.thesaurusnummer, t5.thesaurus_itemnummer,
+				         t6.thesaurusnummer, t6.thesaurus_itemnummer,
+				         t7.thesaurusnummer, t7.thesaurus_itemnummer,
+				         sam.aanduiding_werkzaamhulpstof, sam.volgnummer, sam.handelsproduktkode,
+				         eenh.code, eenh.soort_code, eenh.eenheid,
+				         t8.thesaurusnummer, t8.thesaurus_itemnummer,
+				         nam.generiekenaamkode,
+				         t9.thesaurusnummer, t9.thesaurus_itemnummer
+				         ");
+
+		$output->writeln('Truncating gs_atc_codes_extended');
+		Propel::getConnection()->query('TRUNCATE TABLE gs_atc_codes_extended');
+		$output->writeln('Filling gs_atc_codes_extended');
 		Propel::getConnection()->query("
-		    REPLACE INTO gs_atc_codes_extended
+		    INSERT INTO gs_atc_codes_extended
             SELECT
             	a.atccode AS atccode
             ,	a.atcnederlandse_omschrijving AS atcnederlandse_omschrijving
@@ -272,12 +294,12 @@ class ImportGStandaardCommand extends ContainerAwareCommand
             ,	f.atccode
             ,	f.atcnederlandse_omschrijving AS chemische_stofnaam
             ,	CONCAT(
-            		IFNULL(b.atcnederlandse_omschrijving, ''),' / ',
-            		IFNULL(c.atcnederlandse_omschrijving, ''),' / ',
-            		IFNULL(d.atcnederlandse_omschrijving, ''),' / ',
-            		IFNULL(e.atcnederlandse_omschrijving, ''),' / ',
-            		IFNULL(f.atcnederlandse_omschrijving, '')) as volledige_naam
-            ,	GROUP_CONCAT(DISTINCT IF(hpk.merkstamnaam = '', NULL, hpk.merkstamnaam) SEPARATOR ', ') as merken
+            		b.atcnederlandse_omschrijving,' / ',
+            		c.atcnederlandse_omschrijving,' / ',
+            		d.atcnederlandse_omschrijving,' / ',
+            		e.atcnederlandse_omschrijving,' / ',
+            		f.atcnederlandse_omschrijving) as volledige_naam
+            , ${string_agg}(DISTINCT CASE WHEN hpk.merkstamnaam = '' THEN NULL ELSE hpk.merkstamnaam END, ', ')
             FROM gs_atc_codes a
             LEFT JOIN gs_atc_codes b on substr(a.atccode,1,1) = b.atccode
             LEFT JOIN gs_atc_codes c on rpad(substr(a.atccode,1,3),3,'?') = c.atccode
@@ -288,8 +310,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
             LEFT JOIN gs_voorschrijfpr_geneesmiddel_identific as prk ON(gpk.generiekeproductcode = prk.generiekeproductcode AND prk.prkcode > 0)
             LEFT JOIN gs_handelsproducten as hpk USING(prkcode)
             LEFT JOIN gs_artikelen as art USING(handelsproduktkode)
-            WHERE LENGTH(a.atccode) > 0
-            GROUP BY a.atccode
+            GROUP BY a.atccode, b.atccode, c.atccode, d.atccode, e.atccode, f.atccode
 		");
 	}
 
@@ -393,12 +414,27 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			// Prepare statement
 			unset($importData['_attributes']);
 			$adapter = Propel::getDB();
+			$table = constant($omClass . 'Peer::TABLE_NAME');
+			$quotedFields = array_map(array($adapter, 'quoteIdentifier'), array_keys($importData));
 			$sql = sprintf(
-				'REPLACE INTO %s (%s) VALUES (%s)',
-				$adapter->quoteIdentifierTable(constant($omClass . 'Peer::TABLE_NAME')),
-				implode(', ', array_map(function($s) use($adapter) { return $adapter->quoteIdentifier($s); }, array_keys($importData))),
-				implode(', ', array_fill(0, count($importData), '?'))
+				'INSERT INTO %s (%s) VALUES (%s)',
+				$adapter->quoteIdentifierTable($table),
+				implode(', ', $quotedFields),
+				implode(', ', array_fill(0, count($quotedFields), '?'))
 			);
+			if ($values_twice = $adapter instanceof \DBMySQL) {
+				$sql .= sprintf(
+					' ON DUPLICATE KEY UPDATE %s',
+					implode(', ', array_map(function($s) { return $s . ' = ?'; }, $quotedFields))
+				);
+			}
+			elseif ($values_twice = $adapter instanceof \DBPostgres) {
+				$sql .= sprintf(
+					' ON CONFLICT ON CONSTRAINT %s DO UPDATE SET %s',
+					$adapter->quoteIdentifier($table . '_pkey'),
+					implode(', ', array_map(function($s) { return $s . ' = ?'; }, $quotedFields))
+				);
+			}
 			$stmt = Propel::getConnection()->prepare($sql);
 
 			$do_update_all = ($this->importType == self::IMPORT_FULL || $fileName == 'BST000T');
@@ -409,7 +445,11 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 					case self::MUTATIE_VERWIJDER:
 					case self::MUTATIE_WIJZIGEN:
 						try {
-							$stmt->execute(array_values($rowData));
+							$values = array_values($rowData);
+							if ($values_twice) {
+								$values = array_merge($values, $values);
+							}
+							$stmt->execute($values);
 						}
 						catch(\PDOException $e) {
 							throw new \Exception(sprintf('Failed executing: %s with values %s', $sql, var_export(array_values($rowData), true)), 0, $e);
