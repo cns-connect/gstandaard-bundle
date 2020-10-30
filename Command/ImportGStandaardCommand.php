@@ -405,8 +405,6 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 			$peerClass = $omClass.'Peer';
 			$values = $rowData;
-			$values['mutatiekode'] = $values['mutatie_code'];
-			unset($values['mutatie_code']);
 
 
 			$sql = 'REPLACE '.constant($peerClass.'::TABLE_NAME').' (';
@@ -423,7 +421,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		}
 
 		protected function getRowData($rowString, $importData) {
-			$rowData = array('mutatie_code' => trim(substr($rowString, 4, 1)));
+			$rowData = [];
 			foreach($importData as $fieldName => $params) {
 				if($fieldName == '_attributes')
 					continue;
@@ -443,7 +441,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 						$row[$field] = substr($value, 0, $roffset) . '.' . substr($value, $roffset);
 						break;
 					case 'integer':
-						$row[$field] = ltrim($row[$field], 0);
+						if (($row[$field] = ltrim($row[$field], '0')) == '')
+							$row[$field] = '0';
 						break;
 					case 'date':
 						$date = $row[$field];
