@@ -8,8 +8,10 @@
 		"symfony/dependency-injection" : "^2.6|^3.4",
 		"symfony/http-kernel" : "^2.6|^3.4",
 		"symfony/event-dispatcher" : "^2.6|^3.4",
-		"symfony/yaml" : "^2.6|^3.4",
 		"propel/propel-bundle" : "~1.5|1.6.x-dev",
+		"php": ">=5.5",
+		"ext-dom": "*",
+		"ext-libxml": "*",
 		"ext-curl" : "*"
 	},
 	"license" : "MIT",

@@ -15,7 +15,6 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Console\Input\InputArgument;
 
 use Propel;
-use Symfony\Component\Yaml\Yaml;
 
 class ImportGStandaardCommand extends ContainerAwareCommand
 {
@@ -38,7 +37,9 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 	const GSTANDAARD_URL = 'https://www.z-index.nl/@@download-file?filename=';
 	const ALLE_BESTANDEN = 'all';
 	protected $bestand = self::ALLE_BESTANDEN;
-    
+
+	const SCHEMA_ID_SEP = ' : ';
+
 	protected function configure()
 	{
 		$this
@@ -78,6 +79,8 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			$this->downloadGStandaard($input, $output, $downloadDirectory);
 			$this->extractGStandaard($input, $output, $downloadDirectory);
 		}
+
+		$this->zindexConfig = $this->getZindexConfig();
 
 		if(!$input->getOption('skipHistorie')) {
 		  $this->updateAddOnHistorie($input, $output);
@@ -326,16 +329,14 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		Propel::disableInstancePooling();
 		$this->output = $output;
 		$start = time();
-		$zindexConfig = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/config/zindex.yml');
-		$this->zindexConfig = Yaml::parseFile($zindexConfig);
-		self::sortConfigByDependencies($this->zindexConfig['import']);
+		self::sortConfigByDependencies($this->zindexConfig);
 		$this->mapRecordlengths();
-		foreach($this->zindexConfig['import'] as $fileName => $import) {
+		foreach($this->zindexConfig as $fileName => $import) {
 		    if($this->bestand !== self::ALLE_BESTANDEN && $fileName != $this->bestand) {
 		        continue;
 		    }
 			try {
-				$this->import($fileName, $import);
+				$this->import($fileName);
 			}
 			catch(\InvalidArgumentException $e) {
 				$output->writeln('<error>Skipping missing '.$fileName.'</error>');
@@ -382,7 +383,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		if (!($fh = fopen($pathname, 'r'))) {
 			throw new \Exception('Failed opening ' . $pathname);
 		}
-		$definition = $this->zindexConfig['import'][$filename];
+		$definition = $this->zindexConfig[$filename]['fields'];
 		while(!feof($fh)) {
 			if (strlen($line = rtrim(fgets($fh), "\r\n\x1A"))) {
 				yield $this->getRowData($line, $definition);
@@ -396,8 +397,9 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 		protected function import($fileName) {
 			$start = time();
-			$this->output->writeln('<info>Importing '.$importData['_attributes']['table'].' ('.$fileName.')</info>');
-			$omClass = 'PharmaIntelligence\\GstandaardBundle\\Model\\'.$importData['_attributes']['modelClass'];
+			$importData = $this->zindexConfig[$fileName];
+			$this->output->writeln('<info>Importing '.$importData['table'].' ('.$fileName.')</info>');
+			$omClass = 'PharmaIntelligence\\GstandaardBundle\\Model\\'.$importData['modelClass'];
 
 			$progress = new ProgressBar($this->output, $this->recordMap[$fileName]['totaal']);
 			$progress->setFormat('debug');
@@ -412,10 +414,9 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 			Propel::getConnection()->query($sql);
 
 			// Prepare statement
-			unset($importData['_attributes']);
 			$adapter = Propel::getDB();
 			$table = constant($omClass . 'Peer::TABLE_NAME');
-			$quotedFields = array_map(array($adapter, 'quoteIdentifier'), array_keys($importData));
+			$quotedFields = array_map(array($adapter, 'quoteIdentifier'), array_keys($importData['fields']));
 			$sql = sprintf(
 				'INSERT INTO %s (%s) VALUES (%s)',
 				$adapter->quoteIdentifierTable($table),
@@ -476,8 +477,6 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		protected function getRowData($rowString, $importData) {
 			$rowData = [];
 			foreach($importData as $fieldName => $params) {
-				if($fieldName == '_attributes')
-					continue;
 				$rowData[$fieldName] = rtrim(substr($rowString, $params['start'], $params['length']));
 			}
 			return $this->mapDataRow($importData, $rowData);
@@ -485,8 +484,6 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 
 		protected function mapDataRow($dataDict, $row) {
 			foreach($dataDict as $field => $fieldOptions) {
-				if($field == '_attributes')
-					continue;
 				switch($fieldOptions['type']) {
 					case 'decimal':
 						$value = $row[$field];
@@ -495,7 +492,7 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 						break;
 					case 'integer':
 						if (($row[$field] = ltrim($row[$field], '0')) == '')
-							$row[$field] = empty($fieldOptions['null0']) ? '0' : NULL;
+							$row[$field] = $fieldOptions['required'] ? '0' : NULL;
 						break;
 					case 'date':
 						$date = $row[$field];
@@ -567,21 +564,70 @@ class ImportGStandaardCommand extends ContainerAwareCommand
 		};
 		foreach($importConfig as $fileName => &$import) {
 			$deps = array();
-			$class = sprintf('PharmaIntelligence\\GstandaardBundle\\Model\\%sPeer', $import['_attributes']['modelClass']);
+			$class = sprintf('PharmaIntelligence\\GstandaardBundle\\Model\\%sPeer', $import['modelClass']);
 			$fAddDeps($deps,$class::getTableMap());
-			$import['_attributes']['filename'] = $fileName;
-			$import['_attributes']['deps'] = $deps;
+			$import['filename'] = $fileName;
+			$import['deps'] = $deps;
 		}
 		unset($import);
 		uasort($importConfig, function($a, $b) {
-			if (isset($a['_attributes']['deps'][$b['_attributes']['modelClass']]))
+			if (isset($a['deps'][$b['modelClass']]))
 				return 1;    // A depends on B
-			elseif (isset($b['_attributes']['deps'][$a['_attributes']['modelClass']]))
+			elseif (isset($b['deps'][$a['modelClass']]))
 				return -1;   // B depends on A
-			elseif ($delta = count($a['_attributes']['deps']) - count($b['_attributes']['deps']))
+			elseif ($delta = count($a['deps']) - count($b['deps']))
 				return $delta;  // Delta in number of dependencies
 			else
-				return strcmp($a['_attributes']['filename'], $b['_attributes']['filename']);  // Filename
+				return strcmp($a['filename'], $b['filename']);  // Filename
 		});
+	}
+
+	protected static function camelizeName($str) {
+		// Resembles Propel's PhpNameGenerator::underscoreMethod()
+		return str_replace('_', '', ucwords($str, '_'));
+	}
+
+	/**
+	 * Extracts and returns the Z-Index configuration array from the Propel schema
+	 *
+	 * @return array
+	 */
+	protected function getZindexConfig()
+	{
+		$xml_pathname = $this->getContainer()->get('kernel')->locateResource('@PharmaIntelligenceGstandaardBundle/Resources/config/schema.xml');
+		$doc = new \DOMDocument();
+		$doc->load(realpath($xml_pathname), \LIBXML_NONET);
+		$xpath = new \DOMXPath($doc);
+		$files = [];
+		foreach($xpath->query('table', $doc->documentElement) as $table) {
+			$filename = explode(self::SCHEMA_ID_SEP, $table->getAttribute('description'), 2)[0];
+			$name = $table->getAttribute('name');
+			$file = [
+				'table' => $name,
+				'modelClass' => $table->hasAttribute('phpName') ? $table->getAttribute('phpName') : self::camelizeName($name),
+				'description' => $table->getAttribute('description'),
+				'fields' => [],
+			];
+
+			$fields =& $file['fields'];
+			foreach($xpath->query('column[@G]', $table) as $column) {
+				$name = $column->getAttribute('name');
+				list($start, $length, $type) = explode(':', $column->getAttribute('G'));
+				$fields[$name] = [
+					'phpName' => $column->hasAttribute('phpName') ? $column->getAttribute('phpName') : self::camelizeName($name),
+					'primaryKey' => ($column->getAttribute('primaryKey') == 'true'),
+					'start' => (int) $start,
+					'length' => (int) $length,
+					'type' => $type,
+					'scale' => $column->hasAttribute('scale') ? (int) $column->getAttribute('scale') : null,
+					'required' => ($column->getAttribute('required') == 'true'),
+					'description' => $column->getAttribute('description'),
+				];
+			}
+
+			$files[$filename] = $file;
+		}
+
+		return $files;
 	}
 }
